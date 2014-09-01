@@ -1,8 +1,16 @@
-function GamingPiece(color) 
-{
+function GamingPiece(color) {
+	this.color;
+	this.place;
+	this.gpModel;
+
+	if (color === undefined)
+		return;
+
 	this.color = color;
 
 	//load model
+	//the model is only the representation and can differ from the position of the place
+	//call assignPosFromPlace to sync them
 	if (color == "white")
   		this.gpModel = new Model(Resources.gpWhiteModel);
   	else if (color == "black")
@@ -23,4 +31,16 @@ GamingPiece.prototype.assignPosFromPlace = function() {
 		this.gpModel.setPosition(this.place.position);
 	else
 		console.error("Try to assign GamingPiece position from place. Place undefined.");
+}
+
+//create a new GamingPiece with the properties of this
+//keep model and place as references
+GamingPiece.prototype.clone = function() {
+	var gp = new GamingPiece();
+
+	gp.color = this.color;
+	gp.gpModel = this.gpModel;
+	gp.place = this.place;
+
+	return gp;
 }
