@@ -20,9 +20,7 @@ Controller.prototype.selectPlace = function(position) {
 	for (var i = 0; i < pl.length; i++) {
 		if (pl[i].isSelected(position,2)) {
 			if (Resources.debugSelection) {
-				console.log("Select place: " + pl[i].id);
-				for (var j = 0; j < pl[i].connections.length; j++)
-					console.log("Connections: " + pl[i].connections[j].id);
+				console.log("Select place: " + pl[i].toString());
 			}
 		}
 	}
