@@ -18,7 +18,7 @@ var init = function() {
   	controls = new THREE.OrbitControls(camera, renderer.domElement);
 
   	match = new Match();
-  	controller = new Human(match);
+  	controller = new Human(match,"white");
 
 	//lighting
 	initLighting();

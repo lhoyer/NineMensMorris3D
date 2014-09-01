@@ -22,6 +22,31 @@ function Game(raw)
 	}
 }
 
+Game.prototype.getUnusedGP = function(color) {
+	var gp = this.getGPsWithColor(color);
+
+	for (var i = 0; i < gp.length; i++)
+		if (gp[i].place === undefined)
+			return gp[i];
+}
+
+Game.prototype.getGPsWithColor = function(color) {
+	var gp;
+	if (color == "white")
+		gp = this.gpWhite;
+	else if (color == "black")
+		gp = this.gpBlack;
+	else 
+		console.error("Game getSelectableGP: color unknown");
+	return gp;
+}
+
+Game.prototype.getGPFromPlace = function(place) {
+	for (var i = 0; i < gp.length; i++)
+		if (gp[i].place === place)
+			return gp[i];
+}
+
 Game.prototype.clone = function() {
 	var game = new Game(true);
 	var g;

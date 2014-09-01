@@ -22,9 +22,9 @@ function GamingPiece(color) {
   	this.gpModel.setScale(new THREE.Vector3(2,2,2));
 }
 
-GamingPiece.prototype.setPlace = function(place) {
-	this.place = place;
-}
+// GamingPiece.prototype.setPlace = function(place) {
+// 	this.place = place;
+// }
 
 GamingPiece.prototype.assignPosFromPlace = function() {
 	if (this.place != undefined)
