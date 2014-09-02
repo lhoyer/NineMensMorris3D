@@ -3,6 +3,7 @@ var overlay = new Overlay();
 function Overlay () {
 	this.gamer = document.getElementById("gamer");
 	this.status = document.getElementById("status");
+	this.help = document.getElementById("help");
 }
 
 Overlay.prototype.setStatus = function(status) {

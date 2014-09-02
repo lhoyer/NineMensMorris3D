@@ -84,6 +84,9 @@ Game.prototype.doMove = function(move) {
 		console.error("Game doMove: parameter move doesn't inherit from Move");
 		return;
 	}
+	if (!move.available(this)) {
+		return;
+	}
 
 	var newGame = this.clone();
 	move.apply(newGame);
@@ -127,7 +130,8 @@ Game.prototype.getGPsWithColor = function(color) {
 }
 
 Game.prototype.getGPFromPlace = function(place) {
-	for (var i = 0; i < gp.length; i++)
-		if (gp[i].place === place)
-			return gp[i];
+	for (var i = 0; i < this.gp.length; i++)
+		if (this.gp[i].place === place)
+			return this.gp[i];
+	return undefined;
 }

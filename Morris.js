@@ -29,6 +29,7 @@ var init = function() {
 	camera.position.set(100,50,100);
   	scene.add(camera);
   	controls = new THREE.OrbitControls(camera, renderer.domElement);
+  	controls.noRotate = true;
 
   	match = new Match();
   	controller1 = new Human(match,"white");

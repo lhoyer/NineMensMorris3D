@@ -12,6 +12,10 @@ function MSet (newPlace, color) {
 }
 
 MSet.prototype.apply = function(game) {
+	if (!this.available(game)) {
+		console.warn("Move apply: move isn't available");
+		return;
+	}
 	this.gamingPiece = game.getNewGP(this.color);
 	this.gamingPiece.place = this.newPlace;
 };
@@ -22,4 +26,9 @@ MSet.prototype.confirm = function() {
 		return;
 	}
 	this.gamingPiece.assignPosFromPlace();
+};
+
+MSet.prototype.available = function(game) {	
+	var g = game.getGPFromPlace(this.newPlace);
+	return (g===undefined);
 };

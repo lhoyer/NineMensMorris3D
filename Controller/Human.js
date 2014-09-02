@@ -4,8 +4,10 @@ Human.prototype.constructor = Human;
 function Human(match,color)
 {
 	Controller.call(this,match,color);
-
 	mouse.addListener(this);
+	this.previewGP = new GamingPiece(color);
+	this.previewGP.gpModel.setVisible(false);
+	this.move;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -28,12 +30,10 @@ Human.prototype.selectPlace = function(position) {
 }
 
 Human.prototype.handleSelectedPlace = function(place) {
-	// TODO: switch betwen SET,MOVE,DELETE
 	var status = this.gameStatus.status;
-
 	if (status == "set") {
-		var move = new MSet(place,this.color);
-		match.doMove(move,true);
+		this.move = new MSet(place,this.color);
+		match.doMove(this.move,true);
 	}
 	if (status == "move") {
 
@@ -41,7 +41,6 @@ Human.prototype.handleSelectedPlace = function(place) {
 	if (status == "delete") {
 
 	}
-
 };
 
 Human.prototype.gameStatusChanged = function(game) {
@@ -51,19 +50,12 @@ Human.prototype.gameStatusChanged = function(game) {
 //-------------------------------------------------------------------------------------------------
 // mouse movement
 //-------------------------------------------------------------------------------------------------
-Human.prototype.handleMouseClick = function(event) {
+Human.prototype.handleMouseUp = function(event) {
+	this.previewGP.gpModel.dae.visible = false;
 	if (this.gameStatus.gamerColor !== this.color)
 		return false;
 
-	var xOff = 0;
-	var yOff = -20;
-	var projector = new THREE.Projector();
-	var planeZ = new THREE.Plane(new THREE.Vector3(0, 1, 0), -2.6);
-	var mouse3D = new THREE.Vector3( ( (event.clientX+xOff) / window.innerWidth ) * 2 - 1,   		//x
-                                    -( (event.clientY+yOff) / window.innerHeight ) * 2 + 1,  		//y
-                                    0.5 );                                            				//z
-    var raycaster = projector.pickingRay( mouse3D.clone(), camera );
-    var pos = raycaster.ray.intersectPlane(planeZ);
+	var pos = this.mouseCoordinate(event);
 
     if (Resources.debugSelection) {
 	    console.log(pos);
@@ -79,3 +71,30 @@ Human.prototype.handleMouseClick = function(event) {
 	this.selectPlace(pos);
 	return true;
 }
+
+Human.prototype.handleMouseDown = function(event) {
+	if (this.gameStatus.gamerColor !== this.color ||
+		this.gameStatus.status !== "move")
+		return false;
+
+	this.previewGP.gpModel.dae.visible = true;
+	//this.move = new MMove();
+}
+
+Human.prototype.handleMouseMove = function(event) {
+	if (this.previewGP !== undefined)
+		this.previewGP.gpModel.setPosition(this.mouseCoordinate(event));
+}
+
+Human.prototype.mouseCoordinate = function(event) {
+	var xOff = 0;
+	var yOff = -20;
+	var projector = new THREE.Projector();
+	var planeZ = new THREE.Plane(new THREE.Vector3(0, 1, 0), -2.6);
+	var mouse3D = new THREE.Vector3( ( (event.clientX+xOff) / window.innerWidth ) * 2 - 1,   		//x
+                                    -( (event.clientY+yOff) / window.innerHeight ) * 2 + 1,  		//y
+                                    0.5 );                                            				//z
+    var raycaster = projector.pickingRay( mouse3D.clone(), camera );
+    var pos = raycaster.ray.intersectPlane(planeZ);
+    return pos;
+};

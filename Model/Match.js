@@ -8,7 +8,14 @@ function Match()
 }
 
 Match.prototype.doMove = function(move) {
-	this.gameStatus = this.gameStatus.doMove(move);
+	var newGame = this.gameStatus.doMove(move);
+	if (newGame === undefined) {
+		overlay.help.textContent = "Move isn't available";
+		return;
+	}
+	else
+		overlay.help.textContent = "";
+	this.gameStatus = newGame;
 	this.gameHistory.push(this.gameStatus);
 
 	move.confirm();

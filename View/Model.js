@@ -2,6 +2,7 @@ function Model(file) {
 	this.rotation = new THREE.Euler(0,0,0);
 	this.position = new THREE.Vector3(0,0,0);
 	this.scale = new THREE.Vector3(0,0,0);
+	this.visible = true;
 
 	var callbackThis = this;
 	var loader = new THREE.ColladaLoader();
@@ -12,10 +13,21 @@ function Model(file) {
 		callbackThis.updateScale();
 		callbackThis.updatePosition();
 		callbackThis.updateRotation();
+		callbackThis.updateVisible();
 		//add to scene
 		scene.add(callbackThis.dae);
 	});
 }
+
+Model.prototype.setVisible = function(visible) {
+	this.visible = visible;
+	if (this.dae != undefined)
+		this.updateVisible();
+};
+
+Model.prototype.updateVisible = function() {
+	this.dae.visible = this.visible;
+};
 
 Model.prototype.setPosition = function(pos) {
 	this.position.set(pos.x,pos.y,pos.z);
