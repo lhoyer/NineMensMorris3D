@@ -27,7 +27,12 @@ function GamingPiece(color) {
 // }
 
 GamingPiece.prototype.assignPosFromPlace = function() {
-	if (this.place != undefined)
+	if (this.place === "deleted") {
+		this.gpModel.setVisible(false);
+		return;
+	}
+
+	if (this.place !== undefined)
 		this.gpModel.setPosition(this.place.position);
 	else
 		console.error("Try to assign GamingPiece position from place. Place undefined.");

@@ -37,7 +37,14 @@ Human.prototype.handleSelectedPlace = function(place) {
 		match.doMove(move);
 	}
 	if (status == "delete") {
-
+		var move = new MDelete(place,this.color);
+		match.doMove(move);
+	}
+	if (status == "jump") {
+		if (this.oldPlace === undefined)
+			return;
+		var move = new MJump(this.oldPlace,place,this.color);
+		match.doMove(move);
 	}
 };
 
@@ -82,8 +89,10 @@ Human.prototype.handleMouseUp = function(event) {
 }
 
 Human.prototype.handleMouseDown = function(event) {
-	if (this.gameStatus.gamerColor !== this.color ||
-		this.gameStatus.status !== "move")
+	if (this.gameStatus.gamerColor !== this.color)
+		return false;
+	if (this.gameStatus.status !== "move" && 
+		this.gameStatus.status !== "jump")
 		return false;
 
 	this.oldPlace = this.placeFromPosition(this.mouseCoordinate(event));

@@ -17,6 +17,9 @@ Overlay.prototype.setStatus = function(status) {
 		case "delete":
 			this.status.textContent = "Delete Gaming Piece";
 			break;
+		case "jump":
+			this.status.textContent = "Jump Gaming Piece";
+			break;
 		default:
 			console.warn("Overlay setStatus: unknown status");
 	}

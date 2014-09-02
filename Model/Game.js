@@ -12,7 +12,7 @@ function Game(raw)
 		return;
 
 	var g;
-	for (i = 0; i<9; i++) {
+	for (i = 0; i<5; i++) {
 		g = new GamingPiece("white");
 		g.gpModel.setPosition(new THREE.Vector3(-80,0,i*10-45));
 		g.place = "new";
@@ -30,7 +30,7 @@ Game.prototype.clone = function() {
 	var game = new Game(true);
 	var g;
 
-	for (i = 0; i<9; i++) {
+	for (i = 0; i<5; i++) {
 		g = this.gpWhite[i].clone();
 		game.gpWhite.push(g);
 		game.gp.push(g);
@@ -54,10 +54,15 @@ Game.prototype.changeGamer = function() {
 		this.gamerColor = "white";
 }
 
-Game.prototype.newMorris = function() {
-	
-
-	return false;
+Game.prototype.newMorris = function(move) {
+	var newPl = move.newPlace;
+	if (move.newPlace===undefined)
+		return false;
+	var gp = this.getGPFromPlace(move.newPlace);
+	if (this.gpInMorris(gp))
+		return true;
+	else
+		return false;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -91,14 +96,16 @@ Game.prototype.doMove = function(move) {
 	var newGame = this.clone();
 	move.apply(newGame);
 
-	if (newGame.newMorris())
+	if (newGame.newMorris(move))
 		newGame.status = "delete";
 	else {
 		newGame.changeGamer();
 		if (newGame.getNewGP(newGame.gamerColor) !== undefined)
 			newGame.status = "set";
+		else if (newGame.countGamingPieces(newGame.gamerColor) < 4)
+			newGame.status = "jump";
 		else
-			newGame.status = "move"
+			newGame.status = "move";
 	}
 
 	return newGame;
@@ -134,4 +141,38 @@ Game.prototype.getGPFromPlace = function(place) {
 		if (this.gp[i].place === place)
 			return this.gp[i];
 	return undefined;
+}
+
+Game.prototype.gpInMorris = function(gp) {
+	var pl = gp.place;
+	var col = gp.color;
+
+	for (var i = 0; i < pl.morrises.length; i++) {
+		var b = 0;
+		for (var j = 0; j < pl.morrises[i].length; j++) {
+			var testGP = this.getGPFromPlace(pl.morrises[i][j]);
+			if (testGP !== undefined && col === testGP.color)
+				b++; 
+		}
+		if (b==3)
+			return true;
+	}
+	return false;
+};
+
+Game.prototype.countGamingPieces = function(color) {
+	var cnt = 0;
+	var gamingPieces;
+	if (color == "white")
+		gamingPieces = this.gpWhite;
+	else
+		gamingPieces = this.gpBlack;
+
+	for (var i = 0; i < gamingPieces.length; i++) {
+		var pl = gamingPieces[i].place;
+		if (pl !== undefined && pl !== "new" && pl !== "deleted")
+			cnt++;
+	}
+
+	return cnt;
 }
