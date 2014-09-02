@@ -4,20 +4,26 @@ function Match()
 	this.gameHistory = new Array();
 	this.gameStatus = new Game();
 	this.gameHistory.push(this.gameStatus);
+	this.controllers = new Array();
 }
 
-Match.prototype.doMove = function(move, confirm) {
-	if (confirm===undefined) confirm = false;
-	if (move===undefined) {
-		console.error("Match doMove: parameter move undefined");
-		return;
-	}
-	if (!(move instanceof Move)) {
-		console.error("Match doMove: parameter move doesn't inherit from Move");
-		return;
-	}
-
-	this.gameStatus = this.gameStatus.clone();
+Match.prototype.doMove = function(move) {
+	this.gameStatus = this.gameStatus.doMove(move);
 	this.gameHistory.push(this.gameStatus);
-	move.apply(this.gameStatus,confirm);
+
+	move.confirm();
+
+	overlay.update(this.gameStatus);
+	this.notifyControllers();
 }
+
+Match.prototype.notifyControllers = function() {
+	for (var i = 0; i < this.controllers.length; i++) {
+		this.controllers[i].gameStatusChanged(this.gameStatus);
+	}
+};
+
+Match.prototype.registerController = function(controller) {
+	this.controllers.push(controller);	
+	this.notifyControllers();
+};

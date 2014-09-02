@@ -9,16 +9,56 @@
 				background-color: #000000;
 				overflow: hidden;
 			}
+			#title {
+				position: absolute;
+				top: 0px;
+				width: 100%;
+				color: #FFFFFF;
+				padding: 20px;
+				font-family: Monospace;
+				font-size: 50px;
+				text-align: center;
+				z-index: 1;
+			}
+			#gamer {
+				position: absolute;
+				bottom: 80px;
+				left: 30px;
+				width: 100%;
+				color: #FFFFFF;
+				padding: 20px;
+				font-family: Monospace;
+				font-size: 30px;
+				text-align: left;
+				z-index: 1;
+			}
+			#status {
+				position: absolute;
+				bottom: 30px;
+				left: 30px;
+				width: 100%;
+				color: #FFFFFF;
+				padding: 20px;
+				font-family: Monospace;
+				font-size: 30px;
+				text-align: left;
+				z-index: 1;
+			}
 		</style>
 	</head>	
 
 	<body>
+		<div id="title">Nine Men's Morris 3D</div>
+		<div id="gamer">Gamer 1 (White)</div>
+		<div id="status">Set Gaming Piece</div>
+
 		//THREE.js
 		<script src="js/three.min.js"></script>
 		<script src="js/OrbitControls.js"></script>
 		<script src="js/ColladaLoader.js"></script>
 
 		//Controller
+		<script type="text/javascript" src="Controller/Mouse.js"></script>
 		<script type="text/javascript" src="Controller/Controller.js"></script>
 		<script type="text/javascript" src="Controller/AI.js"></script>
 		<script type="text/javascript" src="Controller/Human.js"></script>
@@ -36,7 +76,8 @@
 
 		//View
 		<script type="text/javascript" src="View/Model.js"></script>
-		<script type="text/javascript" src="View/View.js"></script>	  	
+		<script type="text/javascript" src="View/View.js"></script>	  
+		<script type="text/javascript" src="View/Overlay.js"></script>	  	
 		<script type="text/javascript" src="View/Resources.js"></script>
 
 		//Main

@@ -4,17 +4,13 @@ Human.prototype.constructor = Human;
 function Human(match,color)
 {
 	Controller.call(this,match,color);
-	var callbackThis = this;
 
-	(function() {
-    window.onclick = handleMouseMove;
-    function handleMouseMove(event) {
-        event = event || window.event; // IE-ism
-        callbackThis.handleMouseMove(event);
-    }
-	})();
+	mouse.addListener(this);
 }
 
+//-------------------------------------------------------------------------------------------------
+// place selection
+//-------------------------------------------------------------------------------------------------
 Human.prototype.selectPlace = function(position) {
 	var pl = match.field.places;
 	var place;
@@ -33,17 +29,32 @@ Human.prototype.selectPlace = function(position) {
 
 Human.prototype.handleSelectedPlace = function(place) {
 	// TODO: switch betwen SET,MOVE,DELETE
-	var status = "SET";
+	var status = this.gameStatus.status;
 
-	if (status == "SET")
-	{
+	if (status == "set") {
 		var move = new MSet(place,this.color);
 		match.doMove(move,true);
+	}
+	if (status == "move") {
+
+	}
+	if (status == "delete") {
+
 	}
 
 };
 
-Human.prototype.handleMouseMove = function(event) {
+Human.prototype.gameStatusChanged = function(game) {
+	this.gameStatus = game;
+};
+
+//-------------------------------------------------------------------------------------------------
+// mouse movement
+//-------------------------------------------------------------------------------------------------
+Human.prototype.handleMouseClick = function(event) {
+	if (this.gameStatus.gamerColor !== this.color)
+		return false;
+
 	var xOff = 0;
 	var yOff = -20;
 	var projector = new THREE.Projector();
@@ -66,4 +77,5 @@ Human.prototype.handleMouseMove = function(event) {
 	}
 
 	this.selectPlace(pos);
+	return true;
 }

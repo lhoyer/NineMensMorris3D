@@ -8,11 +8,18 @@ function MSet (newPlace, color) {
 		console.error("MSet: parameter color undefined")
 	this.newPlace = newPlace;
 	this.color = color;
+	this.gamingPiece = undefined;
 }
 
-MSet.prototype.apply = function(game,confirm) {
-	var gp = game.getUnusedGP(this.color);
-	gp.place = this.newPlace;
-	if (confirm)
-		gp.assignPosFromPlace();
+MSet.prototype.apply = function(game) {
+	this.gamingPiece = game.getNewGP(this.color);
+	this.gamingPiece.place = this.newPlace;
+};
+
+MSet.prototype.confirm = function() {
+	if (this.gamingPiece === undefined) {
+		console.warn("Move confirm: gaming piece undefined");
+		return;
+	}
+	this.gamingPiece.assignPosFromPlace();
 };

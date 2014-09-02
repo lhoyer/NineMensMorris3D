@@ -49,7 +49,6 @@ Field.prototype.buildPlaces = function() {
 		var pl3 = this.places[this.plIdx(2,i,1)];
 		this.setupMorris(pl1,pl2,pl3);
 	}
-
 }
 
 Field.prototype.setupMorris = function(pl1,pl2,pl3) {

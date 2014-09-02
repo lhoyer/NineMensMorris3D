@@ -9,3 +9,7 @@ function Controller(match,color)
 	else
 		console.error("Controller doesn't get a color");
 }
+
+Controller.prototype.gameStatusChanged = function(game) {
+	console.warn("Controller gameStatusChanged should be implemented by children");
+};

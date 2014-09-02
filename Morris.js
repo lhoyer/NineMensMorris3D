@@ -1,9 +1,22 @@
 "use strict";
 
 var scene, camera, renderer, controls;
-var match,controller;
+var match,controller1, controller2;
 
 var init = function() {
+	// Create a dov to contain everything
+    var container = document.createElement('div');
+    document.body.appendChild(container);
+    
+
+    // Give this example a title
+    var info = document.createElement('div');
+    info.style.position = 'absolute';
+    info.style.top = '10px';
+    info.style.width = '100%';
+    info.style.textAlign = 'center';
+    info.innerHTML = 'Just a box';
+    container.appendChild(info);
 
 	//scene
 	scene = new THREE.Scene();
@@ -18,7 +31,10 @@ var init = function() {
   	controls = new THREE.OrbitControls(camera, renderer.domElement);
 
   	match = new Match();
-  	controller = new Human(match,"white");
+  	controller1 = new Human(match,"white");
+  	controller2 = new Human(match,"black");
+  	match.registerController(controller1);
+  	match.registerController(controller2);
 
 	//lighting
 	initLighting();
@@ -80,7 +96,7 @@ var onResizeWindow = function() {
 var render = function () {
 	requestAnimationFrame(render);
 	renderer.render(scene, camera);
-	controls.update();
+	// controls.update();
 };
 
 init();
