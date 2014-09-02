@@ -69,9 +69,64 @@ Game.prototype.newMorris = function(move) {
 // Game Status 2
 //-------------------------------------------------------------------------------------------------
 Game.prototype.getAvailableMoves = function() {
+	var move;
 	var moves = new Array();
+	var gamingPieces = this.getGPsWithColor(this.gamerColor);
+	var places = match.field.places;
+	var plOld, plNew;
 
-	moves.push("----");
+	if (this.status == "set")
+	{
+		for (var i = 0; i < places.length; i++) {
+			plNew = places[i];
+			move = new MSet(plNew,this.gamerColor);
+			if (move.available(this))
+				moves.push(move);
+		}
+	}
+	if (this.status == "move")
+	{
+		for (var i = 0; i < gamingPieces.length; i++) {
+			if (gamingPieces[i].place === "deleted")
+				continue;
+			plOld = gamingPieces[i].place;
+			for (var j = 0; j < plOld.connections.length; j++) {
+				plNew = plOld.connections[j];
+				move = new MMove(plOld,plNew,this.gamerColor);
+				if (move.available(this))
+					moves.push(move);
+			}
+		}
+	}
+	if (this.status == "jump")
+	{
+		for (var i = 0; i < gamingPieces.length; i++) {
+			if (gamingPieces[i].place === "deleted")
+				continue;
+			plOld = gamingPieces[i].place;
+			for (var j = 0; j < places.length; j++) {
+				plNew = places[j];
+				move = new MJump(plOld,plNew,this.gamerColor);
+				if (move.available(this))
+					moves.push(move);
+			}
+		}
+	}
+	if (this.status == "delete")
+	{
+		if (this.gamerColor == "white")
+			gamingPieces = this.gpBlack;
+		else
+			gamingPieces = this.gpWhite;
+		for (var i = 0; i < gamingPieces.length; i++) {
+			if (gamingPieces[i].place === "deleted" || gamingPieces[i].place === "new")
+				continue;
+			plOld = gamingPieces[i].place;
+			move = new MDelete(plOld,this.gamerColor);
+			if (move.available(this))
+				moves.push(move);
+		}
+	}
 
 	return moves;
 }
@@ -100,9 +155,15 @@ Game.prototype.doMove = function(move) {
 	var newGame = this.clone();
 	move.apply(newGame);
 
-	if (newGame.newMorris(move))
+	var enterOtherStates = true;
+	if (newGame.newMorris(move)) {
+		enterOtherStates = false;
 		newGame.status = "delete";
-	else {
+		if (newGame.getAvailableMoves().length == 0)
+			enterOtherStates = true;
+	}
+	if (enterOtherStates)
+	{
 		newGame.changeGamer();
 		if (newGame.getNewGP(newGame.gamerColor) !== undefined)
 			newGame.status = "set";
@@ -112,7 +173,7 @@ Game.prototype.doMove = function(move) {
 			newGame.status = "move";
 	}
 	if (newGame.countGamingPieces(newGame.gamerColor) < 3 ||
-		this.getAvailableMoves().length==0)
+		newGame.getAvailableMoves().length==0)
 		newGame.status = "end";
 
 	return newGame;
@@ -169,11 +230,7 @@ Game.prototype.gpInMorris = function(gp) {
 
 Game.prototype.countGamingPieces = function(color) {
 	var cnt = 0;
-	var gamingPieces;
-	if (color == "white")
-		gamingPieces = this.gpWhite;
-	else
-		gamingPieces = this.gpBlack;
+	var gamingPieces = this.getGPsWithColor(color);
 
 	for (var i = 0; i < gamingPieces.length; i++) {
 		var pl = gamingPieces[i].place;
