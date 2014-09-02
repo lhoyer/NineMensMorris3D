@@ -19,6 +19,9 @@
 				font-size: 50px;
 				text-align: center;
 				z-index: 1;
+				-webkit-user-select: none; /* Chrome/Safari */        
+				-moz-user-select: none; /* Firefox */
+				-ms-user-select: none; /* IE10+ */
 			}
 			#gamer {
 				position: absolute;
@@ -30,6 +33,9 @@
 				font-size: 30px;
 				text-align: left;
 				z-index: 1;
+				-webkit-user-select: none; /* Chrome/Safari */        
+				-moz-user-select: none; /* Firefox */
+				-ms-user-select: none; /* IE10+ */
 			}
 			#status {
 				position: absolute;
@@ -41,6 +47,9 @@
 				font-size: 30px;
 				text-align: left;
 				z-index: 1;
+				-webkit-user-select: none; /* Chrome/Safari */        
+				-moz-user-select: none; /* Firefox */
+				-ms-user-select: none; /* IE10+ */
 			}
 			#help {
 				position: absolute;
@@ -52,6 +61,9 @@
 				font-size: 30px;
 				text-align: right;
 				z-index: 1;
+				-webkit-user-select: none; /* Chrome/Safari */        
+				-moz-user-select: none; /* Firefox */
+				-ms-user-select: none; /* IE10+ */
 			}
 		</style>
 	</head>	
@@ -62,18 +74,18 @@
 		<div id="status">Set Gaming Piece</div>
 		<div id="help"></div>
 
-		//THREE.js
+		<!--THREE.js-->
 		<script src="js/three.min.js"></script>
 		<script src="js/OrbitControls.js"></script>
 		<script src="js/ColladaLoader.js"></script>
 
-		//Controller
+		<!--Controller-->
 		<script type="text/javascript" src="Controller/Mouse.js"></script>
 		<script type="text/javascript" src="Controller/Controller.js"></script>
 		<script type="text/javascript" src="Controller/AI.js"></script>
 		<script type="text/javascript" src="Controller/Human.js"></script>
 
-		//Model
+		<!--Model-->
 		<script type="text/javascript" src="Model/Field.js"></script>
 		<script type="text/javascript" src="Model/Game.js"></script>
 		<script type="text/javascript" src="Model/GamingPiece.js"></script>
@@ -84,13 +96,13 @@
 		<script type="text/javascript" src="Model/MDelete.js"></script>
 		<script type="text/javascript" src="Model/Place.js"></script>
 
-		//View
+		<!--View-->
 		<script type="text/javascript" src="View/Model.js"></script>
 		<script type="text/javascript" src="View/View.js"></script>	  
 		<script type="text/javascript" src="View/Overlay.js"></script>	  	
 		<script type="text/javascript" src="View/Resources.js"></script>
 
-		//Main
+		<!--Main-->
 	  	<script type="text/javascript" src="Morris.js"></script>		
 	</body>
 </html>

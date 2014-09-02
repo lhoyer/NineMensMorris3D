@@ -92,7 +92,7 @@ Human.prototype.handleMouseDown = function(event) {
 	var gp = this.match.gameStatus.getGPFromPlace(this.oldPlace)
 	if (gp === undefined)
 		return;
-	
+
 	if (gp.color === this.color) {
 		this.previewGP.gpModel.dae.visible = true;
 		if (Resources.debugSelection) {
@@ -108,7 +108,7 @@ Human.prototype.handleMouseMove = function(event) {
 
 Human.prototype.mouseCoordinate = function(event) {
 	var xOff = 0;
-	var yOff = -20;
+	var yOff = 0;
 	var projector = new THREE.Projector();
 	var planeZ = new THREE.Plane(new THREE.Vector3(0, 1, 0), -2.6);
 	var mouse3D = new THREE.Vector3( ( (event.clientX+xOff) / window.innerWidth ) * 2 - 1,   		//x

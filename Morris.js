@@ -26,9 +26,10 @@ var init = function() {
 
 	//camera
 	camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
-	camera.position.set(100,50,100);
+	camera.position.set(20,120,100);
   	scene.add(camera);
   	controls = new THREE.OrbitControls(camera, renderer.domElement);
+	camera.lookAt(new THREE.Vector3(0,0,10));
   	controls.noRotate = true;
 
   	match = new Match();
