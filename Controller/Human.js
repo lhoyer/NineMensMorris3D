@@ -7,39 +7,48 @@ function Human(match,color)
 	mouse.addListener(this);
 	this.previewGP = new GamingPiece(color);
 	this.previewGP.gpModel.setVisible(false);
-	this.move;
+	this.oldPlace;
 }
 
 //-------------------------------------------------------------------------------------------------
 // place selection
 //-------------------------------------------------------------------------------------------------
 Human.prototype.selectPlace = function(position) {
-	var pl = match.field.places;
 	var place;
-	//get place from position
-	for (var i = 0; i < pl.length; i++) {
-		if (pl[i].isSelected(position,5)) {
-			if (Resources.debugSelection) {
-				console.log("Select place: " + pl[i].toString());
-			}
-			place = pl[i];
-			this.handleSelectedPlace(place);
-			break;
-		}
+	place = this.placeFromPosition(position);
+	if (place === undefined)
+		return;
+	if (Resources.debugSelection) {
+		console.log("Select place: " + place.toString());
 	}
+	this.handleSelectedPlace(place);
 }
 
 Human.prototype.handleSelectedPlace = function(place) {
 	var status = this.gameStatus.status;
 	if (status == "set") {
-		this.move = new MSet(place,this.color);
-		match.doMove(this.move,true);
+		var move = new MSet(place,this.color);
+		match.doMove(move);
 	}
 	if (status == "move") {
-
+		if (this.oldPlace === undefined)
+			return;
+		var move = new MMove(this.oldPlace,place,this.color);
+		match.doMove(move);
 	}
 	if (status == "delete") {
 
+	}
+};
+
+//-------------------------------------------------------------------------------------------------
+// helpers
+//-------------------------------------------------------------------------------------------------
+Human.prototype.placeFromPosition = function(position) {
+	var pl = match.field.places;
+	for (var i = 0; i < pl.length; i++) {
+		if (pl[i].isSelected(position,5))
+			return pl[i];
 	}
 };
 
@@ -77,8 +86,19 @@ Human.prototype.handleMouseDown = function(event) {
 		this.gameStatus.status !== "move")
 		return false;
 
-	this.previewGP.gpModel.dae.visible = true;
-	//this.move = new MMove();
+	this.oldPlace = this.placeFromPosition(this.mouseCoordinate(event));
+	if (this.oldPlace === undefined)
+		return; 
+	var gp = this.match.gameStatus.getGPFromPlace(this.oldPlace)
+	if (gp === undefined)
+		return;
+	
+	if (gp.color === this.color) {
+		this.previewGP.gpModel.dae.visible = true;
+		if (Resources.debugSelection) {
+			console.log("Select place: " + this.oldPlace.toString());
+		}
+	}
 }
 
 Human.prototype.handleMouseMove = function(event) {
@@ -97,4 +117,4 @@ Human.prototype.mouseCoordinate = function(event) {
     var raycaster = projector.pickingRay( mouse3D.clone(), camera );
     var pos = raycaster.ray.intersectPlane(planeZ);
     return pos;
-};
+}
