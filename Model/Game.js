@@ -12,7 +12,7 @@ function Game(raw)
 		return;
 
 	var g;
-	for (i = 0; i<5; i++) {
+	for (i = 0; i<9; i++) {
 		g = new GamingPiece("white");
 		g.gpModel.setPosition(new THREE.Vector3(-80,0,i*10-45));
 		g.place = "new";
@@ -30,7 +30,7 @@ Game.prototype.clone = function() {
 	var game = new Game(true);
 	var g;
 
-	for (i = 0; i<5; i++) {
+	for (i = 0; i<9; i++) {
 		g = this.gpWhite[i].clone();
 		game.gpWhite.push(g);
 		game.gp.push(g);
@@ -69,7 +69,11 @@ Game.prototype.newMorris = function(move) {
 // Game Status 2
 //-------------------------------------------------------------------------------------------------
 Game.prototype.getAvailableMoves = function() {
+	var moves = new Array();
 
+	moves.push("----");
+
+	return moves;
 }
 
 Game.prototype.evaluate = function() {
@@ -107,6 +111,9 @@ Game.prototype.doMove = function(move) {
 		else
 			newGame.status = "move";
 	}
+	if (newGame.countGamingPieces(newGame.gamerColor) < 3 ||
+		this.getAvailableMoves().length==0)
+		newGame.status = "end";
 
 	return newGame;
 }
@@ -170,7 +177,7 @@ Game.prototype.countGamingPieces = function(color) {
 
 	for (var i = 0; i < gamingPieces.length; i++) {
 		var pl = gamingPieces[i].place;
-		if (pl !== undefined && pl !== "new" && pl !== "deleted")
+		if (pl !== undefined && pl !== "deleted")
 			cnt++;
 	}
 

@@ -1,2 +1,4 @@
+less than 2 gps
 no possibility to move
-no possibility to delete 
+no possibility to delete
+ 

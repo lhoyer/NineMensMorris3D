@@ -30,21 +30,27 @@ Human.prototype.handleSelectedPlace = function(place) {
 		var move = new MSet(place,this.color);
 		match.doMove(move);
 	}
-	if (status == "move") {
+	else if (status == "move") {
 		if (this.oldPlace === undefined)
 			return;
 		var move = new MMove(this.oldPlace,place,this.color);
 		match.doMove(move);
 	}
-	if (status == "delete") {
+	else if (status == "delete") {
 		var move = new MDelete(place,this.color);
 		match.doMove(move);
 	}
-	if (status == "jump") {
+	else if (status == "jump") {
 		if (this.oldPlace === undefined)
 			return;
 		var move = new MJump(this.oldPlace,place,this.color);
 		match.doMove(move);
+	}
+	else if (status == "delete") {
+		//do nothing
+	}
+	else {
+		console.warn("Human handleSelectedPlace: status unknown");
 	}
 };
 
