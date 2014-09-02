@@ -19,8 +19,8 @@ MMove.prototype.apply = function(game) {
 		console.warn("Move apply: move isn't available");
 		return;
 	}
-	// this.gamingPiece = game.getNewGP(this.color);
-	// this.gamingPiece.place = this.newPlace;
+	this.gamingPiece = game.getGPFromPlace(this.oldPlace);
+	this.gamingPiece.place = this.newPlace;
 };
 
 MMove.prototype.confirm = function() {
@@ -32,6 +32,18 @@ MMove.prototype.confirm = function() {
 };
 
 MMove.prototype.available = function(game) {	
-	// var g = game.getGPFromPlace(this.newPlace);
-	// return (g===undefined);
+	if (this.oldPlace === undefined || this.newPlace === undefined)
+		return false;
+	var g = game.getGPFromPlace(this.oldPlace);
+	if (g === undefined)
+		return false;
+	if (g.color !== this.color)
+		return false;
+	if (game.getGPFromPlace(this.newPlace) !== undefined)
+		return false;
+	if (!this.oldPlace.isConnected(this.newPlace))
+		return false;
+	// check in morris
+
+	return true;
 };

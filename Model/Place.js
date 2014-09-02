@@ -30,6 +30,13 @@ Place.prototype.addMorris = function(morris) {
 	this.morrises.push(morris);
 }
 
+Place.prototype.isConnected = function(place2) {
+	for (var i = 0; i < this.connections.length; i++)
+		if (this.connections[i] === place2)
+			return true;
+	return false;
+};
+
 Place.prototype.isSelected = function(pos,limit) {
 	if (pos.x - limit < this.position.x && 
 		this.position.x < pos.x + limit && 
