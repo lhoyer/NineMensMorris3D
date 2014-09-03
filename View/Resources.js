@@ -28,5 +28,6 @@ var Resources = {
 	place230:new THREE.Vector3(-16.2,	2.6,	-16.2),
 	place231:new THREE.Vector3(-16.2,	2.6,	0),
 
-	debugSelection:true
+	debugSelection:true,
+	debugAvailableMoves:true
 };

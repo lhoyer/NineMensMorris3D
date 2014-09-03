@@ -35,7 +35,7 @@ var init = function() {
 
   	match = new Match();
   	controller1 = new Human(match,"white");
-  	controller2 = new Human(match,"black");
+  	controller2 = new RandomController(match,"black");
   	match.registerController(controller1);
   	match.registerController(controller2);
 

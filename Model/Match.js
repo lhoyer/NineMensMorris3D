@@ -19,6 +19,8 @@ Match.prototype.doMove = function(move) {
 	this.gameHistory.push(this.gameStatus);
 
 	move.confirm();
+	if (Resources.debugAvailableMoves)
+		console.log(this.gameStatus.getAvailableMoves());
 
 	overlay.update(this.gameStatus);
 	this.notifyControllers();
