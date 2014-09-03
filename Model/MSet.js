@@ -18,6 +18,7 @@ MSet.prototype.apply = function(game) {
 	}
 	this.gamingPiece = game.getNewGP(this.color);
 	this.gamingPiece.place = this.newPlace;
+	game.lastMove = this;
 };
 
 MSet.prototype.confirm = function() {

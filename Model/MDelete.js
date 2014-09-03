@@ -18,6 +18,7 @@ MDelete.prototype.apply = function(game) {
 	}
 	this.gamingPiece = game.getGPFromPlace(this.oldPlace);
 	this.gamingPiece.place = "deleted";
+	game.lastMove = this;
 };
 
 MDelete.prototype.confirm = function() {

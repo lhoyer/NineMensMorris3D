@@ -1,12 +1,9 @@
-function RandomAI() {}
+function AIStrategy() {
 }
 
 //-------------------------------------------------------------------------------------------------
 // place selection
 //-------------------------------------------------------------------------------------------------
-RandomController.prototype.selectBestMove = function() {
-	var moves = this.gameStatus.getAvailableMoves();
-	var m = Math.floor((Math.random() * moves.length));
-	
-	return moves[m];
+AIStrategy.prototype.selectBestMove = function(game) {
+	console.warn("AIStrategy selectBestMove() should be implemented by children");
 };

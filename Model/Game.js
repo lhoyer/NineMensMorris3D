@@ -7,6 +7,7 @@ function Game(raw)
 	this.gp = new Array();
 	this.gamerColor = "white";
 	this.status = "set";
+	this.lastMove;
 
 	if (raw == true)
 		return;
@@ -54,7 +55,11 @@ Game.prototype.changeGamer = function() {
 		this.gamerColor = "white";
 }
 
-Game.prototype.newMorris = function(move) {
+Game.prototype.newMorris = function() {
+	var move = this.lastMove;
+	if (move === undefined)
+		return;
+
 	var newPl = move.newPlace;
 	if (move.newPlace===undefined)
 		return false;
@@ -131,8 +136,27 @@ Game.prototype.getAvailableMoves = function() {
 	return moves;
 }
 
+//do not call out of class
 Game.prototype.evaluate = function() {
+	//get player who does last move
+	var col = this.gamerColor=="white"?"black":"white"
 
+	var myGPs = this.getGPsWithColor(col);
+	var yourGPs = this.getGPsWithOtherColor(col);
+	var evaluation = 0;
+
+	for (var i = 0; i < myGPs.length; i++) {
+		if (myGPs[i].place !== "deleted")
+			evaluation++;
+	}
+	for (var i = 0; i < yourGPs.length; i++) {
+		if (yourGPs[i].place === "deleted")
+			evaluation+=2;
+	}
+	if (this.newMorris())
+		evaluation+=2;
+
+	return evaluation;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -156,7 +180,7 @@ Game.prototype.doMove = function(move) {
 	move.apply(newGame);
 
 	var enterOtherStates = true;
-	if (newGame.newMorris(move)) {
+	if (newGame.newMorris()) {
 		enterOtherStates = false;
 		newGame.status = "delete";
 		if (newGame.getAvailableMoves().length == 0)
@@ -199,6 +223,17 @@ Game.prototype.getGPsWithColor = function(color) {
 		gp = this.gpWhite;
 	else if (color == "black")
 		gp = this.gpBlack;
+	else 
+		console.error("Game getSelectableGP: color unknown");
+	return gp;
+}
+
+Game.prototype.getGPsWithOtherColor = function(color) {
+	var gp;
+	if (color == "white")
+		gp = this.gpBlack;
+	else if (color == "black")
+		gp = this.gpWhite;
 	else 
 		console.error("Game getSelectableGP: color unknown");
 	return gp;
