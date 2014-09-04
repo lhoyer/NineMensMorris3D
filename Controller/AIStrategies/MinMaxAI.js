@@ -2,7 +2,7 @@ MinMaxAI.prototype = Object.create(AIStrategy.prototype);
 MinMaxAI.prototype.constructor = MinMaxAI;
 
 function MinMaxAI() {
-	this.standardDepth = 4;
+	this.standardDepth = 5;
 	this.bestMove;
 }
 
@@ -10,14 +10,17 @@ function MinMaxAI() {
 // place selection
 //-------------------------------------------------------------------------------------------------
 MinMaxAI.prototype.selectBestMove = function(game) {
-	this.miniMax(game,this.standardDepth);	
+	time = 0;
+	this.miniMax(game,this.standardDepth);
+	console.log(""+time);	
 	return this.bestMove;
 };
 
+var time = 0;
 MinMaxAI.prototype.miniMax = function(game,depth) {
-	var moves = game.getAvailableMoves();
+	var moves = game.getAvailableMoves();		
 	var testGame;
-	var bestEvaluation = -1000;
+	var bestEvaluation = -100000;
 	var ev;
 
 	if (depth == 0 || moves.length == 0)
@@ -28,8 +31,9 @@ MinMaxAI.prototype.miniMax = function(game,depth) {
 		ev = - this.miniMax(testGame, depth - 1);
 		if (ev > bestEvaluation) {
 			bestEvaluation = ev;
-			if (depth == this.standardDepth)
+			if (depth == this.standardDepth) {
 				this.bestMove = moves[i];
+			}
 		}
 	}
 	return bestEvaluation;

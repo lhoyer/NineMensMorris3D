@@ -198,8 +198,9 @@ Game.prototype.doMove = function(move) {
 		else
 			newGame.status = "move";
 	}
+					
 	if (newGame.countGamingPieces(newGame.gamerColor) < 3 ||
-		newGame.getAvailableMoves().length==0)
+		newGame.status == "move" && newGame.getAvailableMoves().length==0)
 		newGame.status = "end";
 
 	return newGame;
@@ -243,8 +244,10 @@ Game.prototype.getGPsWithOtherColor = function(color) {
 
 Game.prototype.getGPFromPlace = function(place) {
 	for (var i = 0; i < this.gp.length; i++)
-		if (this.gp[i].place === place)
+		if (this.gp[i].place === place) {
 			return this.gp[i];
+		}
+
 	return undefined;
 }
 
