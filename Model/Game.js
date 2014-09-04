@@ -151,10 +151,12 @@ Game.prototype.evaluate = function() {
 	}
 	for (var i = 0; i < yourGPs.length; i++) {
 		if (yourGPs[i].place === "deleted")
-			evaluation+=2;
+			evaluation++;
 	}
-	if (this.newMorris())
-		evaluation+=2;
+	// if (this.newMorris())
+	// 	evaluation++;
+	// if (this.status == "end")
+	// 	evaluation+=10;
 
 	return evaluation;
 }

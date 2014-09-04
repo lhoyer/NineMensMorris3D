@@ -2,7 +2,7 @@ AlphaBetaAI.prototype = Object.create(AIStrategy.prototype);
 AlphaBetaAI.prototype.constructor = AlphaBetaAI;
 
 function AlphaBetaAI() {
-	this.standardDepth = 5;
+	this.standardDepth = 7;
 	this.bestMove;
 }
 
@@ -10,7 +10,7 @@ function AlphaBetaAI() {
 // place selection
 //-------------------------------------------------------------------------------------------------
 AlphaBetaAI.prototype.selectBestMove = function(game) {
-	this.miniMax(game,this.standardDepth);	
+	this.miniMax(game,this.standardDepth,-10000,10000);	
 	return this.bestMove;
 };
 

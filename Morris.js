@@ -35,7 +35,7 @@ var init = function() {
 
   	match = new Match();
   	controller1 = new Human(match,"white");
-  	controller2 = new AI(match,"black",new AlphaBetaAI());
+  	controller2 = new AI(match,"black",new MinMaxAI());
   	match.registerController(controller1);
   	match.registerController(controller2);
 
@@ -97,7 +97,7 @@ var onResizeWindow = function() {
 };
 
 var render = function () {
-	requestAnimationFrame(render);
+	// requestAnimationFrame(render);
 	renderer.render(scene, camera);
 	// controls.update();
 };

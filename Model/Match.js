@@ -23,10 +23,13 @@ Match.prototype.doMove = function(move) {
 		console.log(this.gameStatus.getAvailableMoves());
 
 	overlay.update(this.gameStatus);
-	this.notifyControllers();
+	render();
+	var _this = this;
+	setTimeout( function() {_this.notifyControllers();}, 0);
 }
 
 Match.prototype.notifyControllers = function() {
+	console.debug("notifyControllers");
 	for (var i = 0; i < this.controllers.length; i++) {
 		this.controllers[i].gameStatusChanged(this.gameStatus);
 	}

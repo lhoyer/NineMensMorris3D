@@ -16,6 +16,7 @@ function Model(file) {
 		callbackThis.updateVisible();
 		//add to scene
 		scene.add(callbackThis.dae);
+		render();
 	});
 }
 
@@ -27,6 +28,7 @@ Model.prototype.setVisible = function(visible) {
 
 Model.prototype.updateVisible = function() {
 	this.dae.visible = this.visible;
+	render();
 };
 
 Model.prototype.setPosition = function(pos) {
@@ -39,6 +41,7 @@ Model.prototype.updatePosition = function() {
 	this.dae.position.x = this.position.x;
 	this.dae.position.y = this.position.y;
 	this.dae.position.z = this.position.z;
+	render();
 };
 
 Model.prototype.setRotation = function(rot) {
@@ -51,6 +54,7 @@ Model.prototype.updateRotation = function() {
 	this.dae.rotation.x = this.rotation.x;
 	this.dae.rotation.y = this.rotation.y;
 	this.dae.rotation.z = this.rotation.z;
+	render();
 };
 
 Model.prototype.setScale = function(scale) {
@@ -63,6 +67,7 @@ Model.prototype.updateScale = function() {
 	this.dae.scale.x = this.scale.x;
 	this.dae.scale.y = this.scale.y;
 	this.dae.scale.z = this.scale.z;
+	render();
 };
 
 // Rotate an object around an arbitrary axis in world space       

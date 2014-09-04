@@ -8,7 +8,7 @@ function AI(match,color,strategy)
 }
 
 //-------------------------------------------------------------------------------------------------
-// place selection
+// move
 //-------------------------------------------------------------------------------------------------
 AI.prototype.doMove = function() {
 	var m = this.strategy.selectBestMove(match.gameStatus);
