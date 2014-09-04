@@ -1,7 +1,5 @@
 function Game(raw) 
 {
-	if (raw === undefined) raw = false;
-
 	this.gpWhite = new Array();
 	this.gpBlack = new Array();
 	this.gp = new Array();
@@ -9,7 +7,16 @@ function Game(raw)
 	this.status = "set";
 	this.lastMove;
 
-	if (raw == true)
+	// create from raw object
+	if (raw !== undefined && raw.gamerColor !== undefined)
+	{
+		this.gamerColor = raw.color;
+		this.status = raw.status;
+		this.lastMove = new Move(raw.lastMove);
+
+	}
+
+	if (raw === true)
 		return;
 
 	var g;
@@ -26,6 +33,17 @@ function Game(raw)
 		this.gp.push(g);
 	}
 }
+
+Game.prototype.rawGame = function() {
+	var raw = {
+		gamerColor : this.gamerColor,
+		status : this.status,
+		lastMove : this.lastMove.raw(),
+		gp : []
+	}
+	for (var i = 0; i < 18; i++)
+		raw.gp.push(this.gp[i].raw());
+};
 
 Game.prototype.clone = function() {
 	var game = new Game(true);

@@ -6,6 +6,12 @@ function GamingPiece(color) {
 	if (color === undefined)
 		return;
 
+	// create from raw object 
+	if (color !== undefined && color.plId !== undefined)
+	{
+
+	}
+
 	this.color = color;
 
 	//load model
@@ -49,3 +55,11 @@ GamingPiece.prototype.clone = function() {
 
 	return gp;
 }
+
+GamingPiece.prototype.raw = function() {
+	var raw = {
+		color = this.color,
+		plId = this.place.id
+	};
+	return raw;
+};

@@ -33,3 +33,7 @@ MSet.prototype.available = function(game) {
 	var g = game.getGPFromPlace(this.newPlace);
 	return (g===undefined);
 };
+
+MSet.prototype.type = function() {
+	return "set";
+}

@@ -45,3 +45,7 @@ MJump.prototype.available = function(game) {
 
 	return true;
 };
+
+MMove.prototype.type = function() {
+	return "jump";
+}

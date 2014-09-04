@@ -47,3 +47,7 @@ MMove.prototype.available = function(game) {
 
 	return true;
 };
+
+MMove.prototype.type = function() {
+	return "move";
+}
