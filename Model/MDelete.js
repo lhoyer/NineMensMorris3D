@@ -17,6 +17,7 @@ MDelete.prototype.apply = function(game) {
 		return;
 	}
 	this.gamingPiece = this.oldPlace.gamingPiece;
+	this.oldPlace.gamingPiece = undefined;
 	this.gamingPiece.place = "deleted";
 };
 
