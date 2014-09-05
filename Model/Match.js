@@ -1,8 +1,6 @@
 //class for combining game model with controllers
 function Match() 
 {
-	this.field = new Field();
-	this.gameHistory = new Array();
 	this.game = new Game();
 	this.controllers = new Array();
 }

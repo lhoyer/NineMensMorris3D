@@ -2,6 +2,7 @@ function Game(raw)
 {
 	if (raw === undefined) raw = false;
 
+	this.field = new Field();
 	this.gpWhite = new Array();
 	this.gpBlack = new Array();
 	this.gp = new Array();
@@ -59,7 +60,7 @@ Game.prototype.getAvailableMoves = function() {
 	var move;
 	var moves = new Array();
 	var gamingPieces = this.getGPsWithColor(this.gamerColor);
-	var places = match.field.places;
+	var places = this.field.places;
 	var plOld, plNew;
 
 	if (this.status == "set")

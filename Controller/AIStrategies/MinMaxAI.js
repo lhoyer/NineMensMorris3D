@@ -11,7 +11,10 @@ function MinMaxAI() {
 //-------------------------------------------------------------------------------------------------
 MinMaxAI.prototype.selectBestMove = function(game) {
 	time = 0;
+		var start = new Date().getTime();
+
 	this.miniMax(game,this.standardDepth);
+	time += new Date().getTime() - start;
 	console.log(""+time);	
 	return this.bestMove;
 };

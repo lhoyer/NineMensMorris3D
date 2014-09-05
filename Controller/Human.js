@@ -58,7 +58,7 @@ Human.prototype.handleSelectedPlace = function(place) {
 // helpers
 //-------------------------------------------------------------------------------------------------
 Human.prototype.placeFromPosition = function(position) {
-	var pl = match.field.places;
+	var pl = match.game.field.places;
 	for (var i = 0; i < pl.length; i++) {
 		if (pl[i].isSelected(position,5))
 			return pl[i];
