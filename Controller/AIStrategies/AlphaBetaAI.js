@@ -2,7 +2,7 @@ AlphaBetaAI.prototype = Object.create(AIStrategy.prototype);
 AlphaBetaAI.prototype.constructor = AlphaBetaAI;
 
 function AlphaBetaAI() {
-	this.standardDepth = 7;
+	this.standardDepth = 8;
 	this.bestMove;
 }
 
@@ -16,7 +16,6 @@ AlphaBetaAI.prototype.selectBestMove = function(game) {
 
 AlphaBetaAI.prototype.miniMax = function(game,depth,alpha,beta) {
 	var moves = game.getAvailableMoves();
-	var testGame;
 	var bestEvaluation = alpha;
 	var ev;
 
@@ -24,8 +23,9 @@ AlphaBetaAI.prototype.miniMax = function(game,depth,alpha,beta) {
 		return game.evaluate();
 
 	for (var i = 0; i < moves.length; i++) {
-		testGame = game.doMove(moves[i]);
-		ev = - this.miniMax(testGame, depth - 1, -beta, -bestEvaluation);
+		game.doMove(moves[i]);
+		ev = - this.miniMax(game, depth - 1, -beta, -bestEvaluation);
+		game.undoLastMove();
 		if (ev > bestEvaluation) {
 			bestEvaluation = ev;
 			if (bestEvaluation >= beta)
