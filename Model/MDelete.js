@@ -44,3 +44,7 @@ MDelete.prototype.available = function(game) {
 		return false;
 	return true;
 };
+
+MDelete.prototype.type = function() {
+	return "delete";
+}

@@ -38,3 +38,7 @@ MSet.prototype.available = function(game) {
 	var g = this.newPlace.gamingPiece;
 	return (g===undefined);
 };
+
+MSet.prototype.type = function() {
+	return "set";
+}
