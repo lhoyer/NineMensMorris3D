@@ -18,10 +18,12 @@ MSet.prototype.apply = function(game) {
 	}
 	this.gamingPiece = game.getNewGP(this.color);
 	this.gamingPiece.place = this.newPlace;
+	this.newPlace.gamingPiece = this.gamingPiece;
 };
 
 MSet.prototype.undo = function(game) {
 	this.gamingPiece.place = "new";	
+	this.newPlace.gamingPiece = undefined;
 };
 
 MSet.prototype.confirm = function() {
@@ -33,6 +35,6 @@ MSet.prototype.confirm = function() {
 };
 
 MSet.prototype.available = function(game) {	
-	var g = game.getGPFromPlace(this.newPlace);
+	var g = this.newPlace.gamingPiece;
 	return (g===undefined);
 };

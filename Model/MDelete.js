@@ -16,12 +16,13 @@ MDelete.prototype.apply = function(game) {
 		console.warn("Move apply: move isn't available");
 		return;
 	}
-	this.gamingPiece = game.getGPFromPlace(this.oldPlace);
+	this.gamingPiece = this.oldPlace.gamingPiece;
 	this.gamingPiece.place = "deleted";
 };
 
 MDelete.prototype.undo = function(game) {
 	this.gamingPiece.place = this.oldPlace;	
+	this.oldPlace.gamingPiece = this.gamingPiece;
 };
 
 MDelete.prototype.confirm = function() {
@@ -33,7 +34,7 @@ MDelete.prototype.confirm = function() {
 };
 
 MDelete.prototype.available = function(game) {	
-	var g = game.getGPFromPlace(this.oldPlace);
+	var g = this.oldPlace.gamingPiece;
 	if (g===undefined)
 		return false;
 	if (g.color === this.color)

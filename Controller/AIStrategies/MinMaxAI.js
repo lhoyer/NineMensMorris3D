@@ -2,7 +2,7 @@ MinMaxAI.prototype = Object.create(AIStrategy.prototype);
 MinMaxAI.prototype.constructor = MinMaxAI;
 
 function MinMaxAI() {
-	this.standardDepth = 3;
+	this.standardDepth = 5;
 	this.bestMove;
 }
 
@@ -11,8 +11,7 @@ function MinMaxAI() {
 //-------------------------------------------------------------------------------------------------
 MinMaxAI.prototype.selectBestMove = function(game) {
 	time = 0;
-		var start = new Date().getTime();
-
+	var start = new Date().getTime();
 	this.miniMax(game,this.standardDepth);
 	time += new Date().getTime() - start;
 	console.log(""+time);	

@@ -19,12 +19,16 @@ MJump.prototype.apply = function(game) {
 		console.warn("Move apply: move isn't available");
 		return;
 	}
-	this.gamingPiece = game.getGPFromPlace(this.oldPlace);
+	this.gamingPiece = this.oldPlace.gamingPiece;
+	this.oldPlace.gamingPiece = undefined;
 	this.gamingPiece.place = this.newPlace;
+	this.newPlace.gamingPiece = this.gamingPiece;
 };
 
 MJump.prototype.undo = function(game) {
 	this.gamingPiece.place = this.oldPlace;	
+	this.oldPlace.gamingPiece = this.gamingPiece;
+	this.newPlace.gamingPiece = undefined;
 };
 
 MJump.prototype.confirm = function() {
@@ -38,12 +42,12 @@ MJump.prototype.confirm = function() {
 MJump.prototype.available = function(game) {	
 	if (this.oldPlace === undefined || this.newPlace === undefined)
 		return false;
-	var g = game.getGPFromPlace(this.oldPlace);
+	var g = this.oldPlace.gamingPiece;
 	if (g === undefined)
 		return false;
 	if (g.color !== this.color)
 		return false;
-	if (game.getGPFromPlace(this.newPlace) !== undefined)
+	if (this.newPlace.gamingPiece !== undefined)
 		return false;
 
 	return true;

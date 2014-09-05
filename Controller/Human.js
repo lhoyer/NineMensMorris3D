@@ -104,7 +104,7 @@ Human.prototype.handleMouseDown = function(event) {
 	this.oldPlace = this.placeFromPosition(this.mouseCoordinate(event));
 	if (this.oldPlace === undefined)
 		return; 
-	var gp = this.match.game.getGPFromPlace(this.oldPlace)
+	var gp = this.oldPlace.gamingPiece;
 	if (gp === undefined)
 		return;
 

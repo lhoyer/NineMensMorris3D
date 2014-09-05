@@ -46,7 +46,7 @@ Game.prototype.newMorris = function() {
 	var newPl = move.newPlace;
 	if (move.newPlace===undefined)
 		return false;
-	var gp = this.getGPFromPlace(move.newPlace);
+	var gp = move.newPlace.gamingPiece;
 	if (this.gpInMorris(gp))
 		return true;
 	else
@@ -233,15 +233,6 @@ Game.prototype.getGPsWithOtherColor = function(color) {
 	return gp;
 }
 
-Game.prototype.getGPFromPlace = function(place) {
-	for (var i = 0; i < this.gp.length; i++)
-		if (this.gp[i].place === place) {
-			return this.gp[i];
-		}
-
-	return undefined;
-}
-
 Game.prototype.gpInMorris = function(gp) {
 	var pl = gp.place;
 	var col = gp.color;
@@ -249,7 +240,7 @@ Game.prototype.gpInMorris = function(gp) {
 	for (var i = 0; i < pl.morrises.length; i++) {
 		var b = 0;
 		for (var j = 0; j < pl.morrises[i].length; j++) {
-			var testGP = this.getGPFromPlace(pl.morrises[i][j]);
+			var testGP = pl.morrises[i][j].gamingPiece;
 			if (testGP !== undefined && col === testGP.color)
 				b++; 
 		}

@@ -1,6 +1,8 @@
 function Place(id) {
 	this.id = id;
 
+	this.gamingPiece = undefined;
+
 	//list connections
 	this.connections = [];
 
