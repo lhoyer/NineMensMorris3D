@@ -10,18 +10,18 @@ function AI(match,color,strategy)
 //-------------------------------------------------------------------------------------------------
 // move
 //-------------------------------------------------------------------------------------------------
-AI.prototype.doMove = function() {
-	var m = this.strategy.selectBestMove(match.gameStatus);
+AI.prototype.doMove = function(game) {
+	var m = this.strategy.selectBestMove(game);
 	match.doMove(m);
 };
 
 //-------------------------------------------------------------------------------------------------
 // helpers
 //-------------------------------------------------------------------------------------------------
-AI.prototype.gameStatusChanged = function(game) {
-	this.gameStatus = game;
-	if (this.gameStatus.status !== "end") {
-		if (this.gameStatus.gamerColor === this.color)
-			this.doMove();
+AI.prototype.gameChanged = function(game) {
+	this.game = game;
+	if (this.game.status !== "end") {
+		if (this.game.gamerColor === this.color)
+			this.doMove(game);
 	}
 };

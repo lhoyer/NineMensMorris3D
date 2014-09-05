@@ -1,37 +1,36 @@
+//class for combining game model with controllers
 function Match() 
 {
 	this.field = new Field();
 	this.gameHistory = new Array();
-	this.gameStatus = new Game();
-	this.gameHistory.push(this.gameStatus);
+	this.game = new Game();
 	this.controllers = new Array();
 }
 
 Match.prototype.doMove = function(move) {
-	var newGame = this.gameStatus.doMove(move);
-	if (newGame === undefined) {
+	var success = this.game.doMove(move);
+	if (success === false) {
 		overlay.help.textContent = "Move isn't available";
 		return;
 	}
 	else
 		overlay.help.textContent = "";
-	this.gameStatus = newGame;
-	this.gameHistory.push(this.gameStatus);
 
 	move.confirm();
 	if (Resources.debugAvailableMoves)
-		console.log(this.gameStatus.getAvailableMoves());
+		console.log(this.game.getAvailableMoves());
 
-	overlay.update(this.gameStatus);
+	overlay.update(this.game);
 	render();
 	var _this = this;
-	setTimeout( function() {_this.notifyControllers();}, 0);
+	// setTimeout( function() {_this.notifyControllers();}, 0);
+	this.notifyControllers();
 }
 
 Match.prototype.notifyControllers = function() {
 	console.debug("notifyControllers");
 	for (var i = 0; i < this.controllers.length; i++) {
-		this.controllers[i].gameStatusChanged(this.gameStatus);
+		this.controllers[i].gameChanged(this.game);
 	}
 };
 

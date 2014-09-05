@@ -21,7 +21,10 @@ MJump.prototype.apply = function(game) {
 	}
 	this.gamingPiece = game.getGPFromPlace(this.oldPlace);
 	this.gamingPiece.place = this.newPlace;
-	game.lastMove = this;
+};
+
+MJump.prototype.undo = function(game) {
+	this.gamingPiece.place = this.oldPlace;	
 };
 
 MJump.prototype.confirm = function() {

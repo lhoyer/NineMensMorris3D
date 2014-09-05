@@ -25,7 +25,7 @@ Human.prototype.selectPlace = function(position) {
 }
 
 Human.prototype.handleSelectedPlace = function(place) {
-	var status = this.gameStatus.status;
+	var status = this.game.status;
 	if (status == "set") {
 		var move = new MSet(place,this.color);
 		match.doMove(move);
@@ -65,8 +65,8 @@ Human.prototype.placeFromPosition = function(position) {
 	}
 };
 
-Human.prototype.gameStatusChanged = function(game) {
-	this.gameStatus = game;
+Human.prototype.gameChanged = function(game) {
+	this.game = game;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ Human.prototype.gameStatusChanged = function(game) {
 //-------------------------------------------------------------------------------------------------
 Human.prototype.handleMouseUp = function(event) {
 	this.previewGP.gpModel.dae.visible = false;
-	if (this.gameStatus.gamerColor !== this.color)
+	if (this.game.gamerColor !== this.color)
 		return false;
 
 	var pos = this.mouseCoordinate(event);
@@ -95,16 +95,16 @@ Human.prototype.handleMouseUp = function(event) {
 }
 
 Human.prototype.handleMouseDown = function(event) {
-	if (this.gameStatus.gamerColor !== this.color)
+	if (this.game.gamerColor !== this.color)
 		return false;
-	if (this.gameStatus.status !== "move" && 
-		this.gameStatus.status !== "jump")
+	if (this.game.status !== "move" && 
+		this.game.status !== "jump")
 		return false;
 
 	this.oldPlace = this.placeFromPosition(this.mouseCoordinate(event));
 	if (this.oldPlace === undefined)
 		return; 
-	var gp = this.match.gameStatus.getGPFromPlace(this.oldPlace)
+	var gp = this.match.game.getGPFromPlace(this.oldPlace)
 	if (gp === undefined)
 		return;
 

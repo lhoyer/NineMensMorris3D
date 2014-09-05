@@ -35,6 +35,7 @@ var init = function() {
 
   	match = new Match();
   	controller1 = new Human(match,"white");
+  	// controller2 = new Human(match,"black");
   	controller2 = new AI(match,"black",new MinMaxAI());
   	match.registerController(controller1);
   	match.registerController(controller2);

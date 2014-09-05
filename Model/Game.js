@@ -7,7 +7,7 @@ function Game(raw)
 	this.gp = new Array();
 	this.gamerColor = "white";
 	this.status = "set";
-	this.lastMove;
+	this.history = [];
 
 	if (raw == true)
 		return;
@@ -27,24 +27,6 @@ function Game(raw)
 	}
 }
 
-Game.prototype.clone = function() {
-	var game = new Game(true);
-	var g;
-
-	for (i = 0; i<9; i++) {
-		g = this.gpWhite[i].clone();
-		game.gpWhite.push(g);
-		game.gp.push(g);
-		g = this.gpBlack[i].clone();
-		game.gpBlack.push(g);
-		game.gp.push(g);
-	}
-	game.gamerColor = this.gamerColor;
-	game.status = this.status;
-
-	return game;	
-};
-
 //-------------------------------------------------------------------------------------------------
 // Game Status
 //-------------------------------------------------------------------------------------------------
@@ -56,7 +38,7 @@ Game.prototype.changeGamer = function() {
 }
 
 Game.prototype.newMorris = function() {
-	var move = this.lastMove;
+	var move = this.history[this.history.length-1].move;
 	if (move === undefined)
 		return;
 
@@ -168,42 +150,50 @@ Game.prototype.doMove = function(move) {
 	if (confirm===undefined) confirm = false;
 	if (move===undefined) {
 		console.error("Game doMove: parameter move undefined");
-		return;
+		return false;
 	}
 	if (!(move instanceof Move)) {
 		console.error("Game doMove: parameter move doesn't inherit from Move");
-		return;
+		return false;
 	}
 	if (!move.available(this)) {
-		return;
+		return false;
 	}
 
-	var newGame = this.clone();
-	move.apply(newGame);
+	this.history.push({move:move,status:this.status,color:this.gamerColor});
+	move.apply(this);
 
 	var enterOtherStates = true;
-	if (newGame.newMorris()) {
+	if (this.newMorris()) {
 		enterOtherStates = false;
-		newGame.status = "delete";
-		if (newGame.getAvailableMoves().length == 0)
+		this.status = "delete";
+		if (this.getAvailableMoves().length == 0)
 			enterOtherStates = true;
 	}
 	if (enterOtherStates)
 	{
-		newGame.changeGamer();
-		if (newGame.getNewGP(newGame.gamerColor) !== undefined)
-			newGame.status = "set";
-		else if (newGame.countGamingPieces(newGame.gamerColor) < 4)
-			newGame.status = "jump";
+		this.changeGamer();
+		if (this.getNewGP(this.gamerColor) !== undefined)
+			this.status = "set";
+		else if (this.countGamingPieces(this.gamerColor) < 4)
+			this.status = "jump";
 		else
-			newGame.status = "move";
+			this.status = "move";
 	}
 					
-	if (newGame.countGamingPieces(newGame.gamerColor) < 3 ||
-		newGame.status == "move" && newGame.getAvailableMoves().length==0)
-		newGame.status = "end";
+	if (this.countGamingPieces(this.gamerColor) < 3 ||
+		this.status == "move" && this.getAvailableMoves().length==0)
+		this.status = "end";
 
-	return newGame;
+	return true;
+}
+
+Game.prototype.undoLastMove = function() {
+	var last = this.history[this.history.length-1];
+	last.move.undo(this);
+	this.status = last.status;
+	this.gamerColor = last.color;
+	this.history.splice(this.history.length-1,1);
 }
 
 

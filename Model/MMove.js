@@ -21,7 +21,10 @@ MMove.prototype.apply = function(game) {
 	}
 	this.gamingPiece = game.getGPFromPlace(this.oldPlace);
 	this.gamingPiece.place = this.newPlace;
-	game.lastMove = this;
+};
+
+MMove.prototype.undo = function(game) {
+	this.gamingPiece.place = this.oldPlace;	
 };
 
 MMove.prototype.confirm = function() {
