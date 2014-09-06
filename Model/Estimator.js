@@ -4,16 +4,27 @@ function Estimator (game) {
 
 Estimator.prototype.evaluate = function() {
 	//get player who does last move
-	var col = this.game.gamerColor=="white"?"black":"white";
-	var oppCol = this.game.gamerColor=="white"?"white":"black";
+	var col = this.game.gamerColor;
+	var oppCol = this.game.gamerColor=="white"?"black":"white";
+	var morrisInfo = this.morrisInfo(col);
+	var oppMorrisInfo = this.morrisInfo(oppCol);
 
-	var evaluation = this.gpNumber(col) - this.gpNumber(oppCol);
+	if (this.game.status === "set") {
+		var newMorrisNum = this.newMorris(col) - this.newMorris(oppCol);
+		var morrisNum = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
+		var blockedGPs = this.blockedOpponentGPsNum(col) - this.blockedOpponentGPsNum(oppCol);
+		var gpNum = this.gpNumber(col) - this.gpNumber(oppCol);
+
+	}
+		var gpNum = this.gpNumber(col) - this.gpNumber(oppCol);
+
+	evaluation = gpNum;
 
 	return evaluation;
 };
 
-Estimator.prototype.newMorris = function() {
-	return this.game.newMorris();
+Estimator.prototype.newMorris = function(color) {
+	return this.game.gamerColor === color && this.game.newMorris();
 };
 
 Estimator.prototype.gpNumber = function(color) {
@@ -119,5 +130,5 @@ Estimator.prototype.doubleMorrisNum = function(color) {
 };
 
 Estimator.prototype.win = function(color) {
-	return this.game.gamerColor !== color && this.game.status === "end";
+	return this.game.gamerColor === color && this.game.status === "end";
 };

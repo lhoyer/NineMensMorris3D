@@ -7,6 +7,7 @@ function Game(raw)
 	this.gamerColor = "white";
 	this.status = "set";
 	this.history = [];
+	this.evaluation = 0;
 	this.estimator = new Estimator(this);
 
 	// create from raw object
@@ -148,8 +149,7 @@ Game.prototype.getAvailableMoves = function() {
 
 //do not call out of class
 Game.prototype.evaluate = function() {
-	var evaluation = this.estimator.evaluate();
-	return evaluation;
+	return this.evaluation;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -172,14 +172,22 @@ Game.prototype.doMove = function(move) {
 	this.history.push({move:move,status:this.status,color:this.gamerColor});
 	move.apply(this);
 
+	this.changeGamer();
+	if (this.countGamingPieces(this.gamerColor) < 3 ||
+		this.status == "move" && this.getAvailableMoves().length==0)
+		this.status = "end";
+	this.changeGamer();
+
+	this.evaluation = this.estimator.evaluate();
+
 	var enterOtherStates = true;
-	if (this.newMorris()) {
+	if (this.status !== "end" && this.newMorris()) {
 		enterOtherStates = false;
 		this.status = "delete";
 		if (this.getAvailableMoves().length == 0)
 			enterOtherStates = true;
 	}
-	if (enterOtherStates)
+	if (this.status !== "end" && enterOtherStates)
 	{
 		this.changeGamer();
 		if (this.getNewGP(this.gamerColor) !== undefined)
@@ -189,10 +197,6 @@ Game.prototype.doMove = function(move) {
 		else
 			this.status = "move";
 	}
-					
-	if (this.countGamingPieces(this.gamerColor) < 3 ||
-		this.status == "move" && this.getAvailableMoves().length==0)
-		this.status = "end";
 
 	return true;
 }

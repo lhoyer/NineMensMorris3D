@@ -35,9 +35,9 @@ var init = function() {
 
   	match = new Match();
   	controller1 = new Human(match,"white");
-  	controller2 = new Human(match,"black");
+  	// controller2 = new Human(match,"black");
   	// controller1 = new AI(match,"white",new AlphaBetaAI());
-  	// controller2 = new AI(match,"black",new AlphaBetaAI());
+  	controller2 = new AI(match,"black",new AlphaBetaAI());
   	match.registerController(controller1);
   	match.registerController(controller2);
   	match.start();
@@ -97,6 +97,7 @@ var onResizeWindow = function() {
     renderer.setSize(WIDTH, HEIGHT);
     camera.aspect = WIDTH / HEIGHT;
     camera.updateProjectionMatrix();
+    render();
 };
 
 var render = function () {
