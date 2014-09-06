@@ -11,6 +11,8 @@ Match.prototype.start = function() {
 
 Match.prototype.doMove = function(move) {
 	var success = this.game.doMove(move);
+	console.debug("Evaluation " + (this.game.gamerColor==="white"?"black":"white") + ": " + this.game.evaluation);
+
 	if (success === false) {
 		overlay.help.textContent = "Move isn't available";
 		return;
@@ -31,7 +33,6 @@ Match.prototype.doMove = function(move) {
 }
 
 Match.prototype.notifyControllers = function() {
-	console.debug("notifyControllers");
 	for (var i = 0; i < this.controllers.length; i++) {
 		if (this.controllers[i].gameChanged(this.game))
 			break;

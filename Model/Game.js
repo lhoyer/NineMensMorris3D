@@ -59,7 +59,7 @@ Game.prototype.raw = function() {
 // Game Status
 //-------------------------------------------------------------------------------------------------
 Game.prototype.changeGamer = function() {
-	if (this.gamerColor=="white")
+	if (this.gamerColor==="white")
 		this.gamerColor = "black";
 	else
 		this.gamerColor = "white";
@@ -174,8 +174,10 @@ Game.prototype.doMove = function(move) {
 
 	this.changeGamer();
 	if (this.countGamingPieces(this.gamerColor) < 3 ||
-		this.status == "move" && this.getAvailableMoves().length==0)
+		this.status == "move" && this.getAvailableMoves().length==0) {
+		this.lastStatus = this.status;
 		this.status = "end";
+	}
 	this.changeGamer();
 
 	this.evaluation = this.estimator.evaluate();
@@ -183,6 +185,7 @@ Game.prototype.doMove = function(move) {
 	var enterOtherStates = true;
 	if (this.status !== "end" && this.newMorris()) {
 		enterOtherStates = false;
+		this.lastStatus = this.status;
 		this.status = "delete";
 		if (this.getAvailableMoves().length == 0)
 			enterOtherStates = true;

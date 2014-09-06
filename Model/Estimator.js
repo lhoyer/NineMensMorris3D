@@ -5,20 +5,47 @@ function Estimator (game) {
 Estimator.prototype.evaluate = function() {
 	//get player who does last move
 	var col = this.game.gamerColor;
-	var oppCol = this.game.gamerColor=="white"?"black":"white";
+	var oppCol = this.game.gamerColor==="white"?"black":"white";
 	var morrisInfo = this.morrisInfo(col);
 	var oppMorrisInfo = this.morrisInfo(oppCol);
+	var evaluation = 0;
 
-	if (this.game.status === "set") {
-		var newMorrisNum = this.newMorris(col) - this.newMorris(oppCol);
-		var morrisNum = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
-		var blockedGPs = this.blockedOpponentGPsNum(col) - this.blockedOpponentGPsNum(oppCol);
-		var gpNum = this.gpNumber(col) - this.gpNumber(oppCol);
+	var status = this.game.status;
+	if (status === "delete" || status === "end")
+		status = this.game.lastStatus;
 
+	if (status === "set") {
+		var r = [];
+		r[0] = this.newMorris(col) - this.newMorris(oppCol);
+		r[1] = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
+		r[2] = this.blockedOpponentGPsNum(col) - this.blockedOpponentGPsNum(oppCol);
+		r[3] = this.gpNumber(col) - this.gpNumber(oppCol);
+		r[4] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
+		r[5] = morrisInfo.closableMorrisNum-1 - oppMorrisInfo.closableMorrisNum+1;
+		for (var i = 0; i < r.length; i++)
+			if (r[i]!==undefined) evaluation += r[i]*Resources.cset[i];
 	}
-		var gpNum = this.gpNumber(col) - this.gpNumber(oppCol);
-
-	evaluation = gpNum;
+	else if (status === "move") {
+		var r = [];
+		r[0] = this.newMorris(col) - this.newMorris(oppCol);
+		r[1] = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
+		r[2] = this.blockedOpponentGPsNum(col) - this.blockedOpponentGPsNum(oppCol);
+		r[3] = this.gpNumber(col) - this.gpNumber(oppCol);
+		r[4] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
+		r[5] = this.doubleMorrisNum(col) - this.doubleMorrisNum(oppCol);
+		r[6] = this.win(col) - this.win(oppCol);
+		for (var i = 0; i < r.length; i++)
+			if (r[i]!==undefined) evaluation += r[i]*Resources.cmove[i];
+	}
+	else if (status === "jump") {
+		var r = [];
+		r[0] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
+		r[1] = morrisInfo.closableMorrisNum-1 - oppMorrisInfo.closableMorrisNum+1;
+		r[3] = this.newMorris(col) - this.newMorris(oppCol);
+		r[4] = this.win(col) - this.win(oppCol);
+		for (var i = 0; i < r.length; i++)
+			if (r[i]!==undefined) evaluation += r[i]*Resources.cjump[i];
+	}
 
 	return evaluation;
 };
