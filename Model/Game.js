@@ -7,6 +7,7 @@ function Game(raw)
 	this.gamerColor = "white";
 	this.status = "set";
 	this.history = [];
+	this.estimator = new Estimator(this);
 
 	// create from raw object
 	if (raw !== undefined && raw.gamerColor !== undefined)
@@ -63,13 +64,14 @@ Game.prototype.changeGamer = function() {
 		this.gamerColor = "white";
 }
 
-Game.prototype.newMorris = function() {
-	var move = this.history[this.history.length-1].move;
+Game.prototype.newMorris = function(move) {
+	if (move === undefined)
+		move = this.history[this.history.length-1].move;
 	if (move === undefined)
 		return;
 
 	var newPl = move.newPlace;
-	if (move.newPlace===undefined)
+	if (move.newPlace===undefined || move.newPlace.gamingPiece===undefined)
 		return false;
 	var gp = move.newPlace.gamingPiece;
 	if (this.gpInMorris(gp))
@@ -146,26 +148,7 @@ Game.prototype.getAvailableMoves = function() {
 
 //do not call out of class
 Game.prototype.evaluate = function() {
-	//get player who does last move
-	var col = this.gamerColor=="white"?"black":"white"
-
-	var myGPs = this.getGPsWithColor(col);
-	var yourGPs = this.getGPsWithOtherColor(col);
-	var evaluation = 0;
-
-	for (var i = 0; i < myGPs.length; i++) {
-		if (myGPs[i].place !== "deleted")
-			evaluation++;
-	}
-	for (var i = 0; i < yourGPs.length; i++) {
-		if (yourGPs[i].place === "deleted")
-			evaluation++;
-	}
-	// if (this.newMorris())
-	// 	evaluation++;
-	// if (this.status == "end")
-	// 	evaluation+=10;
-
+	var evaluation = this.estimator.evaluate();
 	return evaluation;
 }
 

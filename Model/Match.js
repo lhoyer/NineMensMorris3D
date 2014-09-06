@@ -26,7 +26,7 @@ Match.prototype.doMove = function(move) {
 	render();
 	var _this = this;
 	
-	setTimeout( function() {_this.notifyControllers();}, 1000);
+	setTimeout( function() {_this.notifyControllers();}, 100);
 	//this.notifyControllers();
 }
 

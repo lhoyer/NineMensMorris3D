@@ -66,9 +66,7 @@ Human.prototype.placeFromPosition = function(position) {
 };
 
 Human.prototype.gameChanged = function(game) {
-	var accept = game.gamerColor === this.color;
 	this.game = game;
-	return accept;
 };
 
 //-------------------------------------------------------------------------------------------------
