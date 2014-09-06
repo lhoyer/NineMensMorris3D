@@ -10,8 +10,13 @@ function AI(match,color,strategy)
 //-------------------------------------------------------------------------------------------------
 // move
 //-------------------------------------------------------------------------------------------------
+var time = 0;
 AI.prototype.doMove = function(game) {
+	time = 0;
+	var start = new Date().getTime();
 	var m = this.strategy.selectBestMove(game);
+	time += new Date().getTime() - start;
+	console.log(""+time);	
 	match.doMove(m);
 };
 
@@ -19,9 +24,11 @@ AI.prototype.doMove = function(game) {
 // helpers
 //-------------------------------------------------------------------------------------------------
 AI.prototype.gameChanged = function(game) {
+	var accept = game.gamerColor === this.color;
 	this.game = game;
 	if (this.game.status !== "end") {
-		if (this.game.gamerColor === this.color)
+		if (accept)
 			this.doMove(game);
 	}
+	return accept;
 };

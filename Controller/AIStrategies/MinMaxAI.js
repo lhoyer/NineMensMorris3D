@@ -10,15 +10,10 @@ function MinMaxAI() {
 // place selection
 //-------------------------------------------------------------------------------------------------
 MinMaxAI.prototype.selectBestMove = function(game) {
-	time = 0;
-	var start = new Date().getTime();
 	this.miniMax(game,this.standardDepth);
-	time += new Date().getTime() - start;
-	console.log(""+time);	
 	return this.bestMove;
 };
 
-var time = 0;
 MinMaxAI.prototype.miniMax = function(game,depth) {
 	var moves = game.getAvailableMoves();		
 	var bestEvaluation = -100000;
