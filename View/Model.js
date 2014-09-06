@@ -16,7 +16,7 @@ function Model(file) {
 		callbackThis.updateVisible();
 		//add to scene
 		scene.add(callbackThis.dae);
-		render();
+		setTimeout( function() {render();}, 100);
 	});
 }
 

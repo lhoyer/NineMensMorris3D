@@ -21,8 +21,9 @@ Match.prototype.doMove = function(move) {
 	overlay.update(this.game);
 	render();
 	var _this = this;
-	// setTimeout( function() {_this.notifyControllers();}, 0);
-	this.notifyControllers();
+	
+	setTimeout( function() {_this.notifyControllers();}, 0);
+	//this.notifyControllers();
 }
 
 Match.prototype.notifyControllers = function() {
