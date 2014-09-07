@@ -47,6 +47,9 @@ Estimator.prototype.evaluate = function() {
 			if (r[i]!==undefined) evaluation += r[i]*Resources.cjump[i];
 	}
 
+
+	// evaluation = this.gpNumber(col) - this.gpNumber(oppCol);
+
 	return evaluation;
 };
 

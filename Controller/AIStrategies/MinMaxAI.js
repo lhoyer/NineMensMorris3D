@@ -2,7 +2,7 @@ MinMaxAI.prototype = Object.create(AIStrategy.prototype);
 MinMaxAI.prototype.constructor = MinMaxAI;
 
 function MinMaxAI() {
-	this.standardDepth = 5;
+	this.standardDepth = 4;
 	this.bestMove;
 }
 
@@ -24,7 +24,11 @@ MinMaxAI.prototype.miniMax = function(game,depth) {
 
 	for (var i = 0; i < moves.length; i++) {
 		game.doMove(moves[i]);
-		ev = - this.miniMax(game, depth - 1);
+		if (game.status === "delete") {
+			ev = this.miniMax(game, depth - 1);
+		}
+		else
+			ev = - this.miniMax(game, depth - 1);
 		game.undoLastMove();
 		if (ev > bestEvaluation) {
 			bestEvaluation = ev;

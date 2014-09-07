@@ -180,8 +180,6 @@ Game.prototype.doMove = function(move) {
 	}
 	this.changeGamer();
 
-	this.evaluation = this.estimator.evaluate();
-
 	var enterOtherStates = true;
 	if (this.status !== "end" && this.newMorris()) {
 		enterOtherStates = false;
@@ -200,6 +198,10 @@ Game.prototype.doMove = function(move) {
 		else
 			this.status = "move";
 	}
+
+	// estimate after gamer change, because the estimation in minmax is done in leaf after gamer change
+	// so it considers the gamer change
+	this.evaluation = this.estimator.evaluate();
 
 	return true;
 }
