@@ -11,7 +11,7 @@ Estimator.prototype.evaluate = function() {
 	var evaluation = 0;
 
 	var status = this.game.status;
-	if (status === "delete" || status === "end")
+	if (status === "delete")
 		status = this.game.lastStatus;
 
 	if (status === "set") {
@@ -41,11 +41,15 @@ Estimator.prototype.evaluate = function() {
 		var r = [];
 		r[0] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
 		r[1] = morrisInfo.closableMorrisNum-1 - oppMorrisInfo.closableMorrisNum+1;
-		r[3] = this.newMorris(col) - this.newMorris(oppCol);
-		r[4] = this.win(col) - this.win(oppCol);
+		r[2] = this.newMorris(col) - this.newMorris(oppCol);
+		r[3] = this.win(col) - this.win(oppCol);
 		for (var i = 0; i < r.length; i++)
 			if (r[i]!==undefined) evaluation += r[i]*Resources.cjump[i];
 	}
+	else if (status === "end") {
+		evaluation = this.win(col) - this.win(oppCol);
+	}
+
 
 
 	// evaluation = this.gpNumber(col) - this.gpNumber(oppCol);
