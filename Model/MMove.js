@@ -55,6 +55,10 @@ MMove.prototype.available = function(game) {
 	return true;
 };
 
+MMove.prototype.toString = function() {
+	return "MMove " + this.color + ": " + this.oldPlace.id + " -> " + this.newPlace.id; 
+};
+
 MMove.prototype.type = function() {
 	return "move";
 }

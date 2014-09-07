@@ -35,11 +35,11 @@ Match.prototype.start = function() {
 Match.prototype.doMove = function(move) {
 	var success = this.game.doMove(move);
 	var col;
-	if (this.game.status === "delete")
-		col = this.game.gamerColor;
-	else
-		col = this.game.gamerColor==="white"?"black":"white";
-	console.debug("Evaluation " + col + ": " + this.game.evaluation);
+	// if (this.game.status === "delete")
+	// 	col = this.game.gamerColor;
+	// else
+	// 	col = this.game.gamerColor==="white"?"black":"white";
+	console.debug("Evaluation " + this.game.gamerColor + ": " + this.game.evaluation);
 
 	if (success === false) {
 		overlay.help.textContent = "Move isn't available";

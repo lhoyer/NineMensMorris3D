@@ -33,5 +33,6 @@ var Resources = {
 	cjump:[10,1,16,1190],
 
 	debugSelection:false,
-	debugAvailableMoves:false
+	debugAvailableMoves:false,
+	debugMiniMax:true
 };

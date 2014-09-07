@@ -39,6 +39,10 @@ MSet.prototype.available = function(game) {
 	return (g===undefined);
 };
 
+MSet.prototype.toString = function() {
+	return "MSet " + this.color + ": " + this.newPlace.id; 
+};
+
 MSet.prototype.type = function() {
 	return "set";
 }

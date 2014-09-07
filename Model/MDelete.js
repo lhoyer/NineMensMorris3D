@@ -45,6 +45,10 @@ MDelete.prototype.available = function(game) {
 	return true;
 };
 
+MDelete.prototype.toString = function() {
+	return "MDelete " + this.color + ": " + this.oldPlace.id; 
+};
+
 MDelete.prototype.type = function() {
 	return "delete";
 }

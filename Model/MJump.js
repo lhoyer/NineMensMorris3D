@@ -53,6 +53,10 @@ MJump.prototype.available = function(game) {
 	return true;
 };
 
+MJump.prototype.toString = function() {
+	return "MJump " + this.color + ": " + this.oldPlace.id + " -> " + this.newPlace.id; 
+};
+
 MMove.prototype.type = function() {
 	return "jump";
 }
