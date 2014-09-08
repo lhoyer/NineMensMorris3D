@@ -25,6 +25,7 @@ MinMaxAI.prototype.miniMax = function(game,depth,log) {
 
 	if (depth == 0 || moves.length == 0) {
 		ev = game.evaluate();
+		log["ev"] = game.estimator.log;
 		return ev;
 	}
 

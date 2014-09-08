@@ -1,5 +1,6 @@
 function Estimator (game) {
 	this.game = game;
+	this.log;
 }
 
 Estimator.prototype.evaluate = function() {
@@ -9,24 +10,24 @@ Estimator.prototype.evaluate = function() {
 	var morrisInfo = this.morrisInfo(col);
 	var oppMorrisInfo = this.morrisInfo(oppCol);
 	var evaluation = 0;
+	var r = [], c;
+	this.log = "";
 
 	var status = this.game.status;
 	if (status === "delete")
 		status = this.game.lastStatus;
 
 	if (status === "set") {
-		var r = [];
+		c = Resources.cset;
 		r[0] = this.newMorris(col) - this.newMorris(oppCol);
 		r[1] = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
 		r[2] = this.blockedOpponentGPsNum(col) - this.blockedOpponentGPsNum(oppCol);
 		r[3] = this.gpNumber(col) - this.gpNumber(oppCol);
 		r[4] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
 		r[5] = morrisInfo.closableMorrisNum-1 - oppMorrisInfo.closableMorrisNum+1;
-		for (var i = 0; i < r.length; i++)
-			if (r[i]!==undefined) evaluation += r[i]*Resources.cset[i];
 	}
 	else if (status === "move") {
-		var r = [];
+		c = Resources.cmove;
 		r[0] = this.newMorris(col) - this.newMorris(oppCol);
 		r[1] = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
 		r[2] = this.blockedOpponentGPsNum(col) - this.blockedOpponentGPsNum(oppCol);
@@ -34,20 +35,27 @@ Estimator.prototype.evaluate = function() {
 		r[4] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
 		r[5] = this.doubleMorrisNum(col) - this.doubleMorrisNum(oppCol);
 		r[6] = this.win(col) - this.win(oppCol);
-		for (var i = 0; i < r.length; i++)
-			if (r[i]!==undefined) evaluation += r[i]*Resources.cmove[i];
 	}
 	else if (status === "jump") {
-		var r = [];
+		c = Resources.cjump;
 		r[0] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
 		r[1] = morrisInfo.closableMorrisNum-1 - oppMorrisInfo.closableMorrisNum+1;
 		r[2] = this.newMorris(col) - this.newMorris(oppCol);
 		r[3] = this.win(col) - this.win(oppCol);
-		for (var i = 0; i < r.length; i++)
-			if (r[i]!==undefined) evaluation += r[i]*Resources.cjump[i];
 	}
 	else if (status === "end") {
+		c = [1100];
+		r[0] = this.win(col) - this.win(oppCol);
 		evaluation = this.win(col) - this.win(oppCol);
+	}
+
+	for (var i = 0; i < r.length; i++) {
+		if (r[i]===undefined || c[i]===undefined) 
+			console.warn("Estimator evaluate: r or c at "+i+" unknown.");
+		else {
+			evaluation += r[i]*c[i];
+			this.log += "["+i+"]" + r[i] + "*" + c[i] + "=" + r[i]*c[i];
+		}
 	}
 
 
@@ -164,5 +172,5 @@ Estimator.prototype.doubleMorrisNum = function(color) {
 };
 
 Estimator.prototype.win = function(color) {
-	return this.game.gamerColor === color && this.game.status === "end";
+	return this.game.gamerColor !== color && this.game.status === "end";
 };
