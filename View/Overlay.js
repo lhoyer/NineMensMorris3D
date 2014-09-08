@@ -21,7 +21,7 @@ Overlay.prototype.setStatus = function(status) {
 			this.status.textContent = "Jump Gaming Piece";
 			break;
 		case "end":
-			this.status.textContent = "Won Game";
+			this.status.textContent = "Game Over";
 			break;
 		default:
 			console.warn("Overlay setStatus: unknown status");

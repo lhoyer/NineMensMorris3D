@@ -23,7 +23,7 @@ MinMaxAI.prototype.miniMax = function(game,depth,log) {
 	var bestEvaluation = -100000;
 	var ev;
 
-	if (depth == 0 || moves.length == 0) {
+	if (depth == 0 || moves.length == 0 || game.status==="end") {
 		ev = game.evaluate();
 		log["ev"] = game.estimator.log;
 		return ev;

@@ -172,23 +172,15 @@ Game.prototype.doMove = function(move) {
 	this.history.push({move:move,status:this.status,color:this.gamerColor});
 	move.apply(this);
 
-	this.changeGamer();
-	if (this.countGamingPieces(this.gamerColor) < 3 ||
-		this.status == "move" && this.getAvailableMoves().length==0) {
-		this.lastStatus = this.status;
-		this.status = "end";
-	}
-	this.changeGamer();
-
 	var enterOtherStates = true;
-	if (this.status !== "end" && this.newMorris()) {
+	if (this.newMorris()) {
 		enterOtherStates = false;
 		this.lastStatus = this.status;
 		this.status = "delete";
 		if (this.getAvailableMoves().length == 0)
 			enterOtherStates = true;
 	}
-	if (this.status !== "end" && enterOtherStates)
+	if (enterOtherStates)
 	{
 		this.changeGamer();
 		if (this.getNewGP(this.gamerColor) !== undefined)
@@ -197,6 +189,11 @@ Game.prototype.doMove = function(move) {
 			this.status = "jump";
 		else
 			this.status = "move";
+	}
+	if (this.countGamingPieces(this.gamerColor) < 3 ||
+		this.status == "move" && this.getAvailableMoves().length==0) {
+		this.lastStatus = this.status;
+		this.status = "end";
 	}
 
 	// estimate after gamer change, because the estimation in minmax is done in leaf after gamer change
