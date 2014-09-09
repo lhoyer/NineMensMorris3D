@@ -41,7 +41,8 @@ Model.prototype.updatePosition = function() {
 	this.dae.position.x = this.position.x;
 	this.dae.position.y = this.position.y;
 	this.dae.position.z = this.position.z;
-	render();
+	if (this.visible)
+		render();
 };
 
 Model.prototype.setRotation = function(rot) {
@@ -54,7 +55,8 @@ Model.prototype.updateRotation = function() {
 	this.dae.rotation.x = this.rotation.x;
 	this.dae.rotation.y = this.rotation.y;
 	this.dae.rotation.z = this.rotation.z;
-	render();
+	if (this.visible)
+		render();
 };
 
 Model.prototype.setScale = function(scale) {
@@ -67,7 +69,8 @@ Model.prototype.updateScale = function() {
 	this.dae.scale.x = this.scale.x;
 	this.dae.scale.y = this.scale.y;
 	this.dae.scale.z = this.scale.z;
-	render();
+	if (this.visible)
+		render();
 };
 
 // Rotate an object around an arbitrary axis in world space       

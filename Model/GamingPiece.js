@@ -45,11 +45,36 @@ GamingPiece.prototype.assignPosFromPlace = function() {
 		return;
 	}
 
-	if (this.place !== undefined)
-		this.gpModel.setPosition(this.place.position);
+	if (this.place !== undefined) {
+		// this.gpModel.setPosition(this.place.position);
+		var dx = this.place.position.x - this.gpModel.position.x;
+		var dy = this.place.position.y - this.gpModel.position.y;
+		var dz = this.place.position.z - this.gpModel.position.z;
+		this.animate(dx,dy,dz,1);
+	}
 	else
 		console.error("Try to assign GamingPiece position from place. Place undefined.");
 }
+
+GamingPiece.prototype.animate = function(dx,dy,dz,i) {
+	var gThis = this;
+	var steps = 100;
+	var sinH = - Math.sin((i-1)/steps * Math.PI) + Math.sin(i/steps * Math.PI);
+	var sinVel = Math.sin(i/steps * Math.PI);
+	var velScale = 10;
+
+	//scale height curve dependent on distance
+	sinH *= Math.sqrt(dx*dx+dz*dz)/10;
+	sinVel *= velScale;
+	var v = new THREE.Vector3(dx/steps,dy/steps+sinH,dz/steps);
+
+	this.gpModel.position.add(v);
+	this.gpModel.updatePosition();
+
+	if (this.place.position.distanceTo(this.gpModel.position)>0.1) {
+		setTimeout( function() {gThis.animate(dx,dy,dz,i+1);}, velScale-sinVel);
+	}
+};
 
 GamingPiece.prototype.raw = function() {
 	var raw = new Object();
