@@ -9,9 +9,6 @@ function Place(id) {
 	//list of morrises in which contain the place
 	//one item contains array of 3 places
 	this.morrises = [];
-
-	//position
-	this.position = Resources["place"+id];
 }
 
 Place.prototype.addConnection = function(connection) {
@@ -38,16 +35,6 @@ Place.prototype.isConnected = function(place2) {
 			return true;
 	return false;
 };
-
-Place.prototype.isSelected = function(pos,limit) {
-	if (pos.x - limit < this.position.x && 
-		this.position.x < pos.x + limit && 
-		pos.z - limit < this.position.z && 
-		this.position.z < pos.z + limit)
-		return true;
-	else
-		return false;
-}
 
 Place.prototype.toString = function() {
 	var str;

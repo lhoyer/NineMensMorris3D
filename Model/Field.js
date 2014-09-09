@@ -1,12 +1,5 @@
-function Field (raw) 
+function Field () 
 {
-	if (raw === false || raw === undefined) {
-		//load model
-	  	this.field = new Model(Resources.fieldModel);
-	  	this.field.setPosition(new THREE.Vector3(0,0,0));
-	  	this.field.setScale(new THREE.Vector3(15,15,15));
-  	}
-
   	this.buildPlaces();
 }
 

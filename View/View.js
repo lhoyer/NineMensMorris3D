@@ -9,6 +9,12 @@ function View () {
 	this.renderer.setSize(window.innerWidth, window.innerHeight);
 	document.body.appendChild(this.renderer.domElement);
 
+	//3DModels
+	this.objects3D = [];
+
+	//Field
+	this.createField();
+
 	//camera
 	this.camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
 	this.camera.position.set(20,120,100);
@@ -25,8 +31,49 @@ function View () {
 	this.addAxes();
 
 	//window handlers
-  	window.addEventListener('resize', this.onResizeWindow);	
+	var _this = this;
+  	window.addEventListener('resize', function(){_this.onResizeWindow()});	
 }
+
+View.prototype.addObjects3D = function(model) {
+	this.objects3D.push(model);
+};
+
+// this.position = Resources["place"+id];
+// Place.prototype.isSelected = function(pos,limit) {
+// 	if (pos.x - limit < this.position.x && 
+// 		this.position.x < pos.x + limit && 
+// 		pos.z - limit < this.position.z && 
+// 		this.position.z < pos.z + limit)
+// 		return true;
+// 	else
+// 		return false;
+// }
+
+View.prototype.createGPs = function(color) {
+	var gp;
+	var gps = [];
+
+	for (var i = 0; i < 9; i++)
+	{
+  		gp = new GPModel(color);
+		if (this.color == "white") {
+		  	gp.setPosition(new THREE.Vector3(-80,0,i*10-45));
+	  	}
+	  	else if (this.color == "black") {
+		  	gp.setPosition(new THREE.Vector3(80,0,i*10-45));
+	  	}
+	  	gps.push(gp);
+	  	this.addObjects3D(gp);
+  	}
+  	return gps;
+};
+
+View.prototype.createField = function() {
+	this.field = new Model(Resources.fieldModel);
+  	this.field.setPosition(new THREE.Vector3(0,0,0));
+  	this.field.setScale(new THREE.Vector3(15,15,15));
+};
 
 View.prototype.initLighting = function() {
 	var light = new THREE.PointLight(0xfffff3, 0.9);
@@ -64,6 +111,7 @@ View.prototype.addAxes = function() {
 	gridXZ.position.set(0,0,0 );
 	this.scene.add(gridXZ);
 }
+
 View.prototype.onResizeWindow = function() {
 	console.log("Resize window");
     var WIDTH = window.innerWidth,

@@ -1,6 +1,6 @@
 function Game(raw) 
 {
-	this.field;
+	this.field = new Field();
 	this.gpWhite = new Array();
 	this.gpBlack = new Array();
 	this.gp = new Array();
@@ -13,7 +13,6 @@ function Game(raw)
 	// create from raw object
 	if (raw !== undefined && raw.gamerColor !== undefined)
 	{
-		this.field = new Field(true);
 		this.gamerColor = raw.gamerColor;
 		this.status = raw.status;
 		for (var i = 0; i < 18; i++) {
@@ -27,17 +26,12 @@ function Game(raw)
 	}
 	else
 	{
-		this.field = new Field();
 		var g;
 		for (i = 0; i<9; i++) {
 			g = new GamingPiece("white");
-			g.gpModel.setPosition(new THREE.Vector3(-80,0,i*10-45));
-			g.place = "new";
 			this.gpWhite.push(g);
 			this.gp.push(g);
 			var g = new GamingPiece("black");
-			g.gpModel.setPosition(new THREE.Vector3(80,0,i*10-45));
-			g.place = "new";
 			this.gpBlack.push(g);
 			this.gp.push(g);
 		}

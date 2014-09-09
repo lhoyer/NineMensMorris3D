@@ -5,8 +5,8 @@ function Human(match,color)
 {
 	Controller.call(this,match,color);
 	mouse.addListener(this);
-	this.previewGP = new GamingPiece(color);
-	this.previewGP.gpModel.setVisible(false);
+	this.previewGP = new GPModel(color);
+	this.previewGP.setVisible(false);
 	this.oldPlace;
 }
 
@@ -73,7 +73,7 @@ Human.prototype.gameChanged = function(game) {
 // mouse movement
 //-------------------------------------------------------------------------------------------------
 Human.prototype.handleMouseUp = function(event) {
-	this.previewGP.gpModel.dae.visible = false;
+	this.previewGP.setVisible(false);
 	if (this.game.gamerColor !== this.color)
 		return false;
 
@@ -118,7 +118,7 @@ Human.prototype.handleMouseDown = function(event) {
 
 Human.prototype.handleMouseMove = function(event) {
 	if (this.previewGP !== undefined)
-		this.previewGP.gpModel.setPosition(this.mouseCoordinate(event));
+		this.previewGP.setPosition(this.mouseCoordinate(event));
 }
 
 Human.prototype.mouseCoordinate = function(event) {
