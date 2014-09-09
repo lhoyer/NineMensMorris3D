@@ -61,18 +61,18 @@ GamingPiece.prototype.animate = function(dx,dy,dz,i) {
 	var steps = 100;
 	var sinH = - Math.sin((i-1)/steps * Math.PI) + Math.sin(i/steps * Math.PI);
 	var sinVel = Math.sin(i/steps * Math.PI);
-	var velScale = 10;
+	var velMax = 10;
 
 	//scale height curve dependent on distance
 	sinH *= Math.sqrt(dx*dx+dz*dz)/10;
-	sinVel *= velScale;
+	sinVel *= velMax;
 	var v = new THREE.Vector3(dx/steps,dy/steps+sinH,dz/steps);
 
 	this.gpModel.position.add(v);
 	this.gpModel.updatePosition();
 
 	if (this.place.position.distanceTo(this.gpModel.position)>0.1) {
-		setTimeout( function() {gThis.animate(dx,dy,dz,i+1);}, velScale-sinVel);
+		setTimeout( function() {gThis.animate(dx,dy,dz,i+1);}, velMax-sinVel);
 	}
 };
 
