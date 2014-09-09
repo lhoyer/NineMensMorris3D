@@ -129,7 +129,7 @@ Human.prototype.mouseCoordinate = function(event) {
 	var mouse3D = new THREE.Vector3( ( (event.clientX+xOff) / window.innerWidth ) * 2 - 1,   		//x
                                     -( (event.clientY+yOff) / window.innerHeight ) * 2 + 1,  		//y
                                     0.5 );                                            				//z
-    var raycaster = projector.pickingRay( mouse3D.clone(), camera );
+    var raycaster = projector.pickingRay( mouse3D.clone(), view.camera );
     var pos = raycaster.ray.intersectPlane(planeZ);
     return pos;
 }
