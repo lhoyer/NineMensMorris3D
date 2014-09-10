@@ -1,5 +1,5 @@
 //class for combining game model with controllers
-function Match(c1,c2) 
+function Match() 
 {
 	this.game = new Game();
 	this.controllers = new Array();
@@ -14,21 +14,21 @@ Match.prototype.doMove = function(move) {
 	var col;
 	console.debug("Evaluation " + this.game.gamerColor + ": " + this.game.evaluation);
 
-	if (success === false) {
-		overlay.help.textContent = "Move isn't available";
-		return;
-	}
-	else
-		overlay.help.textContent = "";
-
 	move.confirm();
 	if (Resources.debugAvailableMoves)
 		console.log(this.game.getAvailableMoves());
 
-	overlay.update(this.game);
-	view.render();
-	var _this = this;	
-	setTimeout( function() {_this.notifyControllers();}, 800);
+	// UI Handling
+	if (success === false)
+		postMessage({tag:"help",msg:"Move isn't available"});
+	else
+		postMessage({tag:"help",msg:""});
+	postMessage({tag:"gamer",msg:this.game.gamerColor});
+	postMessage({tag:"status",msg:this.game.status});
+
+	this.notifyControllers();
+
+	return success;
 }
 
 Match.prototype.notifyControllers = function() {

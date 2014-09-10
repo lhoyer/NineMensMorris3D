@@ -11,25 +11,22 @@ function GPModel(color) {
   	else
   		console.error("Try to create a GPModel. Color unknown.");
 	
-	this.setScale(2,2,2);
+	this.setScale(new THREE.Vector3(2,2,2));
 }
 
 
-GPModel.prototype.assignPosFromPlace = function(placeID) {
-	if (this.place === "deleted") {
-		this.gpModel.setVisible(false);
+GPModel.prototype.updatePlace = function(placeID) {
+	if (placeID === "deleted") {
+		this.setVisible(false);
 		return;
 	}
 
-	if (this.place !== undefined) {
-		// this.gpModel.setPosition(this.place.position);
-		var dx = this.place.position.x - this.gpModel.position.x;
-		var dy = this.place.position.y - this.gpModel.position.y;
-		var dz = this.place.position.z - this.gpModel.position.z;
-		this.animate(dx,dy,dz,1);
-	}
-	else
-		console.error("Try to assign GamingPiece position from place. Place undefined.");
+	this.placePos = Resources["place"+placeID];
+	// var dx = this.placePos.x - this.position.x;
+	// var dy = this.placePos.y - this.position.y;
+	// var dz = this.placePos.z - this.position.z;
+	// this.animate(dx,dy,dz,1);
+	this.setPosition(this.placePos);
 }
 
 GPModel.prototype.animate = function(dx,dy,dz,i) {
@@ -44,10 +41,10 @@ GPModel.prototype.animate = function(dx,dy,dz,i) {
 	sinVel *= velMax;
 	var v = new THREE.Vector3(dx/steps,dy/steps+sinH,dz/steps);
 
-	this.gpModel.position.add(v);
-	this.gpModel.updatePosition();
+	this.position.add(v);
+	this.updatePosition();
 
-	if (this.place.position.distanceTo(this.gpModel.position)>0.1) {
+	if (this.placePos.distanceTo(this.position)>0.1) {
 		setTimeout( function() {gThis.animate(dx,dy,dz,i+1);}, velMax-sinVel);
 	}
 };

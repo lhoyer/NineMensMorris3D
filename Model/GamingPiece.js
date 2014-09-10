@@ -1,6 +1,7 @@
 // data: normal mode color of gp; raw mode raw object
 // game: only use this parameter in raw mode
-function GamingPiece(data, game) {
+function GamingPiece(data, id, game) {
+	this.id;
 	this.color;
 	this.place = "new";
 
@@ -11,6 +12,7 @@ function GamingPiece(data, game) {
 	if (data !== undefined && data.plId !== undefined && game !== undefined)
 	{
 		this.color = data.color;
+		this.id = data.id;
 		if (data.plId === "new" || data.plId === "deleted")
 			this.place = data.plId;
 		else {
@@ -22,6 +24,7 @@ function GamingPiece(data, game) {
 	else
 	{
 		this.color = data;
+		this.id = id;
 	}
 }
 

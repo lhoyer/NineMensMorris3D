@@ -28,10 +28,12 @@ function Game(raw)
 	{
 		var g;
 		for (i = 0; i<9; i++) {
-			g = new GamingPiece("white");
+			g = new GamingPiece("white",i);
 			this.gpWhite.push(g);
 			this.gp.push(g);
-			var g = new GamingPiece("black");
+		}
+		for (i = 0; i<9; i++) {
+			var g = new GamingPiece("black",i+9);
 			this.gpBlack.push(g);
 			this.gp.push(g);
 		}
@@ -150,7 +152,6 @@ Game.prototype.evaluate = function() {
 // Move handling
 //-------------------------------------------------------------------------------------------------
 Game.prototype.doMove = function(move) {
-	if (confirm===undefined) confirm = false;
 	if (move===undefined) {
 		console.error("Game doMove: parameter move undefined");
 		return false;

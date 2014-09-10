@@ -36,7 +36,13 @@ MJump.prototype.confirm = function() {
 		console.warn("Move confirm: gaming piece undefined");
 		return;
 	}
-	this.gamingPiece.assignPosFromPlace();
+	// send move information to main thread for drawing
+	postMessage({
+		tag:"move",
+		msg:{
+			gp:this.gamingPiece.id,
+			pl:this.newPlace.id}
+		});
 };
 
 MJump.prototype.available = function(game) {	
