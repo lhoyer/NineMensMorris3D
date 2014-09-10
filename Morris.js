@@ -1,11 +1,11 @@
 "use strict";
 
-var view,matchWorker,controller1,controller2;
+var view,matchWorker,mouse;
 
 var init = function() {
 	view = new View();
-
 	matchWorker = new Worker("MatchWorker.js");
+	mouse = new Mouse(matchWorker);
 
 	matchWorker.onmessage = function(e) {
 		var tag = e.data.tag;

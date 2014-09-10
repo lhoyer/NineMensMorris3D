@@ -33,18 +33,6 @@ function View () {
   	window.addEventListener('resize', function(){_this.onResizeWindow()});	
 }
 
-
-// this.position = Resources["place"+id];
-// Place.prototype.isSelected = function(pos,limit) {
-// 	if (pos.x - limit < this.position.x && 
-// 		this.position.x < pos.x + limit && 
-// 		pos.z - limit < this.position.z && 
-// 		this.position.z < pos.z + limit)
-// 		return true;
-// 	else
-// 		return false;
-// }
-
 View.prototype.createGPs = function() {
 	var gp;
 	this.gps = [];

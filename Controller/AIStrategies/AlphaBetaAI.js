@@ -32,7 +32,8 @@ AlphaBetaAI.prototype.miniMax = function(game,depth,alpha,beta,log) {
 			ev += depth*10;
 		if (ev < -500)
 			ev -= depth*10
-		log["ev"] = game.estimator.log;
+		if (Resources.debugMiniMax)
+			log["ev"] = game.estimator.log;
 		return ev;
 	}
 
@@ -45,7 +46,8 @@ AlphaBetaAI.prototype.miniMax = function(game,depth,alpha,beta,log) {
 		else
 			ev = - this.miniMax(game, depth - 1, -beta, -bestEvaluation,l);
 		game.undoLastMove();
-		log[moves[i].toString()+"\t"+ev] = l;
+		if (Resources.debugMiniMax)
+			log[moves[i].toString()+"\t"+ev] = l;
 
 
 		if (ev > bestEvaluation) {

@@ -1,7 +1,5 @@
-var mouse = new Mouse();
-
-function Mouse () {
-	this.listeners = new Array();
+function Mouse (worker) {
+	this.worker = worker;
 
 	var callbackThis = this;
 	(function() {
@@ -27,22 +25,34 @@ function Mouse () {
 	})();
 }
 
-Mouse.prototype.addListener = function(listener) {
-	this.listeners.push(listener);
-};
-
 Mouse.prototype.handleMouseUp = function(event) {
-	for (var i = 0; i < this.listeners.length; i++)
-		if (this.listeners[i].handleMouseUp(event))
-			return;
+	this.worker.postMessage({
+		tag:"mouseUp",
+		msg:this.projectMouse(event)
+		});
 }
 Mouse.prototype.handleMouseDown = function(event) {
-	for (var i = 0; i < this.listeners.length; i++)
-		if (this.listeners[i].handleMouseDown(event))
-			return;
+	this.worker.postMessage({
+		tag:"mouseDown",
+		msg:this.projectMouse(event)
+		});
 }
 Mouse.prototype.handleMouseMove = function(event) {
-	for (var i = 0; i < this.listeners.length; i++)
-		if (this.listeners[i].handleMouseMove(event))
-			return;
+	this.worker.postMessage({
+		tag:"mouseMove",
+		msg:this.projectMouse(event)
+		});
+}
+
+Mouse.prototype.projectMouse = function(event) {
+	var xOff = 0;
+	var yOff = 0;
+	var projector = new THREE.Projector();
+	var planeZ = new THREE.Plane(new THREE.Vector3(0, 1, 0), -2.6);
+	var mouse3D = new THREE.Vector3( ( (event.clientX+xOff) / window.innerWidth ) * 2 - 1,   		//x
+                                    -( (event.clientY+yOff) / window.innerHeight ) * 2 + 1,  		//y
+                                    0.5 );                                            				//z
+    var raycaster = projector.pickingRay( mouse3D.clone(), view.camera );
+    var pos = raycaster.ray.intersectPlane(planeZ);
+    return pos;
 }

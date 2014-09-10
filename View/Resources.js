@@ -34,5 +34,5 @@ var Resources = {
 
 	debugSelection:false,
 	debugAvailableMoves:false,
-	debugMiniMax:true
+	debugMiniMax:false
 };
