@@ -3,6 +3,7 @@ importScripts("Controller/Controller.js");
 importScripts("Controller/AI.js");
 importScripts("Controller/AIStrategies/AIStrategy.js");
 importScripts("Controller/AIStrategies/AlphaBetaAI.js");
+importScripts("Controller/AIStrategies/MinMaxAI.js");
 importScripts("Controller/Human.js");
 importScripts("Model/Match.js");
 importScripts("Model/Game.js");
@@ -20,8 +21,8 @@ importScripts("View/Resources.js");
 var match = new Match();
 // controller1 = new Human(match,"white");
 // controller2 = new Human(match,"black");
-var controller1 = new AI(match,"white",new AlphaBetaAI());
-var controller2 = new AI(match,"black",new AlphaBetaAI());
+var controller1 = new AI(match,"white",new MinMaxAI());
+var controller2 = new AI(match,"black",new MinMaxAI());
 
 match.registerController(controller1);
 match.registerController(controller2);

@@ -77,6 +77,7 @@ Estimator.prototype.gpNumber = function(color) {
 		if (gps[i].place !== "deleted")
 			gpNumber++;
 	}
+
 	return gpNumber;
 };
 
@@ -120,6 +121,7 @@ Estimator.prototype.morrisInfo = function(color) {
 		if (n==2)
 			closableMorrisNum++;
 	}
+
 	return {morrisNum:morNum,
 			closableMorrisNum:closableMorrisNum};
 };
@@ -142,6 +144,7 @@ Estimator.prototype.blockedOpponentGPsNum = function(color) {
 				blockedGPs++;			
 		}
 	}
+
 	return blockedGPs;
 };
 
@@ -168,6 +171,7 @@ Estimator.prototype.doubleMorrisNum = function(color) {
 			}
 		}
 	}
+
 	return doubleMorrisNum;
 };
 
