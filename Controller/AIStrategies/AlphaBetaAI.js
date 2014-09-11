@@ -14,7 +14,7 @@ AlphaBetaAI.prototype.selectBestMove = function(game) {
 	this.log = new Object();
 	this.miniMax(game,this.standardDepth,-1000000,1000000,this.log);
 	if (Resources.debugMiniMax)
-		console.log(this.log);	
+		postMessage({tag:"log",msg:this.log});	
 	return this.bestMove;
 };
 

@@ -23,6 +23,8 @@ var init = function() {
 			view.updatePreviewVisible(msg);
 		if (tag === "previewGPPos")
 			view.updatePreviewPosition(msg);
+		if (tag === "log")
+			console.log(msg);
 	};
 };
 
