@@ -26,9 +26,8 @@ Match.prototype.doMove = function(move) {
 	postMessage({tag:"gamer",msg:this.game.gamerColor});
 	postMessage({tag:"status",msg:this.game.status});
 
-	this.notifyControllers();
-
-	return success;
+	var _this = this;
+	// setTimeout( function() {_this.notifyControllers()}, 1000);
 }
 
 Match.prototype.notifyControllers = function() {

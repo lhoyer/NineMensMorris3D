@@ -18,9 +18,9 @@ importScripts("Model/MDelete.js");
 importScripts("View/Resources.js");
 
 var match = new Match();
-controller1 = new Human(match,"white");
+// controller1 = new Human(match,"white");
 // controller2 = new Human(match,"black");
-// var controller1 = new AI(match,"white",new AlphaBetaAI());
+var controller1 = new AI(match,"white",new AlphaBetaAI());
 var controller2 = new AI(match,"black",new AlphaBetaAI());
 
 match.registerController(controller1);
@@ -49,11 +49,7 @@ onmessage = function(e) {
 		if (controller2.handleMouseMove !== undefined)
 			controller2.handleMouseMove(msg);
 	}
-
-	// if (tag === "move") {
-		// if (success === false)
-		// 	postMessage({tag:"help",msg:"Move isn't available"});
-		// else
-		// 	postMessage({tag:"help",msg:""});
-	// }
+	if (tag === "goOn") {
+		match.notifyControllers();
+	}
 };

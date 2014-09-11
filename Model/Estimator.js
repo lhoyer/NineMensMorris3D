@@ -139,7 +139,7 @@ Estimator.prototype.blockedOpponentGPsNum = function(color) {
 				}
 			}
 			if (blockedConnections===pl.connections.length)
-				blockedGPs++;
+				blockedGPs++;			
 		}
 	}
 	return blockedGPs;

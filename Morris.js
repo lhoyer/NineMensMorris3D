@@ -33,7 +33,6 @@ var render = function() {
 	if (updateRender === true) {
 		view.renderer.render(view.scene, view.camera);
 		updateRender = false;
-		console.log("render");
 	}
 };
 

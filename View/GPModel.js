@@ -22,16 +22,16 @@ GPModel.prototype.updatePlace = function(placeID) {
 	}
 
 	this.placePos = Resources["place"+placeID];
-	var dx = this.placePos.x - this.position.x;
-	var dy = this.placePos.y - this.position.y;
-	var dz = this.placePos.z - this.position.z;
-	this.animate(dx,dy,dz,1);
-	// this.setPosition(this.placePos);
+	// var dx = this.placePos.x - this.position.x;
+	// var dy = this.placePos.y - this.position.y;
+	// var dz = this.placePos.z - this.position.z;
+	// this.animate(dx,dy,dz,1);
+	this.setPosition(this.placePos);
 }
 
 GPModel.prototype.animate = function(dx,dy,dz,i) {
 	var gThis = this;
-	var steps = 100;
+	var steps = 30;
 	var sinH = - Math.sin((i-1)/steps * Math.PI) + Math.sin(i/steps * Math.PI);
 	var sinVel = Math.sin(i/steps * Math.PI);
 	var velMax = 10;
@@ -45,6 +45,6 @@ GPModel.prototype.animate = function(dx,dy,dz,i) {
 	this.updatePosition();
 
 	if (this.placePos.distanceTo(this.position)>0.1) {
-		setTimeout( function() {gThis.animate(dx,dy,dz,i+1);}, velMax-sinVel);
+		setTimeout( function() {gThis.animate(dx,dy,dz,i+1);}, velMax-sinVel+20);
 	}
 };
