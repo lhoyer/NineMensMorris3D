@@ -22,11 +22,11 @@ GPModel.prototype.updatePlace = function(placeID) {
 	}
 
 	this.placePos = Resources["place"+placeID];
-	// var dx = this.placePos.x - this.position.x;
-	// var dy = this.placePos.y - this.position.y;
-	// var dz = this.placePos.z - this.position.z;
-	// this.animate(dx,dy,dz,1);
-	this.setPosition(this.placePos);
+	var dx = this.placePos.x - this.position.x;
+	var dy = this.placePos.y - this.position.y;
+	var dz = this.placePos.z - this.position.z;
+	this.animate(dx,dy,dz,1);
+	// this.setPosition(this.placePos);
 }
 
 GPModel.prototype.animate = function(dx,dy,dz,i) {

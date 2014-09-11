@@ -1,3 +1,5 @@
+var updateRender = false;
+
 function View () {
 	// Create a dov to contain everything
     var container = document.createElement('div');
@@ -143,11 +145,5 @@ View.prototype.onResizeWindow = function() {
     this.renderer.setSize(WIDTH, HEIGHT);
     this.camera.aspect = WIDTH / HEIGHT;
     this.camera.updateProjectionMatrix();
-    this.render();
-};
-
-View.prototype.render = function() {
-	// requestAnimationFrame(render);
-	this.renderer.render(this.scene, this.camera);
-	// controls.update();
+    updateRender = true;
 };

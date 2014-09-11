@@ -28,5 +28,15 @@ var init = function() {
 	};
 };
 
+var render = function() {
+	requestAnimationFrame(render);
+	if (updateRender === true) {
+		view.renderer.render(view.scene, view.camera);
+		updateRender = false;
+		console.log("render");
+	}
+};
+
 
 init();
+render();

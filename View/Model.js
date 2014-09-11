@@ -16,7 +16,7 @@ function Model(file) {
 		callbackThis.updateVisible();
 		//add to scene
 		view.scene.add(callbackThis.dae);
-		setTimeout( function() {view.render();}, 1000);
+		setTimeout( function() {updateRender = true}, 1000);
 	});
 }
 
@@ -27,11 +27,15 @@ Model.prototype.setVisible = function(visible) {
 };
 
 Model.prototype.updateVisible = function() {
-	this.dae.visible = this.visible;
-	view.render();
+	if (this.dae.visible !== this.visible) {
+		this.dae.visible = this.visible;
+		updateRender = true;
+	}
 };
 
 Model.prototype.setPosition = function(pos) {
+	if (pos === null)
+		return;
 	this.position.set(pos.x,pos.y,pos.z);
 	if (this.dae != undefined)
 		this.updatePosition();
@@ -42,7 +46,7 @@ Model.prototype.updatePosition = function() {
 	this.dae.position.y = this.position.y;
 	this.dae.position.z = this.position.z;
 	if (this.visible)
-		view.render();
+		updateRender = true
 };
 
 Model.prototype.setRotation = function(rot) {
@@ -56,7 +60,7 @@ Model.prototype.updateRotation = function() {
 	this.dae.rotation.y = this.rotation.y;
 	this.dae.rotation.z = this.rotation.z;
 	if (this.visible)
-		view.render();
+		updateRender = true
 };
 
 Model.prototype.setScale = function(scale) {
@@ -70,15 +74,5 @@ Model.prototype.updateScale = function() {
 	this.dae.scale.y = this.scale.y;
 	this.dae.scale.z = this.scale.z;
 	if (this.visible)
-		view.render();
-};
-
-// Rotate an object around an arbitrary axis in world space       
-Model.prototype.rotateAroundWorldAxis = function(axis, radians) {
-	var object = this.dae;
-    var rotWorldMatrix = new THREE.Matrix4();
-    rotWorldMatrix.makeRotationAxis(axis.normalize(), radians);
-    rotWorldMatrix.multiplySelf(object.matrix);        // pre-multiply
-    object.matrix = rotWorldMatrix;
-    object.rotation.getRotationFromMatrix(object.matrix, object.scale);
+		updateRender = true
 };
