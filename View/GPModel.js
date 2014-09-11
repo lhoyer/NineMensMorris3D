@@ -44,7 +44,10 @@ GPModel.prototype.animate = function(dx,dy,dz,i) {
 	this.position.add(v);
 	this.updatePosition();
 
-	if (this.placePos.distanceTo(this.position)>0.1) {
-		setTimeout( function() {gThis.animate(dx,dy,dz,i+1);}, velMax-sinVel+20);
+	if (i < steps) {
+		setTimeout( function() {gThis.animate(dx,dy,dz,i+1);}, 500/steps);
+	}
+	else {
+		this.setPosition(this.placePos);
 	}
 };

@@ -17,8 +17,9 @@ var init = function() {
 			overlay.setStatus(msg);
 		if (tag === "gamer")
 			overlay.setGamer(msg);
-		if (tag === "move")
+		if (tag === "move") {
 			view.updateGPPlace(msg);
+		}
 		if (tag === "previewGPVisible")
 			view.updatePreviewVisible(msg);
 		if (tag === "previewGPPos")

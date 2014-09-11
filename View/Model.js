@@ -46,7 +46,7 @@ Model.prototype.updatePosition = function() {
 	this.dae.position.y = this.position.y;
 	this.dae.position.z = this.position.z;
 	if (this.visible)
-		updateRender = true
+		updateRender = true;
 };
 
 Model.prototype.setRotation = function(rot) {
@@ -60,7 +60,7 @@ Model.prototype.updateRotation = function() {
 	this.dae.rotation.y = this.rotation.y;
 	this.dae.rotation.z = this.rotation.z;
 	if (this.visible)
-		updateRender = true
+		updateRender = true;
 };
 
 Model.prototype.setScale = function(scale) {
@@ -74,5 +74,5 @@ Model.prototype.updateScale = function() {
 	this.dae.scale.y = this.scale.y;
 	this.dae.scale.z = this.scale.z;
 	if (this.visible)
-		updateRender = true
+		updateRender = true;
 };

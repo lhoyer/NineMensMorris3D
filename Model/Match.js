@@ -27,7 +27,7 @@ Match.prototype.doMove = function(move) {
 	postMessage({tag:"status",msg:this.game.status});
 
 	var _this = this;
-	// setTimeout( function() {_this.notifyControllers()}, 1000);
+	// setTimeout( function() {_this.notifyControllers()}, 100);
 	this.notifyControllers();
 }
 
