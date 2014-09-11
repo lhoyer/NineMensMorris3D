@@ -2,8 +2,8 @@ AlphaBetaAI.prototype = Object.create(AIStrategy.prototype);
 AlphaBetaAI.prototype.constructor = AlphaBetaAI;
 
 function AlphaBetaAI() {
-	this.standardDepth = 6;
-	this.bestMove;
+	this.standardDepth = 5;
+	this.bestMove = [];
 	this.log = "";
 }
 
@@ -15,7 +15,9 @@ AlphaBetaAI.prototype.selectBestMove = function(game) {
 	this.miniMax(game,this.standardDepth,-1000000,1000000,this.log);
 	if (Resources.debugMiniMax)
 		postMessage({tag:"log",msg:this.log});	
-	return this.bestMove;
+
+	var m = this.bestMove[Math.floor(Math.random() * this.bestMove.length)];
+	return m;
 };
 
 AlphaBetaAI.prototype.miniMax = function(game,depth,alpha,beta,log) {
@@ -54,9 +56,13 @@ AlphaBetaAI.prototype.miniMax = function(game,depth,alpha,beta,log) {
 			bestEvaluation = ev;
 			if (bestEvaluation >= beta)
 				break;
-			if (depth == this.standardDepth)
-				this.bestMove = moves[i];
+			if (depth == this.standardDepth) {
+				this.bestMove = [];
+				this.bestMove[0] = moves[i];
+			}
 		}
+		if (ev == bestEvaluation && depth == this.standardDepth)
+			this.bestMove.push(moves[i]);
 	}
 	return bestEvaluation;
 };
