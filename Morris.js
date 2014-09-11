@@ -19,7 +19,10 @@ var init = function() {
 			overlay.setGamer(msg);
 		if (tag === "move")
 			view.updateGPPlace(msg);
-		// overlay.update();
+		if (tag === "previewGPVisible")
+			view.updatePreviewVisible(msg);
+		if (tag === "previewGPPos")
+			view.updatePreviewPosition(msg);
 	};
 };
 

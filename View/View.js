@@ -12,15 +12,10 @@ function View () {
 	//Field
 	this.createField();
 	this.createGPs();
+	this.createPreviewGPs();
 
 	//camera
-	this.camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
-	this.camera.position.set(20,120,100);
-  	this.scene.add(this.camera);
-  	this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
-	this.camera.lookAt(new THREE.Vector3(0,0,10));
-  	this.controls.noRotate = true;
-  	this.controls.noPan = true;
+	this.initCamera();
 
 	//lighting
 	this.initLighting();
@@ -33,6 +28,9 @@ function View () {
   	window.addEventListener('resize', function(){_this.onResizeWindow()});	
 }
 
+//-------------------------------------------------------------------------------------------------
+// Game elements
+//-------------------------------------------------------------------------------------------------
 View.prototype.createGPs = function() {
 	var gp;
 	this.gps = [];
@@ -52,9 +50,11 @@ View.prototype.createGPs = function() {
   	}
 };
 
-View.prototype.updateGPPlace = function(msg) {
-	var gp = this.gps[msg.gp];
-	gp.updatePlace(msg.pl);
+View.prototype.createPreviewGPs = function() {
+	this.previewWhite = new GPModel("white");
+	this.previewWhite.setVisible(false);
+	this.previewBlack = new GPModel("black");
+	this.previewBlack.setVisible(false);
 };
 
 View.prototype.createField = function() {
@@ -63,6 +63,32 @@ View.prototype.createField = function() {
   	this.field.setScale(new THREE.Vector3(15,15,15));
 };
 
+View.prototype.updateGPPlace = function(msg) {
+	var gp = this.gps[msg.gp];
+	gp.updatePlace(msg.pl);
+};
+
+View.prototype.updatePreviewVisible = function(msg) {
+	var gp;
+	if (msg.color === "white")
+		gp = this.previewWhite;
+	else
+		gp = this.previewBlack
+	gp.setVisible(msg.visible);		
+};
+
+View.prototype.updatePreviewPosition = function(msg) {
+	var gp;
+	if (msg.color === "white")
+		gp = this.previewWhite;
+	else
+		gp = this.previewBlack
+	gp.setPosition(msg.pos);		
+};
+
+//-------------------------------------------------------------------------------------------------
+// Scene initialization
+//-------------------------------------------------------------------------------------------------
 View.prototype.initLighting = function() {
 	var light = new THREE.PointLight(0xfffff3, 0.9);
   	light.position.set(-100,200,100);
@@ -88,6 +114,16 @@ View.prototype.initLighting = function() {
 	var pointLightHelper3 = new THREE.PointLightHelper( light3, sphereSize ); 
 	this.scene.add( pointLightHelper3 );
 }
+
+View.prototype.initCamera = function() {
+	this.camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
+	this.camera.position.set(20,120,100);
+  	this.scene.add(this.camera);
+  	this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+	this.camera.lookAt(new THREE.Vector3(0,0,10));
+  	this.controls.noRotate = true;
+  	this.controls.noPan = true;
+};
 
 View.prototype.addAxes = function() {
 	var axes = new THREE.AxisHelper(50);

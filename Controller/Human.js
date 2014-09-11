@@ -4,9 +4,6 @@ Human.prototype.constructor = Human;
 function Human(match,color)
 {
 	Controller.call(this,match,color);
-	// mouse.addListener(this);
-	// this.previewGP = new GPModel(color);
-	// this.previewGP.setVisible(false);
 	this.oldPlace;
 }
 
@@ -80,7 +77,13 @@ Human.prototype.gameChanged = function(game) {
 // mouse movement
 //-------------------------------------------------------------------------------------------------
 Human.prototype.handleMouseUp = function(pos) {
-	// this.previewGP.setVisible(false);
+	postMessage({
+		tag:"previewGPVisible",
+		msg:{
+			color:this.color,
+			visible:false
+		}
+	});
 	if (this.game.gamerColor !== this.color)
 		return false;
 
@@ -114,7 +117,13 @@ Human.prototype.handleMouseDown = function(pos) {
 		return;
 
 	if (gp.color === this.color) {
-		this.previewGP.gpModel.dae.visible = true;
+		postMessage({
+			tag:"previewGPVisible",
+			msg:{
+				color:this.color,
+				visible:true
+			}
+		});
 		if (Resources.debugSelection) {
 			console.log("Select place: " + this.oldPlace.toString());
 		}
@@ -122,6 +131,11 @@ Human.prototype.handleMouseDown = function(pos) {
 }
 
 Human.prototype.handleMouseMove = function(pos) {
-	// if (this.previewGP !== undefined)
-	// 	this.previewGP.setPosition(pos);
+	postMessage({
+		tag:"previewGPPos",
+		msg:{
+			color:this.color,
+			pos:pos
+		}
+	});
 }
