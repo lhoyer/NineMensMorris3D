@@ -4,18 +4,19 @@ function Model(file) {
 	this.scale = new THREE.Vector3(0,0,0);
 	this.visible = true;
 
-	var callbackThis = this;
+	var _this = this;
 	var loader = new THREE.ColladaLoader();
 	loader.options.convertUpAxis = true;
   	loader.load( file, function( collada ) {
-		callbackThis.dae = collada.scene.clone();
-		var skin = collada.skins[ 0 ];
-		callbackThis.updateScale();
-		callbackThis.updatePosition();
-		callbackThis.updateRotation();
-		callbackThis.updateVisible();
+		_this.dae = collada.scene.clone();
+		_this.material = _this.dae.children[0].children[0].material;
+		// var skin = collada.skins[ 0 ];
+		_this.updateScale();
+		_this.updatePosition();
+		_this.updateRotation();
+		_this.updateVisible();
 		//add to scene
-		view.scene.add(callbackThis.dae);
+		view.scene.add(_this.dae);
 		setTimeout( function() {updateRender = true}, 1000);
 	});
 }
