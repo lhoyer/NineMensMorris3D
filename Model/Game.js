@@ -9,6 +9,9 @@ function Game(raw)
 	this.history = [];
 	this.evaluation = 0;
 	this.estimator = new Estimator(this);
+	this.gpNumber = new Object();
+	this.gpNumber["white"] = 9;
+	this.gpNumber["black"] = 9;
 
 	// create from raw object
 	if (raw !== undefined && raw.gamerColor !== undefined)

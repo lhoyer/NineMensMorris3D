@@ -22,7 +22,7 @@ Estimator.prototype.evaluate = function() {
 		r[0] = this.newMorris(col) - this.newMorris(oppCol);
 		r[1] = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
 		r[2] = this.blockedOpponentGPsNum(col) - this.blockedOpponentGPsNum(oppCol);
-		r[3] = this.gpNumber(col) - this.gpNumber(oppCol);
+		r[3] = this.game.gpNumber[col] - this.game.gpNumber[oppCol];
 		r[4] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
 		r[5] = morrisInfo.closableMorrisNum-1 - oppMorrisInfo.closableMorrisNum+1;
 	}
@@ -31,7 +31,7 @@ Estimator.prototype.evaluate = function() {
 		r[0] = this.newMorris(col) - this.newMorris(oppCol);
 		r[1] = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
 		r[2] = this.blockedOpponentGPsNum(col) - this.blockedOpponentGPsNum(oppCol);
-		r[3] = this.gpNumber(col) - this.gpNumber(oppCol);
+		r[3] = this.game.gpNumber[col] - this.game.gpNumber[oppCol];
 		r[4] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
 		r[5] = this.doubleMorrisNum(col) - this.doubleMorrisNum(oppCol);
 		r[6] = this.win(col) - this.win(oppCol);
@@ -58,8 +58,6 @@ Estimator.prototype.evaluate = function() {
 		}
 	}
 
-
-
 	// evaluation = this.gpNumber(col) - this.gpNumber(oppCol);
 
 	return evaluation;
@@ -67,18 +65,6 @@ Estimator.prototype.evaluate = function() {
 
 Estimator.prototype.newMorris = function(color) {
 	return this.game.gamerColor === color && this.game.newMorris();
-};
-
-Estimator.prototype.gpNumber = function(color) {
-	var gps = this.game.getGPsWithColor(color);
-	var gpNumber = 0;
-
-	for (var i = 0; i < gps.length; i++) {
-		if (gps[i].place !== "deleted")
-			gpNumber++;
-	}
-
-	return gpNumber;
 };
 
 Estimator.prototype.morrisInfo = function(color) {

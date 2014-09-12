@@ -19,11 +19,13 @@ MDelete.prototype.apply = function(game) {
 	this.gamingPiece = this.oldPlace.gamingPiece;
 	this.oldPlace.gamingPiece = undefined;
 	this.gamingPiece.place = "deleted";
+	game.gpNumber[this.color]--;
 };
 
 MDelete.prototype.undo = function(game) {
 	this.gamingPiece.place = this.oldPlace;	
 	this.oldPlace.gamingPiece = this.gamingPiece;
+	game.gpNumber[this.color]++;
 };
 
 MDelete.prototype.confirm = function() {
