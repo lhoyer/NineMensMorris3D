@@ -135,8 +135,7 @@ Estimator.prototype.blockedOpponentGPsNum = function(color) {
 		if (pl !== "new" && pl !== "deleted") {
 			var blockedConnections = 0;
 			for (var j = 0; j < pl.connections.length; j++) {
-				move = new MMove(pl,pl.connections[j],color=="white"?"black":"white");
-				if (!move.available(this.game)) {
+				if (pl.connections[j].gamingPiece !== undefined) {
 					blockedConnections++;
 				}
 			}

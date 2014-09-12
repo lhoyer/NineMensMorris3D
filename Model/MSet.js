@@ -16,6 +16,7 @@ MSet.prototype.apply = function(game) {
 		console.warn("Move apply: move isn't available");
 		return;
 	}
+
 	this.gamingPiece = game.getNewGP(this.color);
 	this.gamingPiece.place = this.newPlace;
 	this.newPlace.gamingPiece = this.gamingPiece;
