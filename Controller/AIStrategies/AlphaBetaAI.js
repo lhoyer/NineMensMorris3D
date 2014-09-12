@@ -16,7 +16,7 @@ AlphaBetaAI.prototype.selectBestMove = function(game) {
 	if (Resources.debugMiniMax)
 		postMessage({tag:"log",msg:this.log});	
 
-	var m = this.bestMove[Math.floor(Math.random() * this.bestMove.length)];
+	var m = this.bestMove[0];
 	return m;
 };
 
