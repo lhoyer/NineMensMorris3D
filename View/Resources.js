@@ -28,10 +28,6 @@ var Resources = {
 	place230:new THREE.Vector3(-16.2,	2.6,	-16.2),
 	place231:new THREE.Vector3(-16.2,	2.6,	0),
 
-	cset:[18,26,1,6,12,7],
-	cmove:[14,43,10,8,7,42,1086],
-	cjump:[10,1,16,1190],
-
 	debugSelection:false,
 	debugAvailableMoves:false,
 	debugMiniMax:false

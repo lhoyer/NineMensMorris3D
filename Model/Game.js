@@ -7,8 +7,6 @@ function Game(raw)
 	this.gamerColor = "white";
 	this.status = "set";
 	this.history = [];
-	this.evaluation = 0;
-	this.estimator = new Estimator(this);
 	this.gpNumber = new Object();
 	this.gpNumber["white"] = 9;
 	this.gpNumber["black"] = 9;
@@ -146,11 +144,6 @@ Game.prototype.getAvailableMoves = function() {
 	return moves;
 }
 
-//do not call out of class
-Game.prototype.evaluate = function() {
-	return this.evaluation;
-}
-
 //-------------------------------------------------------------------------------------------------
 // Move handling
 //-------------------------------------------------------------------------------------------------
@@ -196,7 +189,6 @@ Game.prototype.doMove = function(move) {
 
 	// estimate after gamer change, because the estimation in minmax is done in leaf after gamer change
 	// so it considers the gamer change
-	this.evaluation = this.estimator.evaluate();
 
 	return true;
 }

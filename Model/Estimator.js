@@ -1,6 +1,11 @@
 function Estimator (game) {
 	this.game = game;
 	this.log;
+
+	this.cset = [18,26,1,6,12,7];
+	this.cmove = [14,43,10,8,7,42,1086];
+	this.cjump = [10,1,16,1190];
+	this.cwin = [1100];
 }
 
 Estimator.prototype.evaluate = function() {
@@ -18,7 +23,7 @@ Estimator.prototype.evaluate = function() {
 		status = this.game.lastStatus;
 
 	if (status === "set") {
-		c = Resources.cset;
+		c = this.cset;
 		r[0] = this.newMorris(col) - this.newMorris(oppCol);
 		r[1] = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
 		r[2] = this.blockedOpponentGPsNum(col) - this.blockedOpponentGPsNum(oppCol);
@@ -27,7 +32,7 @@ Estimator.prototype.evaluate = function() {
 		r[5] = morrisInfo.closableMorrisNum-1 - oppMorrisInfo.closableMorrisNum+1;
 	}
 	else if (status === "move") {
-		c = Resources.cmove;
+		c = this.cmove;
 		r[0] = this.newMorris(col) - this.newMorris(oppCol);
 		r[1] = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
 		r[2] = this.blockedOpponentGPsNum(col) - this.blockedOpponentGPsNum(oppCol);
@@ -37,14 +42,14 @@ Estimator.prototype.evaluate = function() {
 		r[6] = this.win(col) - this.win(oppCol);
 	}
 	else if (status === "jump") {
-		c = Resources.cjump;
+		c = this.cjump;
 		r[0] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
 		r[1] = morrisInfo.closableMorrisNum-1 - oppMorrisInfo.closableMorrisNum+1;
 		r[2] = this.newMorris(col) - this.newMorris(oppCol);
 		r[3] = this.win(col) - this.win(oppCol);
 	}
 	else if (status === "end") {
-		c = [1100];
+		c = this.cwin;
 		r[0] = this.win(col) - this.win(oppCol);
 		evaluation = this.win(col) - this.win(oppCol);
 	}
