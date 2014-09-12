@@ -21,8 +21,8 @@ importScripts("View/Resources.js");
 var match = new Match();
 // controller1 = new Human(match,"white");
 // controller2 = new Human(match,"black");
-var controller1 = new AI(match,"white",new MinMaxAI());
-var controller2 = new AI(match,"black",new MinMaxAI());
+var controller1 = new AI(match,"white",new AlphaBetaAI());
+var controller2 = new AI(match,"black",new AlphaBetaAI());
 
 match.registerController(controller1);
 match.registerController(controller2);

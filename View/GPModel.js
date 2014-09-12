@@ -22,27 +22,26 @@ GPModel.prototype.updatePlace = function(placeID) {
 	}
 
 	this.placePos = Resources["place"+placeID];
-	// var dx = this.placePos.x - this.position.x;
-	// var dy = this.placePos.y - this.position.y;
-	// var dz = this.placePos.z - this.position.z;
-	// this.animate(dx,dy,dz,1);
-	this.setPosition(this.placePos);
+	this.old = this.position.clone();
+	var dx = this.placePos.x - this.position.x;
+	var dy = this.placePos.y - this.position.y;
+	var dz = this.placePos.z - this.position.z;
+	this.animate(dx,dy,dz,1);
+	// this.setPosition(this.placePos);
 }
 
 GPModel.prototype.animate = function(dx,dy,dz,i) {
 	var gThis = this;
 	var steps = 30;
-	var sinH = - Math.sin((i-1)/steps * Math.PI) + Math.sin(i/steps * Math.PI);
-	var sinVel = Math.sin(i/steps * Math.PI);
-	var velMax = 10;
+	var sinH = Math.sin(i/steps * Math.PI);
+	// var sinVel = Math.sin(i/steps * Math.PI);
+	// var velMax = 10;
 
-	//scale height curve dependent on distance
+	// //scale height curve dependent on distance
 	sinH *= Math.sqrt(dx*dx+dz*dz)/10;
-	sinVel *= velMax;
-	var v = new THREE.Vector3(dx/steps,dy/steps+sinH,dz/steps);
-
-	this.position.add(v);
-	this.updatePosition();
+	// sinVel *= velMax;
+	var pos = new THREE.Vector3(i*dx/steps,i*dy/steps+sinH,i*dz/steps).add(this.old);
+	this.setPosition(pos);
 
 	if (i < steps) {
 		setTimeout( function() {gThis.animate(dx,dy,dz,i+1);}, 500/steps);
