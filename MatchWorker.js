@@ -23,7 +23,6 @@ var match = new Match();
 // controller2 = new Human(match,"black");
 var controller1 = new AI(match,"white",new AlphaBetaAI(match.game));
 var controller2 = new AI(match,"black",new AlphaBetaAI(match.game));
-
 match.registerController(controller1);
 match.registerController(controller2);
 match.start();

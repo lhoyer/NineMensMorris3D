@@ -2,9 +2,9 @@ function Estimator (game) {
 	this.game = game;
 	this.log;
 
-	this.cset = [18,26,1,6,12,7];
-	this.cmove = [14,43,10,8,7,42,1086];
-	this.cjump = [10,1,16,1190];
+	this.cset = [18,26,1,6,12,7,0];
+	this.cmove = [14,43,10,8,7,42,0];
+	this.cjump = [10,1,16];
 	this.cwin = [1100];
 }
 
@@ -14,6 +14,8 @@ Estimator.prototype.evaluate = function() {
 	var oppCol = this.game.gamerColor==="white"?"black":"white";
 	var morrisInfo = this.morrisInfo(col);
 	var oppMorrisInfo = this.morrisInfo(oppCol);
+	var gpFreedom = this.gpFreedom(col);
+	var oppGpFreedom = this.gpFreedom(oppCol);
 	var evaluation = 0;
 	var r = [], c;
 	this.log = "";
@@ -26,27 +28,29 @@ Estimator.prototype.evaluate = function() {
 		c = this.cset;
 		r[0] = this.newMorris(col) - this.newMorris(oppCol);
 		r[1] = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
-		r[2] = this.blockedOpponentGPsNum(col) - this.blockedOpponentGPsNum(oppCol);
+		r[2] = oppGpFreedom.blockedGPs - gpFreedom.blockedGPs;
 		r[3] = this.game.gpNumber[col] - this.game.gpNumber[oppCol];
 		r[4] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
 		r[5] = morrisInfo.closableMorrisNum-1 - oppMorrisInfo.closableMorrisNum+1;
+		r[6] = gpFreedom.freeConnections - oppGpFreedom.freeConnections;
 	}
 	else if (status === "move") {
 		c = this.cmove;
 		r[0] = this.newMorris(col) - this.newMorris(oppCol);
 		r[1] = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
-		r[2] = this.blockedOpponentGPsNum(col) - this.blockedOpponentGPsNum(oppCol);
+		r[2] = oppGpFreedom.blockedGPs - gpFreedom.blockedGPs;
 		r[3] = this.game.gpNumber[col] - this.game.gpNumber[oppCol];
 		r[4] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
 		r[5] = this.doubleMorrisNum(col) - this.doubleMorrisNum(oppCol);
-		r[6] = this.win(col) - this.win(oppCol);
+		r[6] = gpFreedom.freeConnections - oppGpFreedom.freeConnections;
+		//r[6] = this.win(col) - this.win(oppCol);
 	}
 	else if (status === "jump") {
 		c = this.cjump;
 		r[0] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
 		r[1] = morrisInfo.closableMorrisNum-1 - oppMorrisInfo.closableMorrisNum+1;
 		r[2] = this.newMorris(col) - this.newMorris(oppCol);
-		r[3] = this.win(col) - this.win(oppCol);
+		//r[3] = this.win(col) - this.win(oppCol);
 	}
 	else if (status === "end") {
 		c = this.cwin;
@@ -117,25 +121,29 @@ Estimator.prototype.morrisInfo = function(color) {
 			closableMorrisNum:closableMorrisNum};
 };
 
-Estimator.prototype.blockedOpponentGPsNum = function(color) {
+Estimator.prototype.gpFreedom = function(color) {
+	var freeConnections = 0;
 	var blockedGPs = 0;
-	var opponentGPs = this.game.getGPsWithOtherColor(color);
+	var gps = this.game.getGPsWithColor(color);
 
-	for (var i = 0; i < opponentGPs.length; i++) {
-		var pl = opponentGPs[i].place
+	for (var i = 0; i < gps.length; i++) {
+		var pl = gps[i].place
 		if (pl !== "new" && pl !== "deleted") {
 			var blockedConnections = 0;
+
 			for (var j = 0; j < pl.connections.length; j++) {
 				if (pl.connections[j].gamingPiece !== undefined) {
 					blockedConnections++;
 				}
+				else
+					freeConnections++;
 			}
 			if (blockedConnections===pl.connections.length)
 				blockedGPs++;			
 		}
 	}
 
-	return blockedGPs;
+	return {blockedGPs:blockedGPs,freeConnections:freeConnections};
 };
 
 Estimator.prototype.doubleMorrisNum = function(color) {
