@@ -1,14 +1,12 @@
-function Estimator (game) {
-	this.game = game;
+function Estimator () {
 	this.log;
 
-	this.cset = [18,26,1,6,12,7,0];
-	this.cmove = [14,43,10,8,7,42,0];
-	this.cjump = [10,1,16];
-	this.cwin = [1100];
+	this.c = new EstCoefficient();
 }
 
-Estimator.prototype.evaluate = function() {
+Estimator.prototype.evaluate = function(game) {
+	this.game = game;
+
 	//get player who does last move
 	var col = this.game.gamerColor;
 	var oppCol = this.game.gamerColor==="white"?"black":"white";
@@ -25,7 +23,7 @@ Estimator.prototype.evaluate = function() {
 		status = this.game.lastStatus;
 
 	if (status === "set") {
-		c = this.cset;
+		c = this.c.cset;
 		r[0] = this.newMorris(col) - this.newMorris(oppCol);
 		r[1] = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
 		r[2] = oppGpFreedom.blockedGPs - gpFreedom.blockedGPs;
@@ -35,7 +33,7 @@ Estimator.prototype.evaluate = function() {
 		r[6] = gpFreedom.freeConnections - oppGpFreedom.freeConnections;
 	}
 	else if (status === "move") {
-		c = this.cmove;
+		c = this.c.cmove;
 		r[0] = this.newMorris(col) - this.newMorris(oppCol);
 		r[1] = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
 		r[2] = oppGpFreedom.blockedGPs - gpFreedom.blockedGPs;
@@ -46,14 +44,14 @@ Estimator.prototype.evaluate = function() {
 		//r[6] = this.win(col) - this.win(oppCol);
 	}
 	else if (status === "jump") {
-		c = this.cjump;
+		c = this.c.cjump;
 		r[0] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
 		r[1] = morrisInfo.closableMorrisNum-1 - oppMorrisInfo.closableMorrisNum+1;
 		r[2] = this.newMorris(col) - this.newMorris(oppCol);
 		//r[3] = this.win(col) - this.win(oppCol);
 	}
 	else if (status === "end") {
-		c = this.cwin;
+		c = this.c.cwin;
 		r[0] = this.win(col) - this.win(oppCol);
 		evaluation = this.win(col) - this.win(oppCol);
 	}
@@ -66,8 +64,6 @@ Estimator.prototype.evaluate = function() {
 			this.log += "["+i+"]" + r[i] + "*" + c[i] + "=" + r[i]*c[i];
 		}
 	}
-
-	// evaluation = this.gpNumber(col) - this.gpNumber(oppCol);
 
 	return evaluation;
 };

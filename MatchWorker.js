@@ -19,17 +19,34 @@ importScripts("Model/MDelete.js");
 importScripts("View/Resources.js");
 
 var match = new Match();
-// controller1 = new Human(match,"white");
-// controller2 = new Human(match,"black");
-var controller1 = new AI(match,"white",new AlphaBetaAI(match.game));
-var controller2 = new AI(match,"black",new AlphaBetaAI(match.game));
-match.registerController(controller1);
-match.registerController(controller2);
-match.start();
+var controller1, controller2;
 
 onmessage = function(e) {
 	var tag = e.data.tag;
 	var msg = e.data.msg;
+
+	if (tag === "controller1") {
+		if (msg === "human")
+			controller1 = new Human(match,"white");
+		else {
+			controller1 = new AI(match,"white",new AlphaBetaAI(match.game));
+			controller1.strategy.estimator.coefficients = msg;
+		}
+		match.registerController(controller1);
+	}
+
+	if (tag === "controller2") {
+		if (msg === "human")
+			controller2 = new Human(match,"black");
+		else {
+			controller2 = new AI(match,"black",new AlphaBetaAI(match.game));
+			controller2.strategy.estimator.coefficients = msg;
+		}
+		match.registerController(controller2);
+	}
+
+	if (tag === "start")
+		match.start();
 
 	if (tag === "mouseUp") {
 		if (controller1.handleMouseUp !== undefined)

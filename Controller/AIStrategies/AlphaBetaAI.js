@@ -6,7 +6,7 @@ function AlphaBetaAI(game) {
 	this.bestMove = [];
 	this.log = "";
 	this.game = game;
-	this.estimator = new Estimator(game); 
+	this.estimator = new Estimator(); 
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 	var ev;
 
 	if (depth == 0 || moves.length == 0 || this.game.status==="end") {
-		ev = this.estimator.evaluate();
+		ev = this.estimator.evaluate(this.game);
 		// avoid endless loops if the ai is going to win and can't decide for a strategy
 		// -> follow strategy with less moves
 		if (ev > 500)
