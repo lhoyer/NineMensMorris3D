@@ -55,6 +55,12 @@ Referee.prototype.start = function(i) {
 	this.matchWorker[i].addEventListener('message', onMatchWorkerMessage, false);
 }
 
-Referee.prototype.process = function() {
+Referee.prototype.sort = function() {
+	this.estCSet.sort(function(a,b) {return b.score - a.score});
+}
 
+Referee.prototype.toString = function() {
+	var s = JSON.stringify(this.estCSet);
+	s.replace(/"/g,"");
+	return s;
 }

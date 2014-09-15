@@ -5,7 +5,7 @@ var view,mouse,referee;
 var init = function() {
 	view = new View();
 
-	referee = new Referee(new Generator().coefficientSet(10));
+	referee = new Referee(new Generator().coefficientSet(100));
 	for (var i = 0; i < 8; i++)
 		referee.start(i);
 
