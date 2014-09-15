@@ -1,7 +1,7 @@
 function Estimator () {
 	this.log;
 
-	this.c = new EstCoefficient();
+	this.c = undefined;
 }
 
 Estimator.prototype.evaluate = function(game) {
@@ -56,6 +56,8 @@ Estimator.prototype.evaluate = function(game) {
 		evaluation = this.win(col) - this.win(oppCol);
 	}
 
+	if (this.c === undefined)
+		console.warn("Estimator evaluate: estimator coefficient undefined");
 	for (var i = 0; i < r.length; i++) {
 		if (r[i]===undefined) 
 			console.warn("Estimator evaluate: r at "+i+" unknown. " + status);

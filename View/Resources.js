@@ -30,5 +30,7 @@ var Resources = {
 
 	debugSelection:false,
 	debugAvailableMoves:false,
-	debugMiniMax:false
+	debugMiniMax:false,
+	logTime:false,
+	debugMatchEnd:true
 };

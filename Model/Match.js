@@ -3,6 +3,7 @@ function Match()
 {
 	this.game = new Game();
 	this.controllers = new Array();
+	this.movesCnt = 0;
 }
 
 Match.prototype.start = function() {
@@ -12,7 +13,9 @@ Match.prototype.start = function() {
 Match.prototype.doMove = function(move) {
 	var success = this.game.doMove(move);
 	var col;
-	console.debug("Evaluation " + this.game.gamerColor + ": " + this.game.evaluation);
+	
+	if (Resources.debugMiniMax)
+		console.debug("Evaluation " + this.game.gamerColor + ": " + this.game.evaluation);
 
 	move.confirm();
 	if (Resources.debugAvailableMoves)
@@ -25,6 +28,17 @@ Match.prototype.doMove = function(move) {
 		postMessage({tag:"help",msg:""});
 	postMessage({tag:"gamer",msg:this.game.gamerColor});
 	postMessage({tag:"status",msg:this.game.status});
+
+	// Handle end of game
+	if (match.game.status === "end" && match.game.gamerColor === "black") {
+		postMessage({tag:"win",msg:workerID});
+	}
+	if (match.game.status === "end" && match.game.gamerColor === "white") {
+		postMessage({tag:"loose",msg:workerID});
+	}
+	if (this.movesCnt++ > 100) {
+		postMessage({tag:"draw",msg:workerID});
+	}
 
 	var _this = this;
 	// setTimeout( function() {_this.notifyControllers()}, 100);

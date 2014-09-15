@@ -12,11 +12,15 @@ function AI(match,color,strategy)
 //-------------------------------------------------------------------------------------------------
 var time = 0;
 AI.prototype.doMove = function(game) {
-	time = 0;
-	var start = new Date().getTime();
+	if (Resources.logTime) {
+		time = 0;
+		var start = new Date().getTime();
+	}
 	var m = this.strategy.selectBestMove(game);
-	time += new Date().getTime() - start;
-	console.log(""+time);	
+	if (Resources.logTime) {
+		time += new Date().getTime() - start;
+		console.log(""+time);	
+	}
 	match.doMove(m);
 };
 

@@ -19,6 +19,7 @@ importScripts("Model/MJump.js");
 importScripts("Model/MDelete.js");
 importScripts("View/Resources.js");
 
+var workerID = 0;
 var match = new Match();
 var controller1, controller2;
 
@@ -46,8 +47,10 @@ onmessage = function(e) {
 		match.registerController(controller2);
 	}
 
-	if (tag === "start")
+	if (tag === "start") {
+		workerID = msg;
 		match.start();
+	}
 
 	if (tag === "mouseUp") {
 		if (controller1.handleMouseUp !== undefined)
