@@ -8,6 +8,7 @@ importScripts("Controller/Human.js");
 importScripts("Model/Match.js");
 importScripts("Model/Game.js");
 importScripts("Model/Estimator.js");
+importScripts("Model/EstCoefficient.js")
 importScripts("Model/Field.js");
 importScripts("Model/GamingPiece.js");
 importScripts("Model/Place.js");
@@ -30,7 +31,7 @@ onmessage = function(e) {
 			controller1 = new Human(match,"white");
 		else {
 			controller1 = new AI(match,"white",new AlphaBetaAI(match.game));
-			controller1.strategy.estimator.coefficients = msg;
+			controller1.strategy.estimator.c = msg;
 		}
 		match.registerController(controller1);
 	}
@@ -40,7 +41,7 @@ onmessage = function(e) {
 			controller2 = new Human(match,"black");
 		else {
 			controller2 = new AI(match,"black",new AlphaBetaAI(match.game));
-			controller2.strategy.estimator.coefficients = msg;
+			controller2.strategy.estimator.c = msg;
 		}
 		match.registerController(controller2);
 	}

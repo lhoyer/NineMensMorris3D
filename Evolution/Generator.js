@@ -1,6 +1,5 @@
 function Generator() {
-	this.csetRange = [
-						[0,100],	// new morris
+	this.csetRange = [[0,100],		// new morris
 						[0,100],	// morris number
 						[0,20],		// blocked GPs
 						[0,100],	// gp number
@@ -8,7 +7,7 @@ function Generator() {
 						[0,100],	// 3 piece constellation
 						[0,100]];	// free connections
 
-	this.cmoveRange = [[0,100]		// new morris
+	this.cmoveRange = [[0,100],		// new morris
 						[0,100],	// morris number
 						[0,100],	// blocked GPs
 						[0,100],	// gp number
@@ -20,7 +19,7 @@ function Generator() {
 						[0,100],	// 3 piece constellation
 						[0,100]];	// new morris
 
-	this.cwinRang = [[1000,3000]];
+	this.cwinRange = [[1000,3000]];
 }
 
 Generator.prototype.randomCoefficients = function() {
@@ -41,15 +40,16 @@ Generator.prototype.randomCoefficients = function() {
 		c[i] = Math.floor((Math.random() * this.cjumpRange[i][1]-this.cjumpRange[i][0]) + this.cjumpRange[i][0]);
 	estCoefficient.cjump = c;
 
-	estCoefficient.cwin = Math.floor((Math.random() * this.cwinRange[i][1]-this.cwinRange[i][0]) + this.cwinRange[i][0]);
+	estCoefficient.cwin = [];
+	estCoefficient.cwin[0] = Math.floor((Math.random() * this.cwinRange[0][1]-this.cwinRange[0][0]) + this.cwinRange[0][0]);
 
 	return estCoefficient;
 };
 
-Generator.prototype.estimatorSet = function(number) {
+Generator.prototype.coefficientSet = function(number) {
 	var set = [];
 	for (var i = 0; i < number; i++)
-		set[i] = randomEstimator();
+		set[i] = this.randomCoefficients();
 	return set;
 };
 

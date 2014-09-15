@@ -2,7 +2,7 @@ AlphaBetaAI.prototype = Object.create(AIStrategy.prototype);
 AlphaBetaAI.prototype.constructor = AlphaBetaAI;
 
 function AlphaBetaAI(game) {
-	this.standardDepth = 7;
+	this.standardDepth = 5;
 	this.bestMove = [];
 	this.log = "";
 	this.game = game;

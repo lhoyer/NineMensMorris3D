@@ -57,8 +57,10 @@ Estimator.prototype.evaluate = function(game) {
 	}
 
 	for (var i = 0; i < r.length; i++) {
-		if (r[i]===undefined || c[i]===undefined) 
-			console.warn("Estimator evaluate: r or c at "+i+" unknown.");
+		if (r[i]===undefined) 
+			console.warn("Estimator evaluate: r at "+i+" unknown. " + status);
+		else if (c[i]===undefined) 
+			console.warn("Estimator evaluate: c at "+i+" unknown. " + status);
 		else {
 			evaluation += r[i]*c[i];
 			this.log += "["+i+"]" + r[i] + "*" + c[i] + "=" + r[i]*c[i];

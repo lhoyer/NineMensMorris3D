@@ -28,3 +28,7 @@ Referee.prototype.recordScore = function(estC1,estC2,result) {
 	if (result === "loose")
 		estC2.score += 3;
 }
+
+Referee.prototype.process = function() {
+	
+}
