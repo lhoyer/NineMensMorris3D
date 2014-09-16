@@ -1,9 +1,12 @@
 Referee = function (estimatorCoefficientSet) {
 	this.estCSet = estimatorCoefficientSet;
-	this.nextMatch = 0;
+	for (var i = 0; i < this.estCSet.length; i++)
+		this.estCSet[i].score = 0;
 
+	this.nextMatch = 0;
 	this.matchWorker = [];
 	this.matchTracker = [];
+	this.moveCnt = [];
 }
 
 Referee.prototype.getNextMatch = function() {
@@ -23,7 +26,16 @@ Referee.prototype.getNextMatch = function() {
 	return undefined;
 };
 
-Referee.prototype.handleMatchEnd = function(result,id) {
+Referee.prototype.handleMatchEnd = function(result,msg) {
+	var id = msg[0];
+	var moveCnt = msg[1];
+
+	this.matchWorker[id].terminate();
+
+	if (this.matchTracker[id] == undefined) {
+		return;
+	}
+
 	if (result === "win")
 		this.matchTracker[id][0].score += 3;
 	if (result === "draw") {
@@ -32,11 +44,12 @@ Referee.prototype.handleMatchEnd = function(result,id) {
 	}
 	if (result === "loose")
 		this.matchTracker[id][1].score += 3;
+	this.moveCnt.push(moveCnt)
+	
 
 	if (Resources.debugMatchEnd)
-		console.log(result + ": " + this.matchTracker[id][2]);
+		console.log(result + " in " + moveCnt + " moves: " + this.matchTracker[id][2]);
 
-	this.matchWorker[id].terminate();
 	this.start(id);
 }
 
@@ -53,6 +66,19 @@ Referee.prototype.start = function(i) {
 	this.matchWorker[i].postMessage({tag:"start",msg:i});
 	this.matchTracker[i] = [nextMatch[0],nextMatch[1],this.nextMatch-1];
 	this.matchWorker[i].addEventListener('message', onMatchWorkerMessage, false);
+}
+
+Referee.prototype.startHuman = function() {
+	var est1 = {cset:[33,92,17,55,28,84,77],cmove:[86,83,20,90,13,91,3],cjump:[43,39,49],cwin:[2510],score:285};
+	var est2 = {cset:[96,5,17,1,48,19,37],cmove:[21,65,15,58,85,3,14],cjump:[33,5,25],cwin:[1851],score:333};
+	this.matchWorker[0] = new Worker("MatchWorker.js");
+
+	this.matchWorker[0].postMessage({tag:"controller1",
+							 msg: "human"});
+	this.matchWorker[0].postMessage({tag:"controller2",
+							 msg: est2});
+	this.matchWorker[0].postMessage({tag:"start",msg:0});
+	this.matchWorker[0].addEventListener('message', onMatchWorkerMessage, false);
 }
 
 Referee.prototype.sort = function() {

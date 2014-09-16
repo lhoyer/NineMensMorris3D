@@ -3,7 +3,7 @@ function Match()
 {
 	this.game = new Game();
 	this.controllers = new Array();
-	this.movesCnt = 0;
+	this.moveCnt = 0;
 }
 
 Match.prototype.start = function() {
@@ -31,17 +31,17 @@ Match.prototype.doMove = function(move) {
 
 	// Handle end of game
 	if (match.game.status === "end" && match.game.gamerColor === "black") {
-		postMessage({tag:"win",msg:workerID});
+		postMessage({tag:"win",msg:[workerID,this.moveCnt]});
 	}
 	if (match.game.status === "end" && match.game.gamerColor === "white") {
-		postMessage({tag:"loose",msg:workerID});
+		postMessage({tag:"loose",msg:[workerID,this.moveCnt]});
 	}
-	if (this.movesCnt++ > 100) {
-		postMessage({tag:"draw",msg:workerID});
+	if (this.moveCnt++ > 200) {
+		self.postMessage({tag:"draw",msg:[workerID,this.moveCnt]});
 	}
 
 	var _this = this;
-	// setTimeout( function() {_this.notifyControllers()}, 100);
+	// setTimeout( function() {_this.notifyControllers()}, 1000);
 	this.notifyControllers();
 }
 
