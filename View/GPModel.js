@@ -23,12 +23,15 @@ GPModel.prototype.updatePlace = function(placeID) {
 	}
 
 	this.placePos = Resources["place"+placeID];
-	// this.old = this.position.clone();
-	// var dx = this.placePos.x - this.position.x;
-	// var dy = this.placePos.y - this.position.y;
-	// var dz = this.placePos.z - this.position.z;
-	// this.animateMove(dx,dy,dz,1);
-	this.setPosition(this.placePos);
+	if (Resources.animate) {
+		this.old = this.position.clone();
+		var dx = this.placePos.x - this.position.x;
+		var dy = this.placePos.y - this.position.y;
+		var dz = this.placePos.z - this.position.z;
+		this.animateMove(dx,dy,dz,1);
+	}
+	else
+		this.setPosition(this.placePos);
 }
 
 GPModel.prototype.animateMove = function(dx,dy,dz,i) {
