@@ -74,9 +74,9 @@ Referee.prototype.startHuman = function() {
 	this.matchWorker[0] = new Worker("MatchWorker.js");
 
 	this.matchWorker[0].postMessage({tag:"controller1",
-							 msg: "human"});
+							 msg: est1});
 	this.matchWorker[0].postMessage({tag:"controller2",
-							 msg: est2});
+							 msg: "human"});
 	this.matchWorker[0].postMessage({tag:"start",msg:0});
 	this.matchWorker[0].addEventListener('message', onMatchWorkerMessage, false);
 }
