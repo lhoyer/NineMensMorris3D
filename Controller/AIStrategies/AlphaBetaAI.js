@@ -19,7 +19,7 @@ AlphaBetaAI.prototype.selectBestMove = function() {
 		postMessage({tag:"log",msg:this.log});
 	var m;	
 	if (Resources.airandom)
-		m = this.bestMove[Math.floor(Math.random * this.bestMove.length)];
+		m = this.bestMove[Math.floor(Math.random() * this.bestMove.length)];
 	else
 		m = this.bestMove[0];
 	return m;
