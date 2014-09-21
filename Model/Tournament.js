@@ -1,4 +1,4 @@
-Referee = function (estimatorCoefficientSet) {
+Tournament = function (estimatorCoefficientSet) {
 	this.estCSet = estimatorCoefficientSet;
 	for (var i = 0; i < this.estCSet.length; i++)
 		this.estCSet[i].score = 0;
@@ -9,7 +9,7 @@ Referee = function (estimatorCoefficientSet) {
 	this.moveCnt = [];
 }
 
-Referee.prototype.getNextMatch = function() {
+Tournament.prototype.getNextMatch = function() {
 	var cnt = 0;
 	for (var i = 0; i < this.estCSet.length; i++) {
 		for (var j = 0; j < this.estCSet.length; j++) {
@@ -26,7 +26,7 @@ Referee.prototype.getNextMatch = function() {
 	return undefined;
 };
 
-Referee.prototype.handleMatchEnd = function(result,msg) {
+Tournament.prototype.handleMatchEnd = function(result,msg) {
 	var id = msg[0];
 	var moveCnt = msg[1];
 
@@ -53,8 +53,8 @@ Referee.prototype.handleMatchEnd = function(result,msg) {
 	this.start(id);
 }
 
-Referee.prototype.start = function(i) {
-	this.matchWorker[i] = new Worker("MatchWorker.js");
+Tournament.prototype.start = function(i) {
+	this.matchWorker[i] = new Worker("Model/MatchWorker.js");
 	var nextMatch = this.getNextMatch();
 	if (nextMatch === undefined)
 		return;
@@ -68,10 +68,10 @@ Referee.prototype.start = function(i) {
 	this.matchWorker[i].addEventListener('message', onMatchWorkerMessage, false);
 }
 
-Referee.prototype.startHuman = function() {
+Tournament.prototype.startHuman = function() {
 	var est1 = {cset:[33,92,17,55,28,84,77],cmove:[86,83,20,90,13,91,3],cjump:[43,39,49],cwin:[2510],score:285};
 	var est2 = {cset:[96,5,17,1,48,19,37],cmove:[21,65,15,58,85,3,14],cjump:[33,5,25],cwin:[1851],score:333};
-	this.matchWorker[0] = new Worker("MatchWorker.js");
+	this.matchWorker[0] = new Worker("Model/MatchWorker.js");
 
 	this.matchWorker[0].postMessage({tag:"controller1",
 							 msg: est1});
@@ -81,11 +81,11 @@ Referee.prototype.startHuman = function() {
 	this.matchWorker[0].addEventListener('message', onMatchWorkerMessage, false);
 }
 
-Referee.prototype.sort = function() {
+Tournament.prototype.sort = function() {
 	this.estCSet.sort(function(a,b) {return b.score - a.score});
 }
 
-Referee.prototype.toString = function() {
+Tournament.prototype.toString = function() {
 	var s = JSON.stringify(this.estCSet);
 	s.replace(/"/g,"");
 	return s;

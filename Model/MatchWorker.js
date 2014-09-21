@@ -1,23 +1,23 @@
-importScripts("js/three.min.js");
-importScripts("Controller/Controller.js");
-importScripts("Controller/AI.js");
-importScripts("Controller/AIStrategies/AIStrategy.js");
-importScripts("Controller/AIStrategies/AlphaBetaAI.js");
-importScripts("Controller/AIStrategies/MinMaxAI.js");
-importScripts("Controller/Human.js");
-importScripts("Model/Match.js");
-importScripts("Model/Game.js");
-importScripts("Model/Estimator.js");
-importScripts("Model/EstCoefficient.js")
-importScripts("Model/Field.js");
-importScripts("Model/GamingPiece.js");
-importScripts("Model/Place.js");
-importScripts("Model/Move.js");
-importScripts("Model/MSet.js");
-importScripts("Model/MMove.js");
-importScripts("Model/MJump.js");
-importScripts("Model/MDelete.js");
-importScripts("View/Resources.js");
+importScripts("../js/three.min.js");
+importScripts("../Controller/Controller.js");
+importScripts("../Controller/AI.js");
+importScripts("../Controller/AIStrategies/AIStrategy.js");
+importScripts("../Controller/AIStrategies/AlphaBetaAI.js");
+importScripts("../Controller/AIStrategies/MinMaxAI.js");
+importScripts("../Controller/Human.js");
+importScripts("Match.js");
+importScripts("Game.js");
+importScripts("Estimator.js");
+importScripts("EstCoefficient.js")
+importScripts("Field.js");
+importScripts("GamingPiece.js");
+importScripts("Place.js");
+importScripts("Move.js");
+importScripts("MSet.js");
+importScripts("MMove.js");
+importScripts("MJump.js");
+importScripts("MDelete.js");
+importScripts("../View/Resources.js");
 
 var workerID = 0;
 var match = new Match();
