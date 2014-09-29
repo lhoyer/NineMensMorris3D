@@ -83,6 +83,8 @@ Tournament.prototype.startHuman = function() {
 
 Tournament.prototype.sort = function() {
 	this.estCSet.sort(function(a,b) {return b.score - a.score});
+	for (var i = 0; i < this.estCSet.length; i++)
+		this.estCSet[i].id = 'E' + i;
 }
 
 Tournament.prototype.toString = function() {

@@ -5,6 +5,10 @@ var view,mouse,tournament;
 var init = function() {
 	view = new View();
 
+	var e = new Evolution();
+	var c = new Generator().coefficientSet(2);
+	e.crossover(c[0],c[1]);
+
 	if (!Resources.human) {
 		Resources.animate = false;
 		Resources.enableView = false;
