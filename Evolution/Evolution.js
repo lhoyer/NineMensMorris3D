@@ -8,30 +8,23 @@ Evolution.prototype.crossover = function(p1,p2) {
 	//crossover point between 1 and 17 -> minimum one coefficient from one parent
 	var crossoverPoint = Math.floor(Math.random()*17)+1;
 
-	for (var i = 0; i < 7; i++) {
+	for (var i = 0; i < 18; i++) {
 		if (i < crossoverPoint)
-			c.cset[i] = p1.cset[i];
+			this.copyCoefficient(p1,c,i);
 		else
-			c.cset[i] = p2.cset[i];
-	}
-	for (var i = 0; i < 7; i++) {
-		if (i+7 < crossoverPoint)
-			c.cmove[i] = p1.cmove[i];
-		else
-			c.cmove[i] = p2.cmove[i];
-	}
-	for (var i = 0; i < 3; i++) {
-		if (i+14 < crossoverPoint)
-			c.cjump[i] = p1.cjump[i];
-		else
-			c.cjump[i] = p2.cjump[i];
-	}
-	for (var i = 0; i < 1; i++) {
-		if (i+17 < crossoverPoint)
-			c.cwin[i] = p1.cwin[i];
-		else
-			c.cwin[i] = p2.cwin[i];
+			this.copyCoefficient(p2,c,i);
 	}
 	
 	return c;
+};
+
+Evolution.prototype.copyCoefficient = function(src,dest,idx) {
+	if (idx < 7)
+		dest.cset[idx] = src.cset[idx];
+	else if (idx < 14)
+		dest.cmove[idx-7] = src.cmove[idx-7];
+	else if (idx < 17)
+		dest.cjump[idx-14] = src.cjump[idx-14];
+	else
+		dest.cwin[0] = src.cwin[0];
 };
