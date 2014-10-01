@@ -9,6 +9,16 @@ var init = function() {
 	var c = new Generator().coefficientSet(2);
 	e.crossover(c[0],c[1]);
 
+	start();
+};
+
+var start = function() {
+	//reset if neccessary
+	if (tournament !== undefined) {
+		tournament.cancel();
+		view.resetGPs();
+	}
+
 	if (!Resources.human) {
 		Resources.animate = false;
 		Resources.enableView = false;
@@ -23,10 +33,9 @@ var init = function() {
 		Resources.animate = true;
 		Resources.enableView = true;
 		tournament.startHuman();
+		mouse = new Mouse(tournament.matchWorker[0]);
 	}
-
-	mouse = new Mouse(tournament.matchWorker[0]);
-};
+}
 
 var onMatchWorkerMessage = function(e) {
 	var tag = e.data.tag;

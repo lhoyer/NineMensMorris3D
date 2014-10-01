@@ -9,6 +9,11 @@ Tournament = function (estimatorCoefficientSet) {
 	this.moveCnt = [];
 }
 
+Tournament.prototype.cancel = function() {
+	for (var i = 0; i < this.matchWorker.length; i++)
+		this.matchWorker[i].terminate();
+};
+
 Tournament.prototype.getNextMatch = function() {
 	var cnt = 0;
 	for (var i = 0; i < this.estCSet.length; i++) {

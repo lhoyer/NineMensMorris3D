@@ -12,12 +12,13 @@
 			#title {
 				position: absolute;
 				top: 0px;
+				left: 30px;
 				width: 100%;
 				color: #FFFFFF;
 				padding: 20px;
 				font-family: Monospace;
 				font-size: 50px;
-				text-align: center;
+				text-align: left;
 				z-index: 1;
 				-webkit-user-select: none; /* Chrome/Safari */        
 				-moz-user-select: none; /* Firefox */
@@ -65,6 +66,70 @@
 				-moz-user-select: none; /* Firefox */
 				-ms-user-select: none; /* IE10+ */
 			}
+			#settings {
+				position: absolute;
+				top: -2px;
+				right: 10px;
+				color: #FFFFFF;
+				padding: 0px;
+				font-family: Monospace;
+				font-size: 30px;
+				text-align: center;
+				z-index: 1;
+			}
+			.button-style {
+				-moz-box-shadow:inset 0px 1px 0px 0px #f5978e;
+				-webkit-box-shadow:inset 0px 1px 0px 0px #f5978e;
+				box-shadow:inset 0px 1px 0px 0px #f5978e;
+				background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f) );
+				background:-moz-linear-gradient( center top, #f24537 5%, #c62d1f 100% );
+				filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f');
+				background-color:#f24537;
+				-webkit-border-top-left-radius:0px;
+				-moz-border-radius-topleft:0px;
+				border-top-left-radius:0px;
+				-webkit-border-top-right-radius:0px;
+				-moz-border-radius-topright:0px;
+				border-top-right-radius:0px;
+				-webkit-border-bottom-right-radius:15px;
+				-moz-border-radius-bottomright:15px;
+				border-bottom-right-radius:15px;
+				-webkit-border-bottom-left-radius:15px;
+				-moz-border-radius-bottomleft:15px;
+				border-bottom-left-radius:15px;
+				text-indent:0px;
+				border:0 solid #d02718;
+				display:inline-block;
+				color:#ffffff;
+				font-family:Arial;
+				font-size:15px;
+				font-weight:bold;
+				font-style:normal;
+				height:50px;
+				line-height:50px;
+				width:100px;
+				text-decoration:none;
+				text-align:center;
+				text-shadow:1px 1px 0px #810e05;
+			}
+			.button-style:hover {
+				background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24537) );
+				background:-moz-linear-gradient( center top, #c62d1f 5%, #f24537 100% );
+				filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24537');
+				background-color:#c62d1f;
+			}.button-style:active {
+				position:relative;
+				top:1px;
+			}
+			.difficulty-box {
+				text-indent:15px;
+				height:48px;
+			}
+			.mode-box {
+				text-indent:5px;
+				height:48px;
+				width:180px;
+			}
 		</style>
 	</head>	
 
@@ -73,6 +138,19 @@
 		<div id="gamer">Gamer 1 (White)</div>
 		<div id="status">Set Gaming Piece</div>
 		<div id="help"></div>
+		<div id="settings">
+			<input name="restart" type="button" value="Restart" class="button-style" onclick="start()">
+			<select name="mode" class="mode-box button-style">
+				<option value=HH>Human vs Human</option>
+				<option selected value=HC>Human vs Computer</option>
+				<option value=CH>Computer vs Human</option>
+		    </select>
+			<select name="ai" class="difficulty-box button-style">
+				<option selected value=HH>Difficult</option>
+				<option value=HC>Medium</option>
+				<option value=CH>Easy</option>
+		    </select>
+	    </div>
 
 		<!--THREE.js-->
 		<script src="js/three.min.js"></script>

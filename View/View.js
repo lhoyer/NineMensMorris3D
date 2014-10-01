@@ -52,6 +52,15 @@ View.prototype.createGPs = function() {
   	}
 };
 
+View.prototype.resetGPs = function() {
+	for (var i = 0; i < 9; i++)
+		this.gps[i].setPosition(new THREE.Vector3(-80,0,i*10-45));
+	for (var i = 0; i < 9; i++)
+		this.gps[i+9].setPosition(new THREE.Vector3(80,0,i*10-45));
+	for (var i = 0; i < 18; i++)
+		this.gps[i].setVisible(true);
+}
+
 View.prototype.createPreviewGPs = function() {
 	this.previewWhite = new GPModel("white");
 	this.previewWhite.setVisible(false);
