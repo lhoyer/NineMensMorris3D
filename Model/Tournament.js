@@ -73,15 +73,34 @@ Tournament.prototype.start = function(i) {
 	this.matchWorker[i].addEventListener('message', onMatchWorkerMessage, false);
 }
 
-Tournament.prototype.startHuman = function() {
+Tournament.prototype.startHuman = function(mode) {
 	var est1 = {cset:[33,92,17,55,28,84,77],cmove:[86,83,20,90,13,91,3],cjump:[43,39,49],cwin:[2510],score:285};
 	var est2 = {cset:[96,5,17,1,48,19,37],cmove:[21,65,15,58,85,3,14],cjump:[33,5,25],cwin:[1851],score:333};
+
 	this.matchWorker[0] = new Worker("Model/MatchWorker.js");
 
-	this.matchWorker[0].postMessage({tag:"controller1",
-							 msg: est1});
-	this.matchWorker[0].postMessage({tag:"controller2",
+	if (mode === "hh") {
+		this.matchWorker[0].postMessage({tag:"controller1",
 							 msg: "human"});
+		this.matchWorker[0].postMessage({tag:"controller2",
+							 msg: "human"});
+	}
+	else if (mode === "hc") {
+		this.matchWorker[0].postMessage({tag:"controller1",
+								 msg: "human"});
+		this.matchWorker[0].postMessage({tag:"controller2",
+								 msg: est2});		
+	}
+	else if (mode === "ch") {
+		this.matchWorker[0].postMessage({tag:"controller1",
+								 msg: est1});
+		this.matchWorker[0].postMessage({tag:"controller2",
+								 msg: "human"});
+	}
+	else {
+		console.warn("Tournament startHuman() get no parameter");
+	}
+
 	this.matchWorker[0].postMessage({tag:"start",msg:0});
 	this.matchWorker[0].addEventListener('message', onMatchWorkerMessage, false);
 }

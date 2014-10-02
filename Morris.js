@@ -9,10 +9,10 @@ var init = function() {
 	var c = new Generator().coefficientSet(2);
 	e.crossover(c[0],c[1]);
 
-	start();
+	start("hc");
 };
 
-var start = function() {
+var start = function(mode) {
 	//reset if neccessary
 	if (tournament !== undefined) {
 		tournament.cancel();
@@ -32,9 +32,15 @@ var start = function() {
 		tournament = new Tournament(new Generator().coefficientSet(1));
 		Resources.animate = true;
 		Resources.enableView = true;
-		tournament.startHuman();
+		tournament.startHuman(mode);
 		mouse = new Mouse(tournament.matchWorker[0]);
 	}
+}
+
+var changeMode = function() {
+	var mode = document.getElementById("mode").options[document.getElementById("mode").selectedIndex].value;
+	console.log("changeMode: " + mode);
+	start(mode);
 }
 
 var onMatchWorkerMessage = function(e) {

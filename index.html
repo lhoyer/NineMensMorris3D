@@ -140,10 +140,10 @@
 		<div id="help"></div>
 		<div id="settings">
 			<input name="restart" type="button" value="Restart" class="button-style" onclick="start()">
-			<select name="mode" class="mode-box button-style">
-				<option value=HH>Human vs Human</option>
-				<option selected value=HC>Human vs Computer</option>
-				<option value=CH>Computer vs Human</option>
+			<select id="mode" name="mode" onChange="changeMode()" class="mode-box button-style">
+				<option value=hh>Human vs Human</option>
+				<option selected value=hc>Human vs Computer</option>
+				<option value=ch>Computer vs Human</option>
 		    </select>
 			<select name="ai" class="difficulty-box button-style">
 				<option selected value=HH>Difficult</option>
