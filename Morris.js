@@ -1,4 +1,4 @@
-"use strict";
+//"use strict";
 
 var view,mouse,tournament,startTime;
 
@@ -20,12 +20,12 @@ var start = function(mode) {
 		Resources.animate = false;
 		Resources.enableView = false;
 
-		var e = new Evolution(Generations.g1);
+		var e = new Evolution(Resources.lastGeneration);
 		var ng = e.newGeneration();
 		console.log(ng);
 		// tournament = new Tournament(new Generator().coefficientSet(100));
 		tournament = new Tournament(ng);
-		for (var i = 0; i < cores; i++)
+		for (var i = 0; i < Resources.cores; i++)
 			tournament.start(i);
 	}
 	else {

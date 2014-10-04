@@ -41,8 +41,10 @@ Match.prototype.doMove = function(move) {
 	}
 
 	var _this = this;
-	// setTimeout( function() {_this.notifyControllers()}, 1000);
-	this.notifyControllers();
+	if (Resources.human)
+		setTimeout( function() {_this.notifyControllers()}, 100);
+	else
+		this.notifyControllers();
 }
 
 Match.prototype.notifyControllers = function() {
