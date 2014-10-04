@@ -1,8 +1,9 @@
 "use strict";
 
-var view,mouse,tournament;
+var view,mouse,tournament,startTime;
 
 var init = function() {
+	startTime = new Date().getTime();
 	view = new View();
 
 	var e = new Evolution();
@@ -77,7 +78,7 @@ var onMatchWorkerMessage = function(e) {
 
 var render = function() {
 	requestAnimationFrame(render);
-	if (updateRender === true) {
+	if (updateRender === true || new Date().getTime() < startTime + 10000) {
 		view.renderer.render(view.scene, view.camera);
 		updateRender = false;
 	}

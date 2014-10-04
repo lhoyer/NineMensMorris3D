@@ -14,7 +14,6 @@ function View () {
 	//Field
 	this.createField();
 	this.createGPs();
-	this.createPreviewGPs();
 
 	//camera
 	this.initCamera();
@@ -36,8 +35,9 @@ function View () {
 View.prototype.createGPs = function() {
 	this.gps = [];
 	this.gpWhiteProto = new GPModel("white",this.whiteProtoCallback);
-	this.gpWhiteProto.setVisible("false");
+	this.gpWhiteProto.setVisible(false);
 	this.gpBlackProto = new GPModel("black",this.blackProtoCallback);
+	this.gpBlackProto.setVisible(false);
 };
 
 View.prototype.whiteProtoCallback = function() {
@@ -49,6 +49,8 @@ View.prototype.whiteProtoCallback = function() {
 	  	gp.setVisible(true);
 	  	view.gps[i] = gp;
   	}
+  	view.previewWhite = view.gpWhiteProto.clone();
+  	view.previewWhite.setVisible(false);
 };
 
 View.prototype.blackProtoCallback = function() {
@@ -60,6 +62,8 @@ View.prototype.blackProtoCallback = function() {
 	  	gp.setVisible(true);
 	  	view.gps[i+9] = gp;
   	}
+  	view.previewBlack = view.gpBlackProto.clone();
+  	view.previewBlack.setVisible(false);
 };
 
 View.prototype.resetGPs = function() {
@@ -70,13 +74,6 @@ View.prototype.resetGPs = function() {
 	for (var i = 0; i < 18; i++)
 		this.gps[i].setVisible(true);
 }
-
-View.prototype.createPreviewGPs = function() {
-	this.previewWhite = new GPModel("white");
-	this.previewWhite.setVisible(false);
-	this.previewBlack = new GPModel("black");
-	this.previewBlack.setVisible(false);
-};
 
 View.prototype.createField = function() {
 	this.field = new Model(Resources.fieldModel);

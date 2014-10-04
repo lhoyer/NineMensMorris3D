@@ -15,7 +15,6 @@ function Model(file,callback) {
   		_this.sceneProto = collada.scene;
 		_this.dae = collada.scene.clone();
 		_this.material = _this.dae.children[0].children[0].material;
-		// var skin = collada.skins[ 0 ];
 		_this.updateScale();
 		_this.updatePosition();
 		_this.updateRotation();
@@ -24,7 +23,7 @@ function Model(file,callback) {
 		view.scene.add(_this.dae);
 		if (callback !== undefined)
 			callback();
-		setTimeout( function() {updateRender = true}, 1000);
+		setTimeout( function() {updateRender = true}, 0);
 	});
 }
 
@@ -32,14 +31,22 @@ function Model(file,callback) {
 Model.prototype.clone = function(cloneContainer) {
 	if (cloneContainer === undefined)
 		cloneContainer = new Model();
-	// cloneContainer.dae = new THREE.Mesh( this.dae.children[0].children[0].geometry, this.dae.children[0].children[0].material);
+
+	//clone model and material
 	cloneContainer.dae = this.sceneProto.clone();
+	cloneContainer.dae.children[0].children[0].material = cloneContainer.dae.children[0].children[0].material.clone();
+	cloneContainer.material = cloneContainer.dae.children[0].children[0].material;
+
+	//clone custom transformation
 	cloneContainer.setRotation(this.rotation);
 	cloneContainer.setPosition(this.position);
 	cloneContainer.setScale(this.scale);
 	cloneContainer.setVisible(this.visible);
+
+	//updat render
 	view.scene.add(cloneContainer.dae);
 	updateRender = true;
+
 	return cloneContainer;
 };
 
