@@ -30,7 +30,7 @@ var start = function(mode) {
 			tournament.start(i);
 	}
 	else {
-		tournament = new Tournament(new Generator().coefficientSet(1));
+		tournament = new Tournament();
 		Resources.animate = true;
 		Resources.enableView = true;
 		tournament.startHuman(mode);
@@ -83,6 +83,13 @@ var render = function() {
 		updateRender = false;
 	}
 };
+
+var stringify = function(obj) {
+	var s = JSON.stringify(obj);
+	s.replace(/"/g,"");
+	return s;
+}
+
 
 
 init();

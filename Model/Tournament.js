@@ -1,12 +1,15 @@
 Tournament = function (estimatorCoefficientSet) {
-	this.estCSet = estimatorCoefficientSet;
-	for (var i = 0; i < this.estCSet.length; i++)
-		this.estCSet[i].score = 0;
-
 	this.nextMatch = 0;
 	this.matchWorker = [];
 	this.matchTracker = [];
 	this.moveCnt = [];
+
+	if (estimatorCoefficientSet === undefined)
+		return;
+
+	this.estCSet = estimatorCoefficientSet;
+	for (var i = 0; i < this.estCSet.length; i++)
+		this.estCSet[i].score = 0;
 }
 
 Tournament.prototype.cancel = function() {
@@ -109,10 +112,4 @@ Tournament.prototype.sort = function() {
 	this.estCSet.sort(function(a,b) {return b.score - a.score});
 	for (var i = 0; i < this.estCSet.length; i++)
 		this.estCSet[i].id = 'E' + i;
-}
-
-Tournament.prototype.toString = function() {
-	var s = JSON.stringify(this.estCSet);
-	s.replace(/"/g,"");
-	return s;
 }
