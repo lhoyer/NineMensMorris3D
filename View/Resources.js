@@ -1,8 +1,8 @@
 var Resources = {
 	fieldModel:"models/Field.dae",
-	gpWhiteModel:"models/GamingPiece_White.dae",
-	gpBlackModel:"models/GamingPiece_Black.dae",
-
+	gpWhiteModelName:"models/GamingPiece_White.dae",
+	gpBlackModelName:"models/GamingPiece_Black.dae",
+	
 	place000:new THREE.Vector3(-40.5,	2.6,	40.5),
 	place001:new THREE.Vector3(0,		2.6,	40.5),
 	place010:new THREE.Vector3(40.5,	2.6,	40.5),

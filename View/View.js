@@ -34,21 +34,31 @@ function View () {
 // Game elements
 //-------------------------------------------------------------------------------------------------
 View.prototype.createGPs = function() {
-	var gp;
 	this.gps = [];
+	this.gpWhiteProto = new GPModel("white",this.whiteProtoCallback);
+	this.gpWhiteProto.setVisible("false");
+	this.gpBlackProto = new GPModel("black",this.blackProtoCallback);
+};
 
+View.prototype.whiteProtoCallback = function() {
+	var gp;
 	for (var i = 0; i < 9; i++)
 	{
-  		gp = new GPModel("white");
+  		gp = view.gpWhiteProto.clone();
 	  	gp.setPosition(new THREE.Vector3(-80,0,i*10-45));
 	  	gp.setVisible(true);
-	  	this.gps.push(gp);
+	  	view.gps[i] = gp;
   	}
-  	for (var i = 0; i < 9; i++) 
-  	{
-  		gp = new GPModel("black");
+};
+
+View.prototype.blackProtoCallback = function() {
+	var gp;
+	for (var i = 0; i < 9; i++)
+	{
+  		gp = view.gpBlackProto.clone();
 	  	gp.setPosition(new THREE.Vector3(80,0,i*10-45));
-	  	this.gps.push(gp);
+	  	gp.setVisible(true);
+	  	view.gps[i+9] = gp;
   	}
 };
 

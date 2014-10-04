@@ -1,13 +1,18 @@
-function Model(file) {
+function Model(file,callback) {
 	this.rotation = new THREE.Euler(0,0,0);
 	this.position = new THREE.Vector3(0,0,0);
 	this.scale = new THREE.Vector3(0,0,0);
 	this.visible = true;
+	this.dae;
+
+	if (file === undefined)
+		return;
 
 	var _this = this;
 	var loader = new THREE.ColladaLoader();
 	loader.options.convertUpAxis = true;
   	loader.load( file, function( collada ) {
+  		_this.sceneProto = collada.scene;
 		_this.dae = collada.scene.clone();
 		_this.material = _this.dae.children[0].children[0].material;
 		// var skin = collada.skins[ 0 ];
@@ -17,9 +22,26 @@ function Model(file) {
 		_this.updateVisible();
 		//add to scene
 		view.scene.add(_this.dae);
+		if (callback !== undefined)
+			callback();
 		setTimeout( function() {updateRender = true}, 1000);
 	});
 }
+
+//use clone container to define model type which is returned (e.g. GPModel)
+Model.prototype.clone = function(cloneContainer) {
+	if (cloneContainer === undefined)
+		cloneContainer = new Model();
+	// cloneContainer.dae = new THREE.Mesh( this.dae.children[0].children[0].geometry, this.dae.children[0].children[0].material);
+	cloneContainer.dae = this.sceneProto.clone();
+	cloneContainer.setRotation(this.rotation);
+	cloneContainer.setPosition(this.position);
+	cloneContainer.setScale(this.scale);
+	cloneContainer.setVisible(this.visible);
+	view.scene.add(cloneContainer.dae);
+	updateRender = true;
+	return cloneContainer;
+};
 
 Model.prototype.setVisible = function(visible) {
 	this.visible = visible;

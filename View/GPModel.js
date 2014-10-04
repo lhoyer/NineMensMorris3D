@@ -1,18 +1,25 @@
 GPModel.prototype = Object.create(Model.prototype);
 GPModel.prototype.constructor = GPModel;
 
-function GPModel(color) {
+function GPModel(color,callback) {
 	this.color = color;
 	if (color == "white") {
-	  	Model.call(this,Resources.gpWhiteModel);
+	  	Model.call(this,Resources.gpWhiteModelName,callback);
   	}
   	else if (color == "black") {
-	  	Model.call(this,Resources.gpBlackModel);
+	  	Model.call(this,Resources.gpBlackModelName,callback);
   	}
   	else
-  		console.error("Try to create a GPModel. Color unknown.");
+  		Model.call(this);
 	
 	this.setScale(new THREE.Vector3(2,2,2));
+}
+
+GPModel.prototype.clone = function() {
+	var cloneContainer = new GPModel();
+	cloneContainer = Model.prototype.clone.call(this,cloneContainer);
+	cloneContainer.color = this.color;
+	return cloneContainer;
 }
 
 
