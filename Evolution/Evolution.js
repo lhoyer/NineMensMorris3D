@@ -10,7 +10,8 @@ Evolution.prototype.newGeneration = function() {
 
 	for (var i = 0; i < 10; i++) {
 		parents[i] = this.estCSet[i];
-		children.push(parents[i]);
+		//use crossover to copy parent and give him the right generation id
+		children.push(this.crossover(parents[i],parents[i]));
 		children[children.length-1].parents = parents[i].id;
 	}
 
@@ -38,6 +39,7 @@ Evolution.prototype.crossover = function(p1,p2) {
 		else
 			this.copyCoefficient(p2,c,i);
 	}
+	c.id = "G" + (Generations.lastGeneration+1);
 	c.parents = p1.id + p2.id;
 	
 	return c;

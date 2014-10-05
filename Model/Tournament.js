@@ -115,7 +115,7 @@ Tournament.prototype.startHuman = function(mode) {
 Tournament.prototype.sort = function() {
 	this.estCSet.sort(function(a,b) {return b.score - a.score});
 	for (var i = 0; i < this.estCSet.length; i++)
-		this.estCSet[i].id = 'E' + i;
+		this.estCSet[i].id = this.estCSet[i].id.substring(0,2) + 'E' + i;
 }
 
 Tournament.prototype.toString = function() {

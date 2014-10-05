@@ -20,7 +20,7 @@ var start = function(mode) {
 		Resources.animate = false;
 		Resources.enableView = false;
 
-		var e = new Evolution(Resources.lastGeneration);
+		var e = new Evolution(Generations["G"+Generations.lastGeneration]);
 		var ng = e.newGeneration();
 		console.log(ng);
 		// tournament = new Tournament(new Generator().coefficientSet(100));
