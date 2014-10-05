@@ -42,8 +42,8 @@ var Resources = {
 	aiBlack : Generations["G"+Generations.lastGeneration][0],
 
 	human:false,
-	drawLimit:150,
-	cores:4,
+	drawLimit:100,
+	cores:8,
 
 	aiDepth:5,
 	aiRandom:false,

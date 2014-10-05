@@ -24,7 +24,8 @@ var start = function(mode) {
 		var ng = e.newGeneration();
 		console.log(ng);
 		// tournament = new Tournament(new Generator().coefficientSet(100));
-		tournament = new Tournament(ng);
+		// tournament = new Tournament(ng);
+		tournament = new Tournament(Generations["C"+Generations.lastGeneration]);
 		for (var i = 0; i < Resources.cores; i++)
 			tournament.start(i);
 	}

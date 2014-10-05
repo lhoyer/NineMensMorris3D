@@ -112,10 +112,16 @@ Tournament.prototype.startHuman = function(mode) {
 	this.matchWorker[0].addEventListener('message', onMatchWorkerMessage, false);
 }
 
-Tournament.prototype.sort = function() {
+Tournament.prototype.sort = function(rename) {
+	if (rename === undefined) {
+		console.warn("Tournament sort: parameter rename is undefined. Abort.");
+		return;
+	}
 	this.estCSet.sort(function(a,b) {return b.score - a.score});
-	for (var i = 0; i < this.estCSet.length; i++)
-		this.estCSet[i].id = this.estCSet[i].id.substring(0,2) + 'E' + i;
+	if (rename === true) {
+		for (var i = 0; i < this.estCSet.length; i++)
+			this.estCSet[i].id = this.estCSet[i].id.substring(0,2) + 'E' + i;
+	}
 }
 
 Tournament.prototype.toString = function() {
