@@ -5,14 +5,15 @@ function Evolution (estCSet) {
 
 Evolution.prototype.newGeneration = function() {
 	var parents = [];
-	var childrenNumber = [10,7,5,5,4,3,2,2,1,1];
+	// var childrenNumber = [10,7,5,5,4,3,2,2,1,1];
+	var childrenNumber = [10,10,7,7,5,5,5,5,4,4,3,3,2,2,2,2,1,1,1,1];
 	var children = [];
 
 	for (var i = 0; i < childrenNumber.length; i++) {
 		parents.push({c:this.estCSet[i],n:childrenNumber[i]});
 		//use crossover to copy parent and give him the right generation id
 		children.push(this.crossover2P(parents[i].c,parents[i].c)[0]);
-		children[children.length-1].parents = parents[i].c;
+		children[children.length-1].parents = parents[i].c.id;
 	}
 	while(1) {
 		var randomSet = [];
@@ -22,6 +23,7 @@ Evolution.prototype.newGeneration = function() {
 		}
 		//if there is only one parent left, choose the other randomly
 		if (randomSet.length === 1) {
+			console.log("ups");
 			randomSet.push(parents[Math.floor(Math.random()*parents.length)]);
 		}
 		if (randomSet.length === 0)

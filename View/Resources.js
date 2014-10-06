@@ -42,7 +42,7 @@ var Resources = {
 	aiWhite : Generations["G"+Generations.lastGeneration][0],
 	aiBlack : Generations["G"+Generations.lastGeneration][0],
 
-	human:false,
+	human:true,
 	drawLimit:100,
 	cores:6,
 
