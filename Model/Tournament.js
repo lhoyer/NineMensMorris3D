@@ -77,28 +77,28 @@ Tournament.prototype.start = function(i) {
 	this.matchWorker[i].addEventListener('message', onMatchWorkerMessage, false);
 }
 
-Tournament.prototype.startHuman = function(mode) {
+Tournament.prototype.startHuman = function() {
 	this.matchWorker[0] = new Worker("Model/MatchWorker.js");
 
-	if (mode === "hh") {
+	if (Resources.mode === "hh") {
 		this.matchWorker[0].postMessage({tag:"controller1",
 							 msg: "human"});
 		this.matchWorker[0].postMessage({tag:"controller2",
 							 msg: "human"});
 	}
-	else if (mode === "hc") {
+	else if (Resources.mode === "hc") {
 		this.matchWorker[0].postMessage({tag:"controller1",
 								 msg: "human"});
 		this.matchWorker[0].postMessage({tag:"controller2",
 								 msg: Resources.aiBlack});		
 	}
-	else if (mode === "ch") {
+	else if (Resources.mode === "ch") {
 		this.matchWorker[0].postMessage({tag:"controller1",
 								 msg: Resources.aiWhite});
 		this.matchWorker[0].postMessage({tag:"controller2",
 								 msg: "human"});
 	}
-	else if (mode === "cc") {
+	else if (Resources.mode === "cc") {
 		Resources.animate = false;
 		this.matchWorker[0].postMessage({tag:"controller1",
 								 msg: Resources.aiWhite});

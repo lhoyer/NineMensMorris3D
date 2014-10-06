@@ -6,26 +6,22 @@ var init = function() {
 	startTime = new Date().getTime();
 	view = new View();
 
-	start("hc");
+	start("cc");
 };
 
-var start = function(mode) {
+var start = function() {
 	//reset if neccessary
 	if (tournament !== undefined) {
 		tournament.cancel();
 		view.resetGPs();
 	}
 
-	if (!Resources.human) {
+	if (Resources.mode==="t") {
 		Resources.animate = false;
 		Resources.enableView = false;
 
-		var e = new Evolution(Generations["G"+Generations.lastGeneration]);
-		var ng = e.newGeneration();
-		console.log(ng);
-		// tournament = new Tournament(new Generator().coefficientSet(100));
-		tournament = new Tournament(ng);
-		// tournament = new Tournament(Generations["C"+Generations.lastGeneration]);
+		console.log(Resources.tournamentEstimators);
+		tournament = new Tournament(Resources.tournamentEstimators);
 		for (var i = 0; i < Resources.cores; i++)
 			tournament.start(i);
 	}
@@ -33,7 +29,7 @@ var start = function(mode) {
 		tournament = new Tournament();
 		Resources.animate = true;
 		Resources.enableView = true;
-		tournament.startHuman(mode);
+		tournament.startHuman();
 		mouse = new Mouse(tournament.matchWorker[0]);
 	}
 }
@@ -41,7 +37,8 @@ var start = function(mode) {
 var changeMode = function() {
 	var mode = document.getElementById("mode").options[document.getElementById("mode").selectedIndex].value;
 	console.log("changeMode: " + mode);
-	start(mode);
+	Resources.mode = mode;
+	start();
 }
 
 var onMatchWorkerMessage = function(e) {

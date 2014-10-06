@@ -41,8 +41,8 @@ Match.prototype.doMove = function(move) {
 	}
 
 	var _this = this;
-	if (Resources.human)
-		setTimeout( function() {_this.notifyControllers()}, 100);
+	if (Resources.mode !== "t")
+		setTimeout( function() {_this.notifyControllers()}, Resources.changeDelay);
 	else
 		this.notifyControllers();
 }
