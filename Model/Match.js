@@ -14,11 +14,11 @@ Match.prototype.doMove = function(move) {
 	var success = this.game.doMove(move);
 	var col;
 	
-	if (Resources.debugMiniMax)
+	if (Settings.debugMiniMax)
 		console.debug("Evaluation " + this.game.gamerColor + ": " + this.game.evaluation);
 
 	move.confirm();
-	if (Resources.debugAvailableMoves)
+	if (Settings.debugAvailableMoves)
 		console.log(this.game.getAvailableMoves());
 
 	// UI Handling
@@ -36,13 +36,13 @@ Match.prototype.doMove = function(move) {
 	if (match.game.status === "end" && match.game.gamerColor === "white") {
 		postMessage({tag:"loose",msg:[workerID,this.moveCnt]});
 	}
-	if (this.moveCnt++ > Resources.drawLimit) {
+	if (this.moveCnt++ > Settings.drawLimit) {
 		self.postMessage({tag:"draw",msg:[workerID,this.moveCnt]});
 	}
 
 	var _this = this;
-	if (Resources.mode !== "t")
-		setTimeout( function() {_this.notifyControllers()}, Resources.changeDelay);
+	if (Settings.mode !== "t")
+		setTimeout( function() {_this.notifyControllers()}, Settings.changeDelay);
 	else
 		this.notifyControllers();
 }

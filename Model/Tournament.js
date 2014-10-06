@@ -55,7 +55,7 @@ Tournament.prototype.handleMatchEnd = function(result,msg) {
 	this.moveCnt.push(moveCnt)
 	
 
-	if (Resources.debugMatchEnd)
+	if (Settings.debugMatchEnd)
 		console.log(result + " in " + moveCnt + " moves: " + this.matchTracker[id][2] + 
 			": " + this.matchTracker[id][0].parents + " vs " + this.matchTracker[id][1].parents);
 
@@ -80,30 +80,30 @@ Tournament.prototype.start = function(i) {
 Tournament.prototype.startHuman = function() {
 	this.matchWorker[0] = new Worker("Model/MatchWorker.js");
 
-	if (Resources.mode === "hh") {
+	if (Settings.mode === "hh") {
 		this.matchWorker[0].postMessage({tag:"controller1",
 							 msg: "human"});
 		this.matchWorker[0].postMessage({tag:"controller2",
 							 msg: "human"});
 	}
-	else if (Resources.mode === "hc") {
+	else if (Settings.mode === "hc") {
 		this.matchWorker[0].postMessage({tag:"controller1",
 								 msg: "human"});
 		this.matchWorker[0].postMessage({tag:"controller2",
-								 msg: Resources.aiBlack});		
+								 msg: Settings.aiBlack});		
 	}
-	else if (Resources.mode === "ch") {
+	else if (Settings.mode === "ch") {
 		this.matchWorker[0].postMessage({tag:"controller1",
-								 msg: Resources.aiWhite});
+								 msg: Settings.aiWhite});
 		this.matchWorker[0].postMessage({tag:"controller2",
 								 msg: "human"});
 	}
-	else if (Resources.mode === "cc") {
-		Resources.animate = false;
+	else if (Settings.mode === "cc") {
+		Settings.animate = false;
 		this.matchWorker[0].postMessage({tag:"controller1",
-								 msg: Resources.aiWhite});
+								 msg: Settings.aiWhite});
 		this.matchWorker[0].postMessage({tag:"controller2",
-								 msg: Resources.aiBlack});
+								 msg: Settings.aiBlack});
 	}
 	else {
 		console.warn("Tournament startHuman() get no parameter");

@@ -13,7 +13,7 @@ function MinMaxAI() {
 MinMaxAI.prototype.selectBestMove = function(game) {
 	this.log = new Object();
 	this.miniMax(game,this.standardDepth,this.log);
-	if (Resources.debugMiniMax)
+	if (Settings.debugMiniMax)
 		console.log(this.log);
 	return this.bestMove;
 };
@@ -25,7 +25,7 @@ MinMaxAI.prototype.miniMax = function(game,depth,log) {
 
 	if (depth == 0 || moves.length == 0 || game.status==="end") {
 		ev = game.evaluate();
-		if (Resources.debugMiniMax)
+		if (Settings.debugMiniMax)
 			log["ev"] = game.estimator.log;
 		return ev;
 	}
@@ -41,7 +41,7 @@ MinMaxAI.prototype.miniMax = function(game,depth,log) {
 		else
 			ev = - this.miniMax(game, depth - 1,l);
 		game.undoLastMove();
-		if (Resources.debugMiniMax)
+		if (Settings.debugMiniMax)
 			log[moves[i].toString()+"\t"+ev] = l;
 
 		if (ev > bestEvaluation) {

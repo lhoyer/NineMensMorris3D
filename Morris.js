@@ -16,19 +16,19 @@ var start = function() {
 		view.resetGPs();
 	}
 
-	if (Resources.mode==="t") {
-		Resources.animate = false;
-		Resources.enableView = false;
+	if (Settings.mode==="t") {
+		Settings.animate = false;
+		Settings.enableView = false;
 
-		console.log(Resources.tournamentEstimators);
-		tournament = new Tournament(Resources.tournamentEstimators);
-		for (var i = 0; i < Resources.cores; i++)
+		console.log(Settings.tournamentEstimators);
+		tournament = new Tournament(Settings.tournamentEstimators);
+		for (var i = 0; i < Settings.cores; i++)
 			tournament.start(i);
 	}
 	else {
 		tournament = new Tournament();
-		Resources.animate = true;
-		Resources.enableView = true;
+		Settings.animate = true;
+		Settings.enableView = true;
 		tournament.startHuman();
 		mouse = new Mouse(tournament.matchWorker[0]);
 	}
@@ -37,7 +37,7 @@ var start = function() {
 var changeMode = function() {
 	var mode = document.getElementById("mode").options[document.getElementById("mode").selectedIndex].value;
 	console.log("changeMode: " + mode);
-	Resources.mode = mode;
+	Settings.mode = mode;
 	start();
 }
 
@@ -45,7 +45,7 @@ var onMatchWorkerMessage = function(e) {
 	var tag = e.data.tag;
 	var msg = e.data.msg;
 
-	if (Resources.enableView)
+	if (Settings.enableView)
 	{
 		// Overlay
 		if (tag === "help")

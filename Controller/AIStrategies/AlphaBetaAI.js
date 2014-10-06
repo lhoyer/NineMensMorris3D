@@ -13,11 +13,11 @@ function AlphaBetaAI(game) {
 //-------------------------------------------------------------------------------------------------
 AlphaBetaAI.prototype.selectBestMove = function() {
 	this.log = new Object();
-	this.miniMax(Resources.aiDepth,-1000000,1000000,this.log);
-	if (Resources.debugMiniMax)
+	this.miniMax(Settings.aiDepth,-1000000,1000000,this.log);
+	if (Settings.debugMiniMax)
 		postMessage({tag:"log",msg:this.log});
 	var m;	
-	if (Resources.aiRandom)
+	if (Settings.aiRandom)
 		m = this.bestMove[Math.floor(Math.random() * this.bestMove.length)];
 	else
 		m = this.bestMove[0];
@@ -38,7 +38,7 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 			ev += depth*10;
 		if (ev < -500)
 			ev -= depth*10
-		if (Resources.debugMiniMax)
+		if (Settings.debugMiniMax)
 			log["ev"] = this.estimator.log;
 		return ev;
 	}
@@ -52,7 +52,7 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 		else
 			ev = - this.miniMax(depth - 1, -beta, -bestEvaluation,l);
 		this.game.undoLastMove();
-		if (Resources.debugMiniMax)
+		if (Settings.debugMiniMax)
 			log[moves[i].toString()+"\t"+ev] = l;
 
 
@@ -60,12 +60,12 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 			bestEvaluation = ev;
 			if (bestEvaluation >= beta)
 				break;
-			if (depth == Resources.aiDepth) {
+			if (depth == Settings.aiDepth) {
 				this.bestMove = [];
 				this.bestMove[0] = moves[i];
 			}
 		}
-		if (ev == bestEvaluation && depth == Resources.aiDepth)
+		if (ev == bestEvaluation && depth == Settings.aiDepth)
 			this.bestMove.push(moves[i]);
 	}
 	return bestEvaluation;

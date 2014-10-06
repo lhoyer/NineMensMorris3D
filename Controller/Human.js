@@ -15,7 +15,7 @@ Human.prototype.selectPlace = function(position) {
 	place = this.placeFromPosition(position);
 	if (place === undefined)
 		return;
-	if (Resources.debugSelection) {
+	if (Settings.debugSelection) {
 		console.log("Select place: " + place.toString());
 	}
 	this.handleSelectedPlace(place);
@@ -87,7 +87,7 @@ Human.prototype.handleMouseUp = function(pos) {
 	if (this.game.gamerColor !== this.color)
 		return false;
 
-    if (Resources.debugSelection) {
+    if (Settings.debugSelection) {
 	    console.log(pos);
 	    var geometry = new THREE.BoxGeometry(.2,.2,.2);
 		var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
@@ -124,7 +124,7 @@ Human.prototype.handleMouseDown = function(pos) {
 				visible:true
 			}
 		});
-		if (Resources.debugSelection) {
+		if (Settings.debugSelection) {
 			console.log("Select place: " + this.oldPlace.toString());
 		}
 	}

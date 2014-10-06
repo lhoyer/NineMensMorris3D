@@ -30,7 +30,7 @@ GPModel.prototype.updatePlace = function(placeID) {
 	}
 
 	this.placePos = Resources["place"+placeID];
-	if (Resources.animate) {
+	if (Settings.animate) {
 		this.old = this.position.clone();
 		var dx = this.placePos.x - this.position.x;
 		var dy = this.placePos.y - this.position.y;

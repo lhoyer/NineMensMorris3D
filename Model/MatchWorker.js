@@ -17,7 +17,9 @@ importScripts("MSet.js");
 importScripts("MMove.js");
 importScripts("MJump.js");
 importScripts("MDelete.js");
-importScripts("../View/Resources.js");
+// importScripts("../Settings/Generations.js");
+// importScripts("../Evolution/Evolution.js");
+importScripts("../Settings/Settings.js");
 
 var workerID = 0;
 var match = new Match();
