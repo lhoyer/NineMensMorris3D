@@ -17,18 +17,20 @@ importScripts("MSet.js");
 importScripts("MMove.js");
 importScripts("MJump.js");
 importScripts("MDelete.js");
-// importScripts("../Settings/Generations.js");
-// importScripts("../Evolution/Evolution.js");
-importScripts("../Settings/Settings.js");
+
 
 var workerID = 0;
 var match = new Match();
-var controller1, controller2;
+var controller1, controller2, Settings;
 
 onmessage = function(e) {
 	var tag = e.data.tag;
 	var msg = e.data.msg;
 
+
+	if (tag === "settings") {
+		Settings = msg;
+	}
 	if (tag === "controller1") {
 		if (msg === "human")
 			controller1 = new Human(match,"white");

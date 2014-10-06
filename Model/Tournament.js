@@ -68,6 +68,8 @@ Tournament.prototype.start = function(i) {
 	if (nextMatch === undefined)
 		return;
 
+	this.matchWorker[i].postMessage({tag:"settings",
+							 msg: Settings});
 	this.matchWorker[i].postMessage({tag:"controller1",
 							 msg: nextMatch[0]});
 	this.matchWorker[i].postMessage({tag:"controller2",
@@ -80,6 +82,8 @@ Tournament.prototype.start = function(i) {
 Tournament.prototype.startHuman = function() {
 	this.matchWorker[0] = new Worker("Model/MatchWorker.js");
 
+	this.matchWorker[0].postMessage({tag:"settings",
+						 msg: Settings});
 	if (Settings.mode === "hh") {
 		this.matchWorker[0].postMessage({tag:"controller1",
 							 msg: "human"});
@@ -106,7 +110,7 @@ Tournament.prototype.startHuman = function() {
 								 msg: Settings.aiBlack});
 	}
 	else {
-		console.warn("Tournament startHuman() get no parameter");
+		console.warn("Tournament startHuman() Settings.mode invalid");
 	}
 
 	this.matchWorker[0].postMessage({tag:"start",msg:0});
