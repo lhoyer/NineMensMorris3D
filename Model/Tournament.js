@@ -56,7 +56,8 @@ Tournament.prototype.handleMatchEnd = function(result,msg) {
 	
 
 	if (Resources.debugMatchEnd)
-		console.log(result + " in " + moveCnt + " moves: " + this.matchTracker[id][2]);
+		console.log(result + " in " + moveCnt + " moves: " + this.matchTracker[id][2] + 
+			": " + this.matchTracker[id][0].parents + " vs " + this.matchTracker[id][1].parents);
 
 	this.start(id);
 }
