@@ -11,7 +11,7 @@ function Settings(){
 		// tournamentEstimators= Generations["C4"];
 	}
 
-	this.mode="t";
+	this.mode="hc";
 	this.drawLimit=100;
 	this.cores=6;
 

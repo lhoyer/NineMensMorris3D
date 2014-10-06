@@ -17,6 +17,7 @@ importScripts("MSet.js");
 importScripts("MMove.js");
 importScripts("MJump.js");
 importScripts("MDelete.js");
+importScripts("../Settings/Resources.js");
 
 
 var workerID = 0;
