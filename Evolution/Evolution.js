@@ -1,16 +1,21 @@
 
 function Evolution (estCSet) {
 	this.estCSet = estCSet;
+
+	// this.childrenDistribution = [10,7,5,5,4,3,2,2,1,1];
+	this.childrenDistribution = [10,10,7,7,5,5,5,5,4,4,3,3,2,2,2,2,1,1,1,1];
+
+	this.mutationRate;
+	this.mutationBoundaries;
+	//...
 }
 
 Evolution.prototype.newGeneration = function() {
 	var parents = [];
-	// var childrenNumber = [10,7,5,5,4,3,2,2,1,1];
-	var childrenNumber = [10,10,7,7,5,5,5,5,4,4,3,3,2,2,2,2,1,1,1,1];
 	var children = [];
 
-	for (var i = 0; i < childrenNumber.length; i++) {
-		parents.push({c:this.estCSet[i],n:childrenNumber[i]});
+	for (var i = 0; i < this.childrenDistribution.length; i++) {
+		parents.push({c:this.estCSet[i],n:this.childrenDistribution[i]});
 		//use crossover to copy parent and give him the right generation id
 		children.push(this.crossover2P(parents[i].c,parents[i].c)[0]);
 		children[children.length-1].parents = parents[i].c.id;
@@ -69,7 +74,7 @@ Evolution.prototype.crossover1P = function(p1,p2) {
 Evolution.prototype.crossover2P = function(p1,p2) {
 	var c1 = new EstCoefficient();
 	var c2 = new EstCoefficient();
-	crossover point between 0 and 17 -> minimum one coefficient from one parent
+	//crossover point between 0 and 17 -> minimum one coefficient from one parent
 	var crossoverPoint1 = Math.floor(Math.random()*18);
 	do {
 		var crossoverPoint2 = Math.floor(Math.random()*18);
