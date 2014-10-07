@@ -7,8 +7,8 @@ function Settings(){
 		this.aiBlack = Generations["G"+Generations.lastGeneration][0];
 
 		this.tournamentEstimators = new Evolution(Generations["G"+Generations.lastGeneration]).newGeneration();
-		// tournamentEstimators = new Generator().coefficientSet(100);
-		// tournamentEstimators= Generations["C4"];
+		// this.tournamentEstimators = new Generator().coefficientSet(100);
+		// this.tournamentEstimators = Generations["G3"];
 	}
 
 	this.mode="hc";

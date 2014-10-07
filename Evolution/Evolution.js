@@ -69,13 +69,16 @@ Evolution.prototype.crossover1P = function(p1,p2) {
 Evolution.prototype.crossover2P = function(p1,p2) {
 	var c1 = new EstCoefficient();
 	var c2 = new EstCoefficient();
-	//crossover point between 1 and 17 -> minimum one coefficient from one parent
-	var crossoverPoint1 = Math.floor(Math.random()*17)+1;
-	var crossoverPoint2 = Math.floor(Math.random()*17)+1;
+	crossover point between 0 and 17 -> minimum one coefficient from one parent
+	var crossoverPoint1 = Math.floor(Math.random()*18);
+	do {
+		var crossoverPoint2 = Math.floor(Math.random()*18);
+	} while (crossoverPoint1 === crossoverPoint2)
 
 	for (var i = 0; i < 18; i++) {
-		if (crossoverPoint1 < i && i < crossoverPoint2 ||
-			crossoverPoint2 < i && i < crossoverPoint1) {
+		// use <= and < so that i between 2 neighboured numbers contains one element
+		if (crossoverPoint1 <= i && i < crossoverPoint2 ||
+			crossoverPoint2 <= i && i < crossoverPoint1) {
 			this.copyCoefficient(p1,c1,i);
 			this.copyCoefficient(p2,c2,i);
 		}
@@ -88,7 +91,7 @@ Evolution.prototype.crossover2P = function(p1,p2) {
 	c1.parents = p1.id + p2.id;
 	c2.id = "G" + (Generations.lastGeneration+1);
 	c2.parents = p2.id + p1.id;
-	
+
 	return [c1,c2];
 };
 

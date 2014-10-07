@@ -16,17 +16,16 @@ var start = function() {
 		view.resetGPs();
 	}
 
+	tournament = new Tournament(Settings.tournamentEstimators);
 	if (Settings.mode==="t") {
 		Settings.animate = false;
 		Settings.enableView = false;
 
 		console.log(Settings.tournamentEstimators);
-		tournament = new Tournament(Settings.tournamentEstimators);
 		for (var i = 0; i < Settings.cores; i++)
 			tournament.start(i);
 	}
 	else {
-		tournament = new Tournament();
 		Settings.animate = true;
 		Settings.enableView = true;
 		tournament.startHuman();
