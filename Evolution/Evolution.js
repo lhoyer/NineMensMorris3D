@@ -37,7 +37,10 @@ Evolution.prototype.newGeneration = function() {
 		var p1 = 0;
 		var p2 = Math.floor((Math.random() * (randomSet.length-1))+1);
 
-		var tmpC = this.crossover2P(randomSet[p1].c,randomSet[p2].c);
+		do {
+			var tmpC = this.crossover2P(randomSet[p1].c,randomSet[p2].c);
+		} while (this.containsEstimator(children,tmpC[0]) || this.containsEstimator(children,tmpC[1]))
+
 		children.push(tmpC[0]);
 		children.push(tmpC[1]);
 		randomSet[p1].n--;
@@ -109,4 +112,23 @@ Evolution.prototype.copyCoefficient = function(src,dest,idx) {
 		dest.cjump[idx-14] = src.cjump[idx-14];
 	else
 		dest.cwin[0] = src.cwin[0];
+};
+
+Evolution.prototype.containsEstimator = function(arr,est) {
+	for (var arrI = 0; arrI < arr.length; arrI++) {
+		var contains = true;
+		for (var idx = 0; idx < 18; idx++) {
+			if (idx < 7)
+				if (arr[arrI].cset[idx] !== est.cset[idx]) contains = false;
+			else if (idx < 14)
+				if (arr[arrI].cmove[idx-7] !== est.cmove[idx-7]) contains = false;
+			else if (idx < 17)
+				if (arr[arrI].cjump[idx-14] !== est.cjump[idx-14]) contains = false;
+			else
+				if (arr[arrI].cwin[0] !== est.cwin[0]) contains = false;
+		}
+		if (contains === true)
+			return true;
+	}
+	return false;
 };
