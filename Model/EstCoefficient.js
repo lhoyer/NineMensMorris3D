@@ -6,4 +6,5 @@ function EstCoefficient () {
 	this.cjump = [10,1,16];
 	this.cwin = [1100];
 	this.score = 0;
+	this.drawGpDiff = 0;
 }

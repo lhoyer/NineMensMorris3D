@@ -8,8 +8,10 @@ Tournament = function (estimatorCoefficientSet) {
 		return;
 
 	this.estCSet = estimatorCoefficientSet;
-	for (var i = 0; i < this.estCSet.length; i++)
+	for (var i = 0; i < this.estCSet.length; i++) {
 		this.estCSet[i].score = 0;
+		this.estCSet[i].drawGpDiff = 0;
+	}
 }
 
 Tournament.prototype.cancel = function() {
@@ -37,6 +39,7 @@ Tournament.prototype.getNextMatch = function() {
 Tournament.prototype.handleMatchEnd = function(result,msg) {
 	var id = msg[0];
 	var moveCnt = msg[1];
+	var gpDiff = msg[2];
 
 	this.matchWorker[id].terminate();
 
@@ -49,6 +52,8 @@ Tournament.prototype.handleMatchEnd = function(result,msg) {
 	if (result === "draw") {
 		this.matchTracker[id][0].score += 1;
 		this.matchTracker[id][1].score += 1;
+		this.matchTracker[id][0].drawGpDiff += gpDiff;
+		this.matchTracker[id][0].drawGpDiff -= gpDiff;
 	}
 	if (result === "loose")
 		this.matchTracker[id][1].score += 3;
@@ -56,8 +61,9 @@ Tournament.prototype.handleMatchEnd = function(result,msg) {
 	
 
 	if (Settings.debugMatchEnd)
-		console.log(result + " in " + moveCnt + " moves: " + this.matchTracker[id][2] + 
-			": " + this.matchTracker[id][0].parents + " vs " + this.matchTracker[id][1].parents);
+		console.log(result + this.matchTracker[id][2] + ": " + 
+			this.matchTracker[id][0].parents + " vs " + this.matchTracker[id][1].parents +
+			"moves: " + moveCnt + "; gpDiff: " + gpDiff);
 
 	this.start(id);
 }

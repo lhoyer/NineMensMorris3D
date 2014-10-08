@@ -30,14 +30,15 @@ Match.prototype.doMove = function(move) {
 	postMessage({tag:"status",msg:this.game.status});
 
 	// Handle end of game
+	var gpDiff = this.game.countGamingPieces("white") - this.game.countGamingPieces("black");
 	if (match.game.status === "end" && match.game.gamerColor === "black") {
-		postMessage({tag:"win",msg:[workerID,this.moveCnt]});
+		postMessage({tag:"win",msg:[workerID,this.moveCnt,gpDiff]});
 	}
 	if (match.game.status === "end" && match.game.gamerColor === "white") {
-		postMessage({tag:"loose",msg:[workerID,this.moveCnt]});
+		postMessage({tag:"loose",msg:[workerID,this.moveCnt,gpDiff]});
 	}
 	if (this.moveCnt++ > Settings.drawLimit && Settings.mode === "t") {
-		self.postMessage({tag:"draw",msg:[workerID,this.moveCnt]});
+		self.postMessage({tag:"draw",msg:[workerID,this.moveCnt,gpDiff]});
 	}
 
 	var _this = this;
