@@ -53,7 +53,7 @@ Tournament.prototype.handleMatchEnd = function(result,msg) {
 		this.matchTracker[id][0].score += 1;
 		this.matchTracker[id][1].score += 1;
 		this.matchTracker[id][0].drawGpDiff += gpDiff;
-		this.matchTracker[id][0].drawGpDiff -= gpDiff;
+		this.matchTracker[id][1].drawGpDiff -= gpDiff;
 	}
 	if (result === "loose")
 		this.matchTracker[id][1].score += 3;
