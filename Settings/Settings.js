@@ -18,7 +18,8 @@ function Settings(){
 	this.cores=6;
 
 	this.changeDelay=100;
-	this.aiDepth=5;
+	this.aiDepth=7;
+	this.aiIterative=true;
 	this.aiRandom=false;
 	this.enableView=true;
 	this.animate=true;
@@ -26,6 +27,6 @@ function Settings(){
 	this.debugSelection=false;
 	this.debugAvailableMoves=false;
 	this.debugMiniMax=false;
-	this.logTime=false;
+	this.logTime=true;
 	this.debugMatchEnd=true
 }

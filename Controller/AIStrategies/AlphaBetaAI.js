@@ -13,7 +13,15 @@ function AlphaBetaAI(game) {
 //-------------------------------------------------------------------------------------------------
 AlphaBetaAI.prototype.selectBestMove = function() {
 	this.log = new Object();
-	this.miniMax(Settings.aiDepth,-1000000,1000000,this.log);
+
+	if (Settings.aiIterative)
+		var startDepth = 1,
+	else
+		var startDepth = Settings.aiDepth;
+	for (var depth = startDepth; depth <= Settings.aiDepth; depth++) {
+		this.miniMax(depth,-1000000,1000000,this.log);
+	}
+
 	if (Settings.debugMiniMax)
 		postMessage({tag:"log",msg:this.log});
 	var m;	
