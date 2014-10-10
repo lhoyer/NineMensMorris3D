@@ -11,14 +11,15 @@ function AI(match,color,strategy)
 // move
 //-------------------------------------------------------------------------------------------------
 var time = 0;
+var startAITime;
 AI.prototype.doMove = function(game) {
 	if (Settings.logTime) {
 		time = 0;
-		var start = new Date().getTime();
+		startAITime = new Date().getTime();
 	}
 	var m = this.strategy.selectBestMove(game);
 	if (Settings.logTime) {
-		time += new Date().getTime() - start;
+		time += new Date().getTime() - startAITime;
 		console.log(""+time);	
 	}
 	match.doMove(m);

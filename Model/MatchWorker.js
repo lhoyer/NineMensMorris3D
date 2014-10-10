@@ -1,6 +1,7 @@
 importScripts("../js/three.min.js");
 importScripts("../Controller/Controller.js");
 importScripts("../Controller/AI.js");
+importScripts("../Controller/AIStrategies/NodeSort.js");
 importScripts("../Controller/AIStrategies/AIStrategy.js");
 importScripts("../Controller/AIStrategies/AlphaBetaAI.js");
 importScripts("../Controller/AIStrategies/MinMaxAI.js");

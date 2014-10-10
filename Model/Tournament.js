@@ -44,6 +44,7 @@ Tournament.prototype.handleMatchEnd = function(result,msg) {
 	this.matchWorker[id].terminate();
 
 	if (this.matchTracker[id] == undefined) {
+		console.log((new Date().getTime() - startTime)/1000);
 		return;
 	}
 

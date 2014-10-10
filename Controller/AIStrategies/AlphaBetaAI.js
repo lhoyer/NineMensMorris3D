@@ -15,11 +15,23 @@ AlphaBetaAI.prototype.selectBestMove = function() {
 	this.log = new Object();
 
 	if (Settings.aiIterative)
-		var startDepth = 1,
+		var startDepth = 1;
 	else
 		var startDepth = Settings.aiDepth;
-	for (var depth = startDepth; depth <= Settings.aiDepth; depth++) {
-		this.miniMax(depth,-1000000,1000000,this.log);
+
+	for (this.iDepth = startDepth; this.iDepth <= Settings.aiDepth; this.iDepth++) {
+		this.newNS = new NodeSort();
+		this.bestMove = [];
+		this.numEv = 0;
+		this.miniMax(this.iDepth,-1000000,1000000,this.log);
+		console.log(this.numEv);
+		this.oldNS = this.newNS;
+		// this.oldNS.goUp();
+
+		// if (new Date().getTime() - startAITime > 2000) {
+		// 	console.log("depth: " + this.iDepth);
+		// 	break;
+		// }
 	}
 
 	if (Settings.debugMiniMax)
@@ -38,6 +50,9 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 	var bestEvaluation = alpha;
 	var ev;
 
+	if (this.oldNS!==undefined) this.oldNS.goDown();
+	this.newNS.goDown();
+
 	if (depth == 0 || moves.length == 0 || this.game.status==="end") {
 		ev = this.estimator.evaluate(this.game);
 		// avoid endless loops if the ai is going to win and can't decide for a strategy
@@ -48,33 +63,53 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 			ev -= depth*10
 		if (Settings.debugMiniMax)
 			log["ev"] = this.estimator.log;
+		this.numEv++;
+		if (this.oldNS!==undefined) this.oldNS.goUp();
+		this.newNS.goUp();
 		return ev;
 	}
 
+	if (this.oldNS !== undefined || depth !== 1) this.oldNS.sortNodes();
 	for (var i = 0; i < moves.length; i++) {
 		var l = new Object();
-		this.game.doMove(moves[i]);
+		if (this.oldNS === undefined || depth === 1)
+			var move = moves[i];
+		else {
+			var move = moves[this.oldNS.sortedI(i)];
+			if (move === undefined) {
+				console.error("sorted move undefined");
+			}
+		}
+		
+		this.game.doMove(move);
 		if (this.game.status === "delete") {
 			ev = this.miniMax(depth - 1, bestEvaluation, beta,l);
 		}
 		else
 			ev = - this.miniMax(depth - 1, -beta, -bestEvaluation,l);
+		this.newNS.addNodeEvaluation(ev);
 		this.game.undoLastMove();
 		if (Settings.debugMiniMax)
-			log[moves[i].toString()+"\t"+ev] = l;
+			log[move.toString()+"\t"+ev] = l;
 
 
 		if (ev > bestEvaluation) {
 			bestEvaluation = ev;
-			if (bestEvaluation >= beta)
+			if (bestEvaluation >= beta) {
 				break;
-			if (depth == Settings.aiDepth) {
+			}
+			if (depth == this.iDepth) {
 				this.bestMove = [];
-				this.bestMove[0] = moves[i];
+				this.bestMove[0] = move;
 			}
 		}
-		if (ev == bestEvaluation && depth == Settings.aiDepth)
-			this.bestMove.push(moves[i]);
+		if (ev == bestEvaluation && depth == this.iDepth)
+			this.bestMove.push(move);
+
+		if (this.oldNS!==undefined) this.oldNS.next();
+		this.newNS.next();
 	}
+	if (this.oldNS!==undefined) this.oldNS.goUp();
+	this.newNS.goUp();
 	return bestEvaluation;
 };

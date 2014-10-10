@@ -37,7 +37,7 @@ Match.prototype.doMove = function(move) {
 	if (match.game.status === "end" && match.game.gamerColor === "white") {
 		postMessage({tag:"loose",msg:[workerID,this.moveCnt,gpDiff]});
 	}
-	if (this.moveCnt++ > Settings.drawLimit && Settings.mode === "t") {
+	if (this.moveCnt++ > Settings.drawLimit && (Settings.mode === "t" || Settings.mode === "cc")) {
 		self.postMessage({tag:"draw",msg:[workerID,this.moveCnt,gpDiff]});
 	}
 
