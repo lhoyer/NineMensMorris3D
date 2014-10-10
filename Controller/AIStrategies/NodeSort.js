@@ -33,9 +33,11 @@ NodeSort.prototype.next = function() {
 	this.goDown();
 };
 
-NodeSort.prototype.addNodeEvaluation = function(evaluation) {
+NodeSort.prototype.addNodeEvaluation = function(i,evaluation) {
 	if (!Settings.presort)
 		return;
+	if (i !== this.n.parent.currChild)
+		console.warn("i dosn't match currChild");
 
 	this.n.ev = evaluation;
 	this.n.i = this.n.parent.currChild;
@@ -45,6 +47,8 @@ NodeSort.prototype.sortNodes = function() {
 	if (!Settings.presort)
 		return;
 	this.n.parent.children.sort(function(a,b) {return b.ev - a.ev});
+	this.n.parent.currChild = 0;
+	this.n = this.n.parent.children[0];
 	// var sortArr = [];
 	// for (var i = 0; i < this.n.children)
 	// 	sortArr.push(this.n.children.i);
@@ -54,12 +58,14 @@ NodeSort.prototype.sortNodes = function() {
 NodeSort.prototype.sortedI = function(i) {
 	if (!Settings.presort)
 		return i;
+	if (i !== this.n.parent.currChild)
+		console.warn("i dosn't match currChild");
+	if (i >= this.n.parent.children.length || this.n.parent.children[i].i === undefined) {
+		// console.log("i >= parent.children.length");
+		return i;
+	}
 
-	// if (this.nodeEvaluation[depth] === undefined ||
-	// 	this.nodeEvaluation[depth][i] === undefined) {
-	// 	console.warn("node undefined: " + depth + ", " + i);
-	// 	return i;
-	// }
-	this.n = this.n.parent.children[i];
+	// this.n.parent.currChild = i;
+	// this.n = this.n.parent.children[i];
 	return this.n.i;
 };

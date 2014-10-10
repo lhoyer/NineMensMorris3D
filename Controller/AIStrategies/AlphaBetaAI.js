@@ -50,9 +50,6 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 	var bestEvaluation = alpha;
 	var ev;
 
-	if (this.oldNS!==undefined) this.oldNS.goDown();
-	this.newNS.goDown();
-
 	if (depth == 0 || moves.length == 0 || this.game.status==="end") {
 		ev = this.estimator.evaluate(this.game);
 		// avoid endless loops if the ai is going to win and can't decide for a strategy
@@ -64,12 +61,12 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 		if (Settings.debugMiniMax)
 			log["ev"] = this.estimator.log;
 		this.numEv++;
-		if (this.oldNS!==undefined) this.oldNS.goUp();
-		this.newNS.goUp();
 		return ev;
 	}
 
-	if (this.oldNS !== undefined || depth !== 1) this.oldNS.sortNodes();
+	this.newNS.goDown();
+	if (this.oldNS !== undefined) this.oldNS.goDown();
+	if (this.oldNS !== undefined && depth !== 1) this.oldNS.sortNodes();
 	for (var i = 0; i < moves.length; i++) {
 		var l = new Object();
 		if (this.oldNS === undefined || depth === 1)
@@ -87,7 +84,11 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 		}
 		else
 			ev = - this.miniMax(depth - 1, -beta, -bestEvaluation,l);
-		this.newNS.addNodeEvaluation(ev);
+		if (this.oldNS !== undefined && this.oldNS.ev !== undefined && this.oldNS.n.ev !== ev)
+			console.log("problem");
+		// if (this.oldNS !== undefined && this.oldNS.n.ev === ev)
+		// 	console.log("works");
+		this.newNS.addNodeEvaluation(i,ev);
 		this.game.undoLastMove();
 		if (Settings.debugMiniMax)
 			log[move.toString()+"\t"+ev] = l;
