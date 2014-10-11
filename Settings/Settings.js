@@ -5,8 +5,8 @@ function Settings(){
 	if (typeof Generations !== 'undefined') {
 		// this.aiWhite = Generations["G"+Generations.lastGeneration][0];
 		// this.aiBlack = Generations["G"+Generations.lastGeneration][0];
-		this.aiWhite = Generations["aG3"][0];
-		this.aiBlack = Generations["aG3"][0];
+		this.aiWhite = Generations["aG4"][0];
+		this.aiBlack = Generations["aG4"][0];
 
 		this.tournamentEstimators = new Evolution(Generations["G"+Generations.lastGeneration]).newGeneration();
 		// this.tournamentEstimators = new Generator().coefficientSet(100);
@@ -17,17 +17,17 @@ function Settings(){
 	this.drawLimit=100;
 	this.cores=6;
 
-	this.changeDelay=100;
 	this.aiDepth=5;
 	this.aiRandom=true;
-	this.aiIterative=true;
-	this.aiRandom=false;
+	this.aiIterative=false;
+
+	this.changeDelay=100;	
 	this.enableView=true;
 	this.animate=true;
 
 	this.debugSelection=false;
 	this.debugAvailableMoves=false;
-	this.debugMiniMax=false;
-	this.logTime=true;
-	this.debugMatchEnd=true
+	this.debugMiniMax=true;
+	this.logTime=false;
+	this.debugMatchEnd=true;
 }

@@ -2,10 +2,11 @@ AlphaBetaAI.prototype = Object.create(AIStrategy.prototype);
 AlphaBetaAI.prototype.constructor = AlphaBetaAI;
 
 function AlphaBetaAI(game) {
-	this.bestMove;
+	this.bestMove = [];
 	this.log = "";
 	this.game = game;
 	this.estimator = new Estimator(); 
+	this.iDepth;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -18,13 +19,19 @@ AlphaBetaAI.prototype.selectBestMove = function() {
 		var startDepth = 1;
 	else
 		var startDepth = Settings.aiDepth;
-	for (var depth = startDepth; depth <= Settings.aiDepth; depth++) {
-		this.miniMax(depth,-1000000,1000000,this.log);
+	this.bestMove = [];
+	for (this.iDepth = startDepth; this.iDepth <= Settings.aiDepth; this.iDepth++) {
+		var r = this.miniMax(this.iDepth,-1000000,1000000,this.log);
+		if (r === "aborted")
+			break;
 	}
 
 	if (Settings.debugMiniMax)
 		postMessage({tag:"log",msg:this.log});
-	return this.bestMove;
+
+	var i = this.bestMove.length-1;
+	if (r === "aborted") i--;
+	return this.bestMove[i];
 };
 
 AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
@@ -32,6 +39,9 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 	var deleteMoves;
 	var bestEvaluation = alpha;
 	var ev;
+
+	if (Settings.aiIterative && new Date().getTime() - startAITime > 1000)
+		return "aborted";
 
 	if (depth == 0 || moves.length == 0 || this.game.status==="end") {
 		ev = this.estimator.evaluate(this.game);
@@ -64,6 +74,8 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 		else
 			ev = - this.miniMax(depth - 1, -beta, -bestEvaluation,l);
 		this.game.undoLastMove();
+		if (ev === "aborted")
+			return ev;
 		if (Settings.debugMiniMax)
 			log[moves[i].toString()+"\t"+ev+","+beta] = l;
 
@@ -72,12 +84,12 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 			bestEvaluation = ev;
 			if (bestEvaluation >= beta)
 				break;
-			if (depth == Settings.aiDepth) {
-				this.bestMove = moves[i];
+			if (depth == this.iDepth) {
+				this.bestMove[this.iDepth] = moves[i];
 			}
 		}
-		// if (ev == bestEvaluation && depth == Settings.aiDepth)
-		// 	this.bestMove = moves[i];
+		// if (ev == bestEvaluation && depth == this.iDepth)
+		// 	this.bestMove[this.iDepth] = moves[i];
 	}
 	return bestEvaluation;
 };
