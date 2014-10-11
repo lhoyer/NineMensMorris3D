@@ -37,9 +37,18 @@ Evolution.prototype.newGeneration = function() {
 		var p1 = 0;
 		var p2 = Math.floor((Math.random() * (randomSet.length-1))+1);
 
+		var i = 0;
+		var mut = false;
 		do {
 			var tmpC = this.crossover2P(randomSet[p1].c,randomSet[p2].c);
+			if (i > 100) {
+				tmpC[0] = this.mutation(tmpC[0]);
+				tmpC[1] = this.mutation(tmpC[1]);
+				mut = true;
+			}
+			i++;
 		} while (this.containsEstimator(children,tmpC[0]) || this.containsEstimator(children,tmpC[1]))
+		if (mut) console.log("mutation");
 
 		children.push(tmpC[0]);
 		children.push(tmpC[1]);
@@ -101,6 +110,13 @@ Evolution.prototype.crossover2P = function(p1,p2) {
 	c2.parents = p2.id + p1.id;
 
 	return [c1,c2];
+};
+
+Evolution.prototype.mutation = function(m) {
+	var rnd = new Generator().coefficientSet(1)[0];
+	var mutPoint = Math.floor(Math.random()*18);
+	this.copyCoefficient(rnd,m,mutPoint);
+	return m;
 };
 
 Evolution.prototype.copyCoefficient = function(src,dest,idx) {
