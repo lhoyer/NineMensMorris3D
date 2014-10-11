@@ -69,6 +69,8 @@ Estimator.prototype.evaluate = function(game) {
 		}
 	}
 
+	// evaluation = this.game.gpNumber[col] - this.game.gpNumber[oppCol];
+
 	return evaluation;
 };
 

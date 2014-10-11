@@ -2,7 +2,7 @@ AlphaBetaAI.prototype = Object.create(AIStrategy.prototype);
 AlphaBetaAI.prototype.constructor = AlphaBetaAI;
 
 function AlphaBetaAI(game) {
-	this.bestMove = [];
+	this.bestMove;
 	this.log = "";
 	this.game = game;
 	this.estimator = new Estimator(); 
@@ -16,16 +16,11 @@ AlphaBetaAI.prototype.selectBestMove = function() {
 	this.miniMax(Settings.aiDepth,-1000000,1000000,this.log);
 	if (Settings.debugMiniMax)
 		postMessage({tag:"log",msg:this.log});
-	var m;	
-	if (Settings.aiRandom)
-		m = this.bestMove[Math.floor(Math.random() * this.bestMove.length)];
-	else
-		m = this.bestMove[0];
-	return m;
+	return this.bestMove;
 };
 
 AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
-	var moves = this.game.getAvailableMoves();
+	if (depth !== 0) var moves = this.game.getAvailableMoves();
 	var deleteMoves;
 	var bestEvaluation = alpha;
 	var ev;
@@ -43,6 +38,15 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 		return ev;
 	}
 
+	if (Settings.aiRandom) {
+		for (var i = 0; i < moves.length; i++) {
+			var i2 = Math.floor(Math.random()*(moves.length));
+			var tmp = moves[i];
+			moves[i] = moves[i2];
+			moves[i2] = tmp;
+		}
+	}
+
 	for (var i = 0; i < moves.length; i++) {
 		var l = new Object();
 		this.game.doMove(moves[i]);
@@ -53,7 +57,7 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 			ev = - this.miniMax(depth - 1, -beta, -bestEvaluation,l);
 		this.game.undoLastMove();
 		if (Settings.debugMiniMax)
-			log[moves[i].toString()+"\t"+ev] = l;
+			log[moves[i].toString()+"\t"+ev+","+beta] = l;
 
 
 		if (ev > bestEvaluation) {
@@ -61,12 +65,11 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 			if (bestEvaluation >= beta)
 				break;
 			if (depth == Settings.aiDepth) {
-				this.bestMove = [];
-				this.bestMove[0] = moves[i];
+				this.bestMove = moves[i];
 			}
 		}
-		if (ev == bestEvaluation && depth == Settings.aiDepth)
-			this.bestMove.push(moves[i]);
+		// if (ev == bestEvaluation && depth == Settings.aiDepth)
+		// 	this.bestMove = moves[i];
 	}
 	return bestEvaluation;
 };
