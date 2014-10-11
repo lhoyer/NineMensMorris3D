@@ -20,12 +20,14 @@ function Settings(){
 	this.changeDelay=100;
 	this.aiDepth=5;
 	this.aiRandom=true;
+	this.aiIterative=true;
+	this.aiRandom=false;
 	this.enableView=true;
 	this.animate=true;
 
 	this.debugSelection=false;
 	this.debugAvailableMoves=false;
 	this.debugMiniMax=false;
-	this.logTime=false;
+	this.logTime=true;
 	this.debugMatchEnd=true
 }
