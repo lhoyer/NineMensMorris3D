@@ -27,7 +27,7 @@ function Settings(){
 
 	this.debugSelection=false;
 	this.debugAvailableMoves=false;
-	this.debugMiniMax=true;
+	this.debugMiniMax=false;
 	this.logTime=false;
 	this.debugMatchEnd=true;
 }
