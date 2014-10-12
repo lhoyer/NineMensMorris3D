@@ -8,14 +8,14 @@ function Settings(){
 		this.aiWhite = Generations["aG4"][0];
 		this.aiBlack = Generations["aG4"][0];
 
-		this.tournamentEstimators = new Evolution(Generations["G"+Generations.lastGeneration]).newGeneration();
+		this.tournamentEstimators = new Evolution(Generations["rG"+Generations.lastGeneration]).newGeneration();
 		// this.tournamentEstimators = new Generator().coefficientSet(100);
-		// this.tournamentEstimators = Generations["G3"];
+		// this.tournamentEstimators = Generations["aG4"];
 	}
 
 	this.mode="hc";
-	this.drawLimit=100;
-	this.cores=6;
+	this.drawLimit=250;
+	this.cores=4;
 
 	this.aiDepth=5;
 	this.aiRandom=true;
