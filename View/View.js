@@ -5,6 +5,8 @@ function View () {
     var container = document.createElement('div');
     document.body.appendChild(container);
 
+    this.checkWebGL();
+
 	//scene
 	this.scene = new THREE.Scene();
 	this.renderer = new THREE.WebGLRenderer({antialias:true});
@@ -28,6 +30,14 @@ function View () {
 	var _this = this;
   	window.addEventListener('resize', function(){_this.onResizeWindow()});	
 }
+
+
+View.prototype.checkWebGL = function() {
+	if (!Detector.webgl) {
+		var r = confirm(Resources.strWebGLMissing);
+		if (r) window.location = "http://get.webgl.org";
+	} 
+};
 
 //-------------------------------------------------------------------------------------------------
 // Game elements
