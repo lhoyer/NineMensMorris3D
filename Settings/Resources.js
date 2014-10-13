@@ -26,5 +26,7 @@ var Resources = {
 	place220:new THREE.Vector3(16.2,	2.6,	-16.2),
 	place221:new THREE.Vector3(0,		2.6,	-16.2),
 	place230:new THREE.Vector3(-16.2,	2.6,	-16.2),
-	place231:new THREE.Vector3(-16.2,	2.6,	0)
+	place231:new THREE.Vector3(-16.2,	2.6,	0),
+
+	strWebGLMissing:"WebGL, which is neccessary for rendering the game, is missing. Do you want to go to troubleshooting page?"
 };
