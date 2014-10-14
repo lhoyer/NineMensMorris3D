@@ -1,4 +1,4 @@
-importScripts("../js/three.min.js");
+importScripts("../three.js/three.min.js");
 importScripts("../Controller/Controller.js");
 importScripts("../Controller/AI.js");
 importScripts("../Controller/AIStrategies/AIStrategy.js");

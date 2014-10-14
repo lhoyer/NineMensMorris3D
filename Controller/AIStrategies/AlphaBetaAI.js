@@ -40,7 +40,7 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 	var bestEvaluation = alpha;
 	var ev;
 
-	if (Settings.aiIterative && new Date().getTime() - startAITime > 1000)
+	if (Settings.aiIterative && new Date().getTime() - startAITime > Settings.aiIterativeMaxTime)
 		return "aborted";
 
 	if (depth == 0 || moves.length == 0 || this.game.status==="end") {
