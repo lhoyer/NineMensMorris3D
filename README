@@ -1,0 +1,52 @@
+
+Nine Men's Morris 3D
+
+======================================================================
+
+OVERVIEW
+
+	Nine Men's Morris 3D is an adaption of the popular correspondent board game. 
+	The game is visualized in 3D and programmed for web browsers. You can play 
+	against a computer opponent or another human.
+
+	Features:
+	- 3D visualization with three.js
+	- implemented rule check
+	- AI with Alpha Beta Pruning
+	- advanced AI Estimator
+	- use of genetic algorithms to improve the Estimator
+
+======================================================================
+
+AUTHOR
+
+	Lukas Hoyer <lukasvii@live.de>
+
+======================================================================
+
+COPYRIGHT
+
+	Nine Men's Morris 3D
+  	Copyright (C) 2014 Lukas Hoyer <lukasvii@live.de>
+
+  	Morris is free software: you can redistribute it and/or modify
+  	it under the terms of the GNU General Public License as published by
+  	the Free Software Foundation, either version 3 of the License, or
+  	(at your option) any later version.
+
+  	This program is distributed in the hope that it will be useful,
+  	but WITHOUT ANY WARRANTY; without even the implied warranty of
+  	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  	GNU General Public License for more details.
+
+  	You should have received a copy of the GNU General Public License
+  	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+  	Send inquiries, comments, bug reports, suggestions, patches, etc. to:
+
+		Lukas Hoyer <lukasvii@live.de>
+
+  	See also the Nine Men's Morris 3D home page on the web:
+
+		http://morris-3d.bplaced.net/
