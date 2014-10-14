@@ -71,7 +71,7 @@ Tournament.prototype.handleMatchEnd = function(result,msg) {
 }
 
 Tournament.prototype.start = function(i) {
-	this.matchWorker[i] = new Worker("Model/MatchWorker.js");
+	this.matchWorker[i] = new Worker("GameLogic/MatchWorker.js");
 	var nextMatch = this.getNextMatch();
 	if (nextMatch === undefined)
 		return;
@@ -88,7 +88,7 @@ Tournament.prototype.start = function(i) {
 }
 
 Tournament.prototype.startHuman = function() {
-	this.matchWorker[0] = new Worker("Model/MatchWorker.js");
+	this.matchWorker[0] = new Worker("GameLogic/MatchWorker.js");
 
 	this.matchWorker[0].postMessage({tag:"settings",
 						 msg: Settings});
