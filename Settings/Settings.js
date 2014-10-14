@@ -13,21 +13,25 @@ function Settings(){
 		// this.tournamentEstimators = Generations["aG4"];
 	}
 
-	this.mode="hc";
-	this.drawLimit=250;
-	this.cores=4;
+	this.mode = "hc";
+	this.drawLimit = 250;
+	this.cores = 4;
 
-	this.aiDepth=5;
-	this.aiRandom=true;
-	this.aiIterative=false;
+	this.aiRandom = true;
+	this.aiIterative = false;
+	if (this.aiIterative)
+		this.aiDepth = 25;
+	else
+		this.aiDepth = 5;
+	this.aiIterativeMaxTime = 2000;
 
-	this.changeDelay=100;	
-	this.enableView=true;
-	this.animate=true;
+	this.changeDelay = 100;	
+	this.enableView = true;
+	this.animate = true;
 
-	this.debugSelection=false;
-	this.debugAvailableMoves=false;
-	this.debugMiniMax=false;
-	this.logTime=false;
-	this.debugMatchEnd=true;
+	this.debugSelection = false;
+	this.debugAvailableMoves = false;
+	this.debugMiniMax = false;
+	this.logTime = false;
+	this.debugMatchEnd = true;
 }
