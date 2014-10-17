@@ -14,7 +14,7 @@ function Settings(){
 	}
 
 	this.mode = "hc";
-	this.drawLimit = 350;
+	this.drawLimit = 300;
 	this.cores = 8;
 
 	this.aiRandom = true;
