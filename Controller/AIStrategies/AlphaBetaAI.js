@@ -69,7 +69,7 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 		var l = new Object();
 		this.game.doMove(moves[i]);
 		if (this.game.status === "delete") {
-			ev = this.miniMax(depth - 1, bestEvaluation, beta,l);
+			ev = this.miniMax(depth, bestEvaluation, beta,l);
 		}
 		else
 			ev = - this.miniMax(depth - 1, -beta, -bestEvaluation,l);
