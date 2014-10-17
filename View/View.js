@@ -34,8 +34,7 @@ function View () {
 
 View.prototype.checkWebGL = function() {
 	if (!Detector.webgl) {
-		var r = confirm(Resources.strWebGLMissing);
-		if (r) window.location = "http://get.webgl.org";
+		window.location = Resources.webGlMissingPage;
 	} 
 };
 

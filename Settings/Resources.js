@@ -28,5 +28,6 @@ var Resources = {
 	place230:new THREE.Vector3(-16.2,	2.6,	-16.2),
 	place231:new THREE.Vector3(-16.2,	2.6,	0),
 
-	strWebGLMissing:"WebGL, which is neccessary for rendering the game, is missing. Do you want to go to troubleshooting page?"
+	webGlMissingPage:"http://morris-3d.bplaced.net/webgl-missing/"
+
 };
