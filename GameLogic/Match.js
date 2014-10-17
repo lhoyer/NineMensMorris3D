@@ -14,9 +14,6 @@ Match.prototype.doMove = function(move) {
 	var success = this.game.doMove(move);
 	var col;
 	
-	if (Settings.debugMiniMax)
-		console.debug("Evaluation " + this.game.gamerColor + ": " + this.game.evaluation);
-
 	move.confirm();
 	if (Settings.debugAvailableMoves)
 		console.log(this.game.getAvailableMoves());

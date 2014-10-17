@@ -21,6 +21,9 @@ AI.prototype.doMove = function(game) {
 		console.log(""+time);	
 	}
 	match.doMove(m);
+	if (Settings.debugMiniMax)
+		console.debug("Evaluation " + this.game.gamerColor + ": " + 
+					  this.strategy.estimator.evaluate(game));
 };
 
 //-------------------------------------------------------------------------------------------------
