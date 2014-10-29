@@ -5,7 +5,7 @@ function Generator() {
 					[10,60],		// closable morris
 					[20,80],		// double morris
 					[10,60],		// blocked GPS
-					[0,30],			// free connections
+					[0,20],			// free connections
 					[1000,3000]];	// win
 }
 
@@ -14,7 +14,7 @@ Generator.prototype.randomCoefficients = function() {
 	var c = [];
 
 	for (var i = 0; i < this.cRange.length; i++)
-		c[i] = Math.floor((Math.random() * this.cRange[i][1]-this.cRange[i][0]) + this.cRange[i][0]);
+		c[i] = Math.floor((Math.random() * (this.cRange[i][1]-this.cRange[i][0])) + this.cRange[i][0]);
 	estCoefficient.c = c;
 
 	return estCoefficient;
