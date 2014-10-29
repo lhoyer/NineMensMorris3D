@@ -6,6 +6,10 @@ function Game(raw)
 	this.gp = new Array();
 	this.gamerColor = "white";
 	this.status = "set";
+	this.gamePhase = {
+		white:"set",
+		black:"set"
+	}
 	this.history = [];
 	this.gpNumber = new Object();
 	this.gpNumber["white"] = 9;
@@ -187,9 +191,24 @@ Game.prototype.doMove = function(move) {
 		this.status = "end";
 	}
 
+	// determine game phase for evaluation
+	if (this.getNewGP("white") !== undefined)
+		this.gamePhase["white"] = "set";
+	else if (this.countGamingPieces("white") < 4)
+		this.gamePhase["white"] = "jump";
+	else
+		this.gamePhase["white"] = "move";
+	if (this.getNewGP("black") !== undefined)
+		this.gamePhase["black"] = "set";
+	else if (this.countGamingPieces("black") < 4)
+		this.gamePhase["black"] = "jump";
+	else
+		this.gamePhase["black"] = "move";
+
+
+
 	// estimate after gamer change, because the estimation in minmax is done in leaf after gamer change
 	// so it considers the gamer change
-
 	return true;
 }
 

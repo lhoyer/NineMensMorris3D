@@ -63,9 +63,9 @@ Evolution.prototype.crossover1P = function(p1,p2) {
 	var c1 = new EstCoefficient();
 	var c2 = new EstCoefficient();
 	//crossover point between 1 and 17 -> minimum one coefficient from one parent
-	var crossoverPoint = Math.floor(Math.random()*17)+1;
+	var crossoverPoint = Math.floor(Math.random()*7)+1;
 
-	for (var i = 0; i < 18; i++) {
+	for (var i = 0; i < 8; i++) {
 		if (i < crossoverPoint) {
 			this.copyCoefficient(p1,c1,i);
 			this.copyCoefficient(p2,c2,i);
@@ -87,12 +87,12 @@ Evolution.prototype.crossover2P = function(p1,p2) {
 	var c1 = new EstCoefficient();
 	var c2 = new EstCoefficient();
 	//crossover point between 0 and 17 -> minimum one coefficient from one parent
-	var crossoverPoint1 = Math.floor(Math.random()*18);
+	var crossoverPoint1 = Math.floor(Math.random()*8);
 	do {
-		var crossoverPoint2 = Math.floor(Math.random()*18);
+		var crossoverPoint2 = Math.floor(Math.random()*8);
 	} while (crossoverPoint1 === crossoverPoint2)
 
-	for (var i = 0; i < 18; i++) {
+	for (var i = 0; i < 8; i++) {
 		// use <= and < so that i between 2 neighboured numbers contains one element
 		if (crossoverPoint1 <= i && i < crossoverPoint2 ||
 			crossoverPoint2 <= i && i < crossoverPoint1) {
@@ -120,28 +120,14 @@ Evolution.prototype.mutation = function(m) {
 };
 
 Evolution.prototype.copyCoefficient = function(src,dest,idx) {
-	if (idx < 7)
-		dest.cset[idx] = src.cset[idx];
-	else if (idx < 14)
-		dest.cmove[idx-7] = src.cmove[idx-7];
-	else if (idx < 17)
-		dest.cjump[idx-14] = src.cjump[idx-14];
-	else
-		dest.cwin[0] = src.cwin[0];
+	dest.c[idx] = src.c[idx];
 };
 
 Evolution.prototype.containsEstimator = function(arr,est) {
 	for (var arrI = 0; arrI < arr.length; arrI++) {
 		var contains = true;
 		for (var idx = 0; idx < 18; idx++) {
-			if (idx < 7)
-				if (arr[arrI].cset[idx] !== est.cset[idx]) contains = false;
-			else if (idx < 14)
-				if (arr[arrI].cmove[idx-7] !== est.cmove[idx-7]) contains = false;
-			else if (idx < 17)
-				if (arr[arrI].cjump[idx-14] !== est.cjump[idx-14]) contains = false;
-			else
-				if (arr[arrI].cwin[0] !== est.cwin[0]) contains = false;
+			if (arr[arrI].c[idx] !== est.c[idx]) contains = false;
 		}
 		if (contains === true)
 			return true;

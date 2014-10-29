@@ -1,47 +1,21 @@
 function Generator() {
-	this.csetRange = [[0,100],		// new morris
-						[0,100],	// morris number
-						[0,20],		// blocked GPs
-						[0,100],	// gp number
-						[0,100],	// closable morris
-						[0,100],	// 3 piece constellation
-						[0,100]];	// free connections
-
-	this.cmoveRange = [[0,100],		// new morris
-						[0,100],	// morris number
-						[0,100],	// blocked GPs
-						[0,100],	// gp number
-						[0,100],	// closable morris number
-						[0,100],	// double morris
-						[0,20]];	// free connections
-
-	this.cjumpRange = [[0,100],		// closable morris
-						[0,100],	// 3 piece constellation
-						[0,100]];	// new morris
-
-	this.cwinRange = [[1000,3000]];
+	this.cRange = [ [50,100],		// gp number
+				    [20,80],		// morris number
+				    [10,60],		// new morris
+					[10,60],		// closable morris
+					[20,80],		// double morris
+					[10,60],		// blocked GPS
+					[0,30],			// free connections
+					[1000,3000]];	// win
 }
 
 Generator.prototype.randomCoefficients = function() {
 	var estCoefficient = new EstCoefficient();
 	var c = [];
 
-	for (var i = 0; i < this.csetRange.length; i++)
-		c[i] = Math.floor((Math.random() * this.csetRange[i][1]-this.csetRange[i][0]) + this.csetRange[i][0]);
-	estCoefficient.cset = c;
-
-	c = [];
-	for (var i = 0; i < this.cmoveRange.length; i++)
-		c[i] = Math.floor((Math.random() * this.cmoveRange[i][1]-this.cmoveRange[i][0]) + this.cmoveRange[i][0]);
-	estCoefficient.cmove = c;
-
-	c = [];
-	for (var i = 0; i < this.cjumpRange.length; i++)
-		c[i] = Math.floor((Math.random() * this.cjumpRange[i][1]-this.cjumpRange[i][0]) + this.cjumpRange[i][0]);
-	estCoefficient.cjump = c;
-
-	estCoefficient.cwin = [];
-	estCoefficient.cwin[0] = Math.floor((Math.random() * this.cwinRange[0][1]-this.cwinRange[0][0]) + this.cwinRange[0][0]);
+	for (var i = 0; i < this.cRange.length; i++)
+		c[i] = Math.floor((Math.random() * this.cRange[i][1]-this.cRange[i][0]) + this.cRange[i][0]);
+	estCoefficient.c = c;
 
 	return estCoefficient;
 };

@@ -15,57 +15,31 @@ Estimator.prototype.evaluate = function(game) {
 	var gpFreedom = this.gpFreedom(col);
 	var oppGpFreedom = this.gpFreedom(oppCol);
 	var evaluation = 0;
-	var r = [], c;
+	var r = [];
 	this.log = "";
 
-	var status = this.game.status;
-	if (status === "delete")
-		status = this.game.lastStatus;
 
-	if (status === "set") {
-		c = this.c.cset;
-		r[0] = this.newMorris(col) - this.newMorris(oppCol);
-		r[1] = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
-		r[2] = oppGpFreedom.blockedGPs - gpFreedom.blockedGPs;
-		r[3] = this.game.gpNumber[col] - this.game.gpNumber[oppCol];
-		r[4] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
-		r[5] = morrisInfo.closableMorrisNum-1 - oppMorrisInfo.closableMorrisNum+1;
-		r[6] = gpFreedom.freeConnections - oppGpFreedom.freeConnections;
-	}
-	else if (status === "move") {
-		c = this.c.cmove;
-		r[0] = this.newMorris(col) - this.newMorris(oppCol);
-		r[1] = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
-		r[2] = oppGpFreedom.blockedGPs - gpFreedom.blockedGPs;
-		r[3] = this.game.gpNumber[col] - this.game.gpNumber[oppCol];
-		r[4] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
-		r[5] = this.doubleMorrisNum(col) - this.doubleMorrisNum(oppCol);
-		r[6] = gpFreedom.freeConnections - oppGpFreedom.freeConnections;
-		//r[6] = this.win(col) - this.win(oppCol);
-	}
-	else if (status === "jump") {
-		c = this.c.cjump;
-		r[0] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
-		r[1] = morrisInfo.closableMorrisNum-1 - oppMorrisInfo.closableMorrisNum+1;
-		r[2] = this.newMorris(col) - this.newMorris(oppCol);
-		//r[3] = this.win(col) - this.win(oppCol);
-	}
-	else if (status === "end") {
-		c = this.c.cwin;
-		r[0] = this.win(col) - this.win(oppCol);
-		evaluation = this.win(col) - this.win(oppCol);
-	}
+	c = this.c.cmove;
+	r[0] = this.game.gpNumber[col] - this.game.gpNumber[oppCol];
+	r[1] = morrisInfo.morrisNum - oppMorrisInfo.morrisNum;
+	r[2] = this.newMorris(col) - this.newMorris(oppCol);
+	r[3] = morrisInfo.closableMorrisNum - oppMorrisInfo.closableMorrisNum;
+	r[4] = this.doubleMorrisNum(col) - this.doubleMorrisNum(oppCol);
+	r[5] = oppGpFreedom.blockedGPs - gpFreedom.blockedGPs;
+	r[6] = gpFreedom.freeConnections - oppGpFreedom.freeConnections;
+	r[7] = this.win(col) - this.win(oppCol);
 
 	if (this.c === undefined)
 		console.warn("Estimator evaluate: estimator coefficient undefined");
 	for (var i = 0; i < r.length; i++) {
 		if (r[i]===undefined) 
-			console.warn("Estimator evaluate: r at "+i+" unknown. " + status);
-		else if (c[i]===undefined) 
-			console.warn("Estimator evaluate: c at "+i+" unknown. " + status);
+			console.warn("Estimator evaluate: r at "+i+" unknown. ");
+		else if (this.c.c[i]===undefined) 
+			console.warn("Estimator evaluate: c at "+i+" unknown. ");
 		else {
-			evaluation += r[i]*c[i];
-			this.log += "["+i+"]" + r[i] + "*" + c[i] + "=" + r[i]*c[i];
+			var v = r[i]*this.c.c[i];
+			evaluation += v;
+			this.log += "["+i+"]" + r[i] + "*" + this.c.c[i] + "=" + v;
 		}
 	}
 
@@ -97,7 +71,7 @@ Estimator.prototype.morrisInfo = function(color) {
 				n--;
 			}
 			//morris can be closed by a move
-			else if (this.game.status === "move") {
+			else if (this.game.gamePhase[color] === "move") {
 				n--
 				for (var k = 0; k < morrises[i][j].connections.length; k++) {
 					//connections is part of this morris

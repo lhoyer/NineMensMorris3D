@@ -77,7 +77,7 @@ AlphaBetaAI.prototype.miniMax = function(depth,alpha,beta,log) {
 		if (ev === "aborted")
 			return ev;
 		if (Settings.debugMiniMax)
-			log[moves[i].toString()+"\t"+ev+","+beta] = l;
+			log[moves[i].toString()+"\t"+ev] = l;
 
 
 		if (ev > bestEvaluation) {

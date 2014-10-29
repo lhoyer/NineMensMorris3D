@@ -5,16 +5,18 @@ function Settings(){
 	if (typeof Generations !== 'undefined') {
 		// this.aiWhite = Generations["G"+Generations.lastGeneration][0];
 		// this.aiBlack = Generations["G"+Generations.lastGeneration][0];
-		this.aiWhite = Generations["aG4"][0];
-		this.aiBlack = Generations["aG4"][0];
+		this.aiWhite = Generations["simple"][0];
+		this.aiBlack = Generations["simple"][0];
 
-		this.tournamentEstimators = new Evolution(Generations["rG"+Generations.lastGeneration]).newGeneration();
-		// this.tournamentEstimators = new Generator().coefficientSet(100);
+		if (Generations.lastGeneration === 0)
+			this.tournamentEstimators = new Generator().coefficientSet(100);
+		else
+			this.tournamentEstimators = new Evolution(Generations["bG"+Generations.lastGeneration]).newGeneration();
 		// this.tournamentEstimators = Generations["aG4"];
 	}
 
 	this.mode = "hc";
-	this.drawLimit = 300;
+	this.drawLimit = 150;
 	this.cores = 8;
 
 	this.aiRandom = true;
